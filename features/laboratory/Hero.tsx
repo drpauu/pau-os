@@ -124,14 +124,6 @@ export function Hero() {
           <br className="desktop-break" /> products, from the algorithm to the
           interface.
         </p>
-        <div className="hero-actions">
-          <Link className="button primary" href="/work/">
-            Explore my work <ArrowUpRight size={17} />
-          </Link>
-          <Link className="hero-resume" href="/resume/">
-            View resume <ArrowUpRight size={14} />
-          </Link>
-        </div>
       </div>
       <div
         className={"scene-container" + (isDragging ? " is-dragging" : "")}

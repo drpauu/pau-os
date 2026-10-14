@@ -392,10 +392,7 @@ test("no WebGL retains all navigation and static scene", async ({ page }) => {
   });
   await page.goto("/");
   await expect(page.locator("canvas")).toHaveCount(0);
-  await expect(
-    page.getByRole("link", { name: "Explore my work" }),
-  ).toBeVisible();
-  await page.screenshot({ path: "docs/screenshots/fallback.png" });
+  await expect(page.locator(".hero-actions")).toHaveCount(0);
   await page.getByRole("link", { name: "Read CAMÍ CURT case study" }).click();
   await expect(page.locator("h1")).toHaveText("CAMÍ CURT");
 });
@@ -448,42 +445,24 @@ test("reduced motion, keyboard navigation and WCAG automated checks", async ({
       });
   }
 });
-test("tablet hero keeps clear space between the call to action and project dock", async ({
+test("tablet hero keeps clear space between the introduction and project dock", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 1024, height: 768 });
   await page.goto("/");
-  const actions = await page.locator(".hero-actions").boundingBox();
+  const introduction = await page.locator(".hero-description").boundingBox();
   const dock = await page.locator(".station-dock").boundingBox();
-  if (!actions || !dock) throw new Error("Hero controls are not measurable.");
-  expect(dock.y - (actions.y + actions.height)).toBeGreaterThanOrEqual(36);
+  if (!introduction || !dock) throw new Error("Hero elements are not measurable.");
+  expect(dock.y - (introduction.y + introduction.height)).toBeGreaterThanOrEqual(36);
 });
-test("home calls to action never overlap at narrow mobile widths", async ({
+test("home omits the two calls to action at narrow mobile widths", async ({
   page,
 }) => {
   for (const width of [320, 360, 390]) {
     await page.setViewportSize({ width, height: 812 });
     await page.goto("/");
-    const bounds = await page.evaluate(() => {
-      const primary = document
-        .querySelector(".hero-actions > .button")!
-        .getBoundingClientRect();
-      const resume = document
-        .querySelector(".hero-actions > .hero-resume")!
-        .getBoundingClientRect();
-      return {
-        overlaps:
-          primary.left < resume.right &&
-          primary.right > resume.left &&
-          primary.top < resume.bottom &&
-          primary.bottom > resume.top,
-        withinViewport: resume.left >= 0 && resume.right <= innerWidth,
-      };
-    });
-    expect(bounds.overlaps, `CTA overlap at ${width}px`).toBe(false);
-    expect(bounds.withinViewport, `Resume link overflow at ${width}px`).toBe(
-      true,
-    );
+    await expect(page.locator(".hero-actions")).toHaveCount(0);
+    await expect(page.locator(".scene-caption a")).toBeVisible();
   }
 });
 for (const [name, width, height] of [

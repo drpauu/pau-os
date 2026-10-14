@@ -360,18 +360,6 @@ svg {
   color: #a7b9c5;
   max-width: 320px;
 }
-.hero-actions {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  margin-top: 25px;
-}
-.hero-resume {
-  font-size: 11px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
 .scene-container {
   position: absolute;
   left: 29%;
@@ -1584,10 +1572,6 @@ svg {
     font-size: 11px;
     max-width: 280px;
   }
-  .hero-actions {
-    margin-top: 20px;
-    gap: 22px;
-  }
   .scene-container {
     left: -16%;
     right: -16%;
@@ -2377,19 +2361,6 @@ main:focus {
   .hero-description {
     max-width: 330px;
     font-size: 12px;
-  }
-  .hero-actions {
-    margin-top: 20px;
-    gap: 22px;
-    flex-wrap: wrap;
-    row-gap: 12px;
-  }
-  .hero-actions > .button,
-  .hero-actions > .hero-resume {
-    flex-shrink: 0;
-  }
-  .hero-actions > .hero-resume {
-    white-space: nowrap;
   }
   .scene-container {
     top: 410px;
