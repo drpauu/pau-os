@@ -1,6 +1,6 @@
 {
   "url": "https://pau-os-laboratory.poeticcrow1.chatgpt.site",
-  "checkedAt": "2026-10-14T12:36:03.780Z",
+  "checkedAt": "2026-10-14T12:52:53.149Z",
   "mode": "Fourteen static routes, desktop WebGL, mobile touch navigation and TrackFlow artwork; existing owner-only read authorization",
   "routes": [
     {
@@ -75,6 +75,16 @@
     }
   ],
   "errors": [],
+  "mainObservatoryProjects": [
+    "CAMÍ CURT",
+    "ATHRA",
+    "ALCOHOLFABET",
+    "TRACKFLOW",
+    "AD-HOC MEDICAL DATA PROCESSING",
+    "CONNECT4 AI",
+    "CHECKERS AI",
+    "ESINMATH"
+  ],
   "resumePdf": {
     "status": 200,
     "contentType": "application/pdf",
@@ -84,9 +94,9 @@
   },
   "webgl": {
     "engine": "three.js r186",
-    "fps": "51",
-    "drawCalls": "355",
-    "triangles": "98609"
+    "fps": "52",
+    "drawCalls": "425",
+    "triangles": "129391"
   },
   "webglRenderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "settledFpsSamples": [
@@ -99,10 +109,11 @@
     "horizontalOverflow": false,
     "mediumRender": {
       "fps": "60",
-      "drawCalls": "196",
-      "triangles": "63676"
+      "drawCalls": "252",
+      "triangles": "84978"
     },
     "swipeFocusedAthra": true,
+    "lastDockProjectFocused": true,
     "trackflowImage": {
       "naturalWidth": 1200,
       "alt": "TrackFlow weekly training plan represented as a running track and connected session timeline"

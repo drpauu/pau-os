@@ -43,6 +43,16 @@ const evidence = {
   routes: [],
   errors: [],
 };
+const observatoryProjects = [
+  "CAMÍ CURT",
+  "ATHRA",
+  "ALCOHOLFABET",
+  "TRACKFLOW",
+  "AD-HOC MEDICAL DATA PROCESSING",
+  "CONNECT4 AI",
+  "CHECKERS AI",
+  "ESINMATH",
+];
 try {
   const context = await browser.newContext({
     viewport: { width: 1440, height: 1000 },
@@ -84,8 +94,19 @@ try {
     evidence.routes.push({ path, status: response?.status(), heading });
     if (response?.status() !== 200)
       throw new Error("Unexpected deployed route status.");
-    if (path === "/")
+    if (path === "/") {
+      evidence.mainObservatoryProjects = await page
+        .locator(".station-card strong")
+        .allTextContents();
+      if (
+        JSON.stringify(evidence.mainObservatoryProjects) !==
+        JSON.stringify(observatoryProjects)
+      )
+        throw new Error(
+          "The deployed main observatory project order is incorrect.",
+        );
       await page.screenshot({ path: "docs/screenshots/live-private.png" });
+    }
   }
   const livePdf = await context.request.get(
     origin + "/pau-alcazar-resume.pdf",
@@ -167,7 +188,9 @@ try {
       () => document.documentElement.scrollWidth > innerWidth,
     ),
   };
-  await mobilePage.screenshot({ path: "docs/screenshots/live-mobile-home.png" });
+  await mobilePage.screenshot({
+    path: "docs/screenshots/live-mobile-home.png",
+  });
   await mobilePage.waitForTimeout(6800);
   evidence.mobile.mediumRender = await mobilePage
     .locator("canvas")
@@ -201,6 +224,14 @@ try {
   if ((await athraFocus.getAttribute("aria-pressed")) !== "true")
     throw new Error("Deployed mobile swipe did not focus ATHRA.");
   evidence.mobile.swipeFocusedAthra = true;
+  await mobilePage.locator(".station-card").nth(7).scrollIntoViewIfNeeded();
+  const finalProject = mobilePage.getByRole("button", {
+    name: "Focus ESINMATH station",
+  });
+  await finalProject.click();
+  if ((await finalProject.getAttribute("aria-pressed")) !== "true")
+    throw new Error("The deployed mobile dock did not focus the last project.");
+  evidence.mobile.lastDockProjectFocused = true;
   await mobilePage.goto(origin + "/work/", { waitUntil: "networkidle" });
   const trackflowImage = mobilePage.locator(".project-trackflow img");
   await trackflowImage.waitFor({ state: "visible" });
@@ -214,7 +245,9 @@ try {
     alt: image.alt,
   }));
   if (evidence.mobile.trackflowImage.naturalWidth !== 1200)
-    throw new Error("Deployed TrackFlow illustration did not load as expected.");
+    throw new Error(
+      "Deployed TrackFlow illustration did not load as expected.",
+    );
   await mobilePage.locator(".project-trackflow").screenshot({
     path: "docs/screenshots/live-mobile-trackflow.png",
   });

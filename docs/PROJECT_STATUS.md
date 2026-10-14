@@ -48,13 +48,13 @@ Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the docu
 
 ## Verified deployment receipt
 
-- Native Sites status: **succeeded**, 2026-10-14T12:34:01Z.
+- Native Sites status: **succeeded**, 2026-10-14T12:52:00Z.
 - URL: https://pau-os-laboratory.poeticcrow1.chatgpt.site
 - Audience: **owner-only**, unchanged. No public sharing enabled.
-- Deployed application/source commit: `66bb8209c140d127c44afa4e9f07ec9b1b660aee`.
-- Deployment ID: `appgdep_6acf76a784288191bec0d643f8a3dd13`; version: `appgprj_6aceae30f6588191a9cca2f37434e8f3~appgver_80efcf2b11208191a97e56edb90220fb`.
-- Live browser verification used the existing owner-authorized read token in memory. No read token was created or rotated. All 14 canonical routes returned 200 with expected headings, zero browser errors, and desktop WebGL rendered. Three settled High samples were 60 FPS. In isolated 375×812 touch emulation, Medium rendered at 60 FPS (196 draw calls, 63,676 triangles); there was no horizontal overflow, the swipe focused ATHRA, and the TrackFlow cover loaded at 1200px with descriptive alt text. `/resume/` returned the full-name heading and the downloadable PDF matched the local artifact byte for byte (65,039 bytes; SHA-256 `39cdbd1753e60a7d17ce505a781a7cf5ef5258d8136462d543951722fb9b0f06`). Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, `docs/screenshots/live-private-3d.png`, `docs/screenshots/live-private-resume.png`, `docs/screenshots/live-mobile-home.png` and `docs/screenshots/live-mobile-trackflow.png`.
-- No shared Supabase resource was modified. A follow-up commit updates verification documentation and does not change the deployed application.
+- Deployed application/source commit: `ee16914a0e8fe0eeb8a1d3145ca8f52aacf3e093`.
+- Deployment ID: `appgdep_6acf7ade574081919eb740915e46a857`; saved version 8.
+- Live browser verification used the existing owner-authorized read token in memory. No read token was created or rotated. All 14 canonical routes returned 200 with expected headings and zero browser errors. The deployed home dock contains all eight projects in the required order. Desktop WebGL rendered; three settled High samples were 60 FPS. In isolated 375×812 touch emulation, Medium rendered at 60 FPS (252 draw calls, 84,978 triangles); there was no horizontal overflow, the swipe focused ATHRA, the dock focused ESINMATH, and the TrackFlow cover loaded at 1200px with descriptive alt text. `/resume/` returned the full-name heading and the downloadable PDF matched the local artifact byte for byte (65,039 bytes; SHA-256 `39cdbd1753e60a7d17ce505a781a7cf5ef5258d8136462d543951722fb9b0f06`). Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, `docs/screenshots/live-private-3d.png`, `docs/screenshots/live-private-resume.png`, `docs/screenshots/live-mobile-home.png` and `docs/screenshots/live-mobile-trackflow.png`.
+- No shared Supabase resource was modified. The remaining local commit changes only the live verification harness, verification record and screenshots; the published application matches the feature commit above.
 
 The four new studies appear after the four primary projects; the medical repository link remains withheld pending upstream credential and data cleanup.
 
