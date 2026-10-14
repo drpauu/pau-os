@@ -23,6 +23,7 @@ import { StaticScene } from "@/features/laboratory/StaticScene";
 import { Catalonia } from "./scenes/Catalonia";
 import Link from "next/link";
 import { useLaboratory, type Station } from "@/stores/laboratory";
+import { projects } from "@/lib/content";
 
 const targets: Record<
   Station,
@@ -117,24 +118,21 @@ function CameraRig({ reduced }: { reduced: boolean }) {
   });
   return null;
 }
-const labels: {
-  id: Station;
-  title: string;
-  point: [number, number, number];
-}[] = [
-  { id: "camicurt", title: "01 / CAMÍ CURT", point: [1.7, 2.35, -2.5] },
-  { id: "athra", title: "02 / ATHRA", point: [-4.8, 1.9, 1.2] },
-  { id: "alcoholfabet", title: "03 / ALCOHOLFABET", point: [3.8, 1.65, 4.1] },
-  { id: "trackflow", title: "04 / TRACKFLOW", point: [3.85, 2.05, -3.1] },
-  {
-    id: "adhoc-medical-data-processing",
-    title: "05 / MEDICAL DATA",
-    point: [-5.15, 1.8, -3.05],
-  },
-  { id: "connect4-ai", title: "06 / CONNECT4 AI", point: [-0.65, 1.8, 5.85] },
-  { id: "checkers-ai", title: "07 / CHECKERS AI", point: [5.55, 1.8, 0.15] },
-  { id: "esinmath", title: "08 / ESINMATH", point: [-1.25, 1.8, -5.8] },
-];
+const labelPoints: Record<string, [number, number, number]> = {
+  camicurt: [1.7, 2.35, -2.5],
+  athra: [-4.8, 1.9, 1.2],
+  alcoholfabet: [3.8, 1.65, 4.1],
+  trackflow: [3.85, 2.05, -3.1],
+  "adhoc-medical-data-processing": [-5.15, 1.8, -3.05],
+  "connect4-ai": [-0.65, 1.8, 5.85],
+  "checkers-ai": [5.55, 1.8, 0.15],
+  esinmath: [-1.25, 1.8, -5.8],
+};
+const labels = projects.map((project, index) => ({
+  id: project.slug as Station,
+  title: `${String(index + 1).padStart(2, "0")} / ${project.title}`,
+  point: labelPoints[project.slug]!,
+}));
 function ProjectLabels() {
   const { camera, size, gl } = useThree();
   const point = useRef(new THREE.Vector3());
@@ -157,11 +155,7 @@ function SceneLabels() {
   return (
     <div className="scene-labels">
       {labels
-        .filter(
-          (label) =>
-            station === label.id ||
-            (station === "core" && labels.indexOf(label) < 4),
-        )
+        .filter((label) => station === "core" || station === label.id)
         .map((label) => (
           <div
             data-station={label.id}

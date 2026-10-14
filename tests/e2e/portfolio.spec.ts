@@ -164,6 +164,13 @@ test("camera redirects safely, every installation focuses, and quality stays aut
   await page.goto("/");
   await expect(page.getByRole("combobox", { name: "Scene quality" })).toHaveCount(0);
   await expect(page.locator("canvas")).toBeVisible();
+  await expect(page.locator(".projected-label")).toHaveCount(8);
+  for (let i = 0; i < installationTitles.length; i++)
+    await expect(
+      page.locator(
+        `[data-station="${installationSlugs[i]}"] .station-label`,
+      ),
+    ).toContainText(installationTitles[i]);
   await page.waitForTimeout(1800);
   const orbitScene = page.locator(".scene-container");
   const startingYaw = await orbitScene.getAttribute("data-orbit-yaw");
@@ -192,6 +199,9 @@ test("camera redirects safely, every installation focuses, and quality stays aut
         name: `Focus ${installationTitles[i]} station`,
       }),
     ).toHaveAttribute("aria-pressed", "true");
+    await expect(page.locator(".scene-caption > a")).toContainText(
+      installationTitles[i],
+    );
     await page.screenshot({
       path: `docs/screenshots/installation-${installationSlugs[i]}.png`,
     });
@@ -447,6 +457,34 @@ test("tablet hero keeps clear space between the call to action and project dock"
   const dock = await page.locator(".station-dock").boundingBox();
   if (!actions || !dock) throw new Error("Hero controls are not measurable.");
   expect(dock.y - (actions.y + actions.height)).toBeGreaterThanOrEqual(36);
+});
+test("home calls to action never overlap at narrow mobile widths", async ({
+  page,
+}) => {
+  for (const width of [320, 360, 390]) {
+    await page.setViewportSize({ width, height: 812 });
+    await page.goto("/");
+    const bounds = await page.evaluate(() => {
+      const primary = document
+        .querySelector(".hero-actions > .button")!
+        .getBoundingClientRect();
+      const resume = document
+        .querySelector(".hero-actions > .hero-resume")!
+        .getBoundingClientRect();
+      return {
+        overlaps:
+          primary.left < resume.right &&
+          primary.right > resume.left &&
+          primary.top < resume.bottom &&
+          primary.bottom > resume.top,
+        withinViewport: resume.left >= 0 && resume.right <= innerWidth,
+      };
+    });
+    expect(bounds.overlaps, `CTA overlap at ${width}px`).toBe(false);
+    expect(bounds.withinViewport, `Resume link overflow at ${width}px`).toBe(
+      true,
+    );
+  }
 });
 for (const [name, width, height] of [
   ["desktop-large", 1920, 1080],
