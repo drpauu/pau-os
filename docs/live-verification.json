@@ -1,6 +1,6 @@
 {
   "url": "https://pau-os-laboratory.poeticcrow1.chatgpt.site",
-  "checkedAt": "2026-10-14T10:27:30.719Z",
+  "checkedAt": "2026-10-14T11:40:53.244Z",
   "mode": "Ten static route checks plus live WebGL; existing owner-only read authorization",
   "routes": [
     {
@@ -34,6 +34,26 @@
       "heading": "TRACKFLOW"
     },
     {
+      "path": "/work/adhoc-medical-data-processing/",
+      "status": 200,
+      "heading": "AD-HOC MEDICAL DATA PROCESSING"
+    },
+    {
+      "path": "/work/connect4-ai/",
+      "status": 200,
+      "heading": "CONNECT4 AI"
+    },
+    {
+      "path": "/work/checkers-ai/",
+      "status": 200,
+      "heading": "CHECKERS AI"
+    },
+    {
+      "path": "/work/esinmath/",
+      "status": 200,
+      "heading": "ESINMATH"
+    },
+    {
       "path": "/experience/",
       "status": 200,
       "heading": "Engineering in practice."
@@ -57,14 +77,14 @@
   "errors": [],
   "webgl": {
     "engine": "three.js r186",
-    "fps": "27",
+    "fps": "52",
     "drawCalls": "401",
     "triangles": "98609"
   },
   "webglRenderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "settledFpsSamples": [
-    "33",
-    "34",
-    "33"
+    "60",
+    "60",
+    "60"
   ]
 }

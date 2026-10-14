@@ -38,7 +38,7 @@ const browser = await chromium.launch({
 const evidence = {
   url: origin,
   checkedAt: new Date().toISOString(),
-  mode: "Ten static route checks plus live WebGL; existing owner-only read authorization",
+  mode: "Fourteen static route checks plus live WebGL; existing owner-only read authorization",
   routes: [],
   errors: [],
 };
