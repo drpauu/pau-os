@@ -55,7 +55,7 @@ Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the docu
 - Deployment ID: `appgdep_6acf6a2a08a8819185d1e512d53f95d3`.
 - Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All 14 canonical routes returned 200 with expected headings, the browser reported zero errors, and WebGL rendered. Three settled live FPS samples were 60. Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, and `docs/screenshots/live-private-3d.png`; the Work listing with all eight loaded images is `docs/screenshots/work-pinned-projects.png`.
 - Sanitized native receipt: `.openai/local/deployment-observatory.json` (ignored local state). No shared Supabase resource was modified.
-- The current local app source matches the deployed commit. Screenshot evidence and the deployment receipt were recorded afterward and do not change the deployed application.
+- The deployed application corresponds to commit `bee4309`. A follow-up documentation/evidence-only commit records verification and does not change the deployed application.
 
 The four new studies appear after the four primary projects; the medical repository link remains withheld pending upstream credential and data cleanup.
 
