@@ -18,7 +18,7 @@ Updated: 2026-10-14. Workspace: `/home/pau/Documents/pau-os`.
 - [x] Production export, type checking, lint, 11 unit tests and 11 Chromium E2E tests passed on the final application code. Database permissions and production dependency audit also passed.
 - [x] Automated WCAG A/AA checks passed on Home, ATHRA, About, Lab, Resume and Contact; manual screenshot review at 1920/1440/768/390px.
 - [x] Measured production HIGH/MEDIUM at 60 FPS on the local Intel Iris Xe. No cross-device performance claim.
-- [ ] Final source packaging and private Sites publication in progress.
+- [x] Source packaged and private Sites deployment confirmed successful: https://pau-os-laboratory.poeticcrow1.chatgpt.site .
 
 ## Current limitations / deliberately absent features
 
@@ -38,3 +38,9 @@ Updated: 2026-10-14. Workspace: `/home/pau/Documents/pau-os`.
 3. After content changes: typecheck/lint/test/build; run relevant browser tests.
 4. Use the existing Site identity in `.openai/hosting.json`; never register a duplicate Site.
 5. Publish through Sites’ source helper, or publish `out/` to a static host with the documented environment.
+
+## Deployment receipt
+
+Confirmed `succeeded` on 2026-10-14, source commit `718be3ed972822dd984f2223999f807b139edca6`. Owner-private URL: https://pau-os-laboratory.poeticcrow1.chatgpt.site . The non-secret deployment receipt is in `.openai/local/deployment.json`. This final status update is local documentation written after deployment; deployed application source is the verified commit above.
+
+Owned preview servers were stopped after validation. Start a fresh local session with `npm run dev`.
