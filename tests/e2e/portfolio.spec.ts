@@ -92,6 +92,17 @@ test("direct routes, verified media, exact main navigation and browser history",
   await expect(page.getByRole("link", { name: "View source" })).toHaveCount(0);
   await page.goto("/resume/");
   await expect(page.locator("main")).not.toContainText("CONNECT4 AI");
+  await expect(page.locator("main")).toContainText("Pau Alcázar Perdomo");
+  await expect(page.locator("main")).toContainText("Core technical skills");
+  await expect(page.locator("main")).toContainText("PySpark");
+  await expect(page.locator("main")).toContainText(
+    "AI-assisted document ingestion",
+  );
+  await expect(page.locator("main")).toContainText("Road-safety analytics");
+  await expect(page.locator("main")).toContainText("Languages");
+  await expect(
+    page.getByRole("link", { name: "Download public CV" }),
+  ).toHaveAttribute("href", "/pau-alcazar-resume.pdf");
   const legacy = await page.goto("/projects/cami-curt/");
   expect(legacy?.status()).toBe(200);
   await expect(page.locator("link[rel=canonical]")).toHaveAttribute(

@@ -953,6 +953,9 @@ svg {
   margin-bottom: 35px;
   border-bottom: 1px solid var(--line);
 }
+.resume-content > section > h2 {
+  margin-bottom: 20px;
+}
 .resume-grid h2 {
   font-size: 32px;
   margin-bottom: 14px;
@@ -969,6 +972,10 @@ svg {
 }
 .resume-project {
   margin-bottom: 25px;
+}
+.resume-project-stack strong {
+  color: var(--text);
+  font-weight: 500;
 }
 .resume-project a {
   font: 11px var(--mono);
@@ -1935,7 +1942,6 @@ svg {
   .resume-grid section {
     padding-bottom: 12px;
     margin-bottom: 12px;
-    break-inside: avoid;
   }
   .resume-grid p {
     font-size: 10px;
@@ -1949,6 +1955,7 @@ svg {
   }
   .resume-project {
     margin-bottom: 12px;
+    break-inside: avoid;
   }
   .resume-project a {
     font-size: 9px;
@@ -2481,5 +2488,15 @@ main:focus {
   }
 }
 
-.hero:not([data-view="core"]) .scene-caption { background: #0b171eeb; border-left: 1px solid #6e8b7c; padding:12px 16px; backdrop-filter:blur(8px); }
-@media(max-width:800px) { .hero:not([data-view="core"]) .scene-caption { padding:6px 9px;left:6%; } }
+.hero:not([data-view="core"]) .scene-caption {
+  background: #0b171eeb;
+  border-left: 1px solid #6e8b7c;
+  padding: 12px 16px;
+  backdrop-filter: blur(8px);
+}
+@media (max-width: 800px) {
+  .hero:not([data-view="core"]) .scene-caption {
+    padding: 6px 9px;
+    left: 6%;
+  }
+}

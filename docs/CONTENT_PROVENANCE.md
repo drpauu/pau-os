@@ -19,6 +19,6 @@ Audited 2026-10-14. This replaces the prior provenance assumptions with the owne
 | ATHRA image | Existing local application browser capture | Shipped sample data; interface currently calls itself KINETICOS. |
 | Alcoholfabet image | Public interface with local menu fixture | Empty score and fictional auth fixture; backend fully intercepted. |
 | TrackFlow image | Existing local unauthenticated frontend | No athlete data or login credentials used. |
-| Public CV PDF | Generated from `lib/professional.ts` with `scripts/generate-public-resume.mjs` | Private contacts and client-specific detail excluded; one-page output visually reviewed. Owner editorial review recommended before deployment. |
+| Public CV PDF and HTML Resume | Generated/rendered from the same `professional.resume` model in `lib/professional.ts` | Complete two-page CV; private contacts omitted and client-identifying project details anonymized. |
 
 No original CV bytes, personal contact details, private application rows, health records, online player codes or privileged credentials were copied into published assets. Source CV remains ignored. The generator reads the curated TypeScript model and never reads or copies the PDF. `docs/public-cv-review.json` records the source hash and review boundary without sensitive values.

@@ -32,7 +32,7 @@ npm run preview
 When intentionally updating public content or scene assets:
 
 ```bash
-npm run resume:generate  # generates only curated public CV fields; no server required
+npm run resume:generate  # generates the complete sanitized CV from the shared resume model
 npm run capture:assets  # requires the running app at 127.0.0.1:3100 and working WebGL
 npm run content:seed    # writes local SQL only; never applies it to a database
 npm run build          # rebuild after generated assets change

@@ -30,6 +30,24 @@ describe("CV-derived public information", () => {
     }
   });
 
+  it("keeps the complete public resume in one model for both HTML and PDF", () => {
+    expect(professional.resume.skills.map((group) => group.category)).toEqual([
+      "Languages & data engineering",
+      "AWS",
+      "Azure & platforms",
+      "AI, backend & DevOps",
+      "Web & analytics",
+    ]);
+    expect(professional.resume.selectedWork).toHaveLength(8);
+    expect(professional.resume.selectedWork.at(-1)?.title).toBe(
+      "Camí Curt — independent web product",
+    );
+    expect(professional.resume.summary).toContain("3+ years of experience");
+    expect(JSON.stringify(professional.resume.selectedWork)).not.toMatch(
+      /Barcelona City Council|Osakidetza|Hospital Clínic|DGT|BIT\b/,
+    );
+  });
+
   it("ties the reviewed model to the original CV when available without exposing its contents", () => {
     // The private input is deliberately absent from CI/source control.
     const path = new URL(
@@ -69,7 +87,7 @@ describe("CV-derived public information", () => {
         "private phone",
         "private email",
         "named clients",
-        "client-specific projects",
+        "client-specific project names and identifying details",
       ]),
     );
   });

@@ -1,4 +1,3 @@
-import { Eyebrow } from "@/components/ui/Primitives";
 import { professional } from "@/lib/professional";
 
 /** Shared public CV content: no separate wording or dates to drift across pages. */
@@ -6,13 +5,13 @@ export function ProfessionalHistory() {
   return (
     <>
       <section aria-labelledby="experience-heading">
-        <Eyebrow>PROFESSIONAL EXPERIENCE</Eyebrow>
-        <h2 id="experience-heading">From requirements to running systems.</h2>
+        <h2 id="experience-heading">Professional experience</h2>
         {professional.experience.map((position) => (
           <article className="experience-entry" key={position.id}>
             <p className="mono muted">{position.dates}</p>
             <h3>{position.company}</h3>
             <p className="position-title">{position.title}</p>
+            <p className="experience-location">{position.location}</p>
             <p>{position.summary}</p>
             <ul className="responsibility-list">
               {position.responsibilities.map((item) => (
@@ -23,8 +22,7 @@ export function ProfessionalHistory() {
         ))}
       </section>
       <section aria-labelledby="education-heading">
-        <Eyebrow>EDUCATION</Eyebrow>
-        <h2 id="education-heading">The foundations.</h2>
+        <h2 id="education-heading">Education</h2>
         {professional.education.map((education) => (
           <article className="experience-entry" key={education.degree}>
             <p className="mono muted">{education.dates}</p>
@@ -35,8 +33,7 @@ export function ProfessionalHistory() {
         ))}
       </section>
       <section aria-labelledby="languages-heading">
-        <Eyebrow>LANGUAGES</Eyebrow>
-        <h2 id="languages-heading">Across conversations.</h2>
+        <h2 id="languages-heading">Languages</h2>
         <p>{professional.languages.join(" · ")}</p>
       </section>
     </>

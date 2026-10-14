@@ -11,14 +11,14 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 5. **Data:** CV-derived public professional model and separately generated sanitized one-page PDF; exact five-category/80-entry Toolbox with build-time sync and tested offline fallback; verified project snapshots. Optional Supabase adapter is validated but disabled by default; no shared production data changed.
 6. **Motion/UX:** interruptible camera transitions, skip intro, source-map hover/selection, reduced motion, native scrolling, mobile disclosure, keyboard controls, three quality tiers and WebGL/context-loss fallback.
 7. **Visual refinement:** actual browser renders reviewed; fixed white map overexposure, opaque ground rectangle, scene/text overlap, camera cropping, intersecting gantry and caption contrast. Authentic project screenshots retained/added with provenance. Desktop/mobile professional pages reviewed.
-8. **QA:** production export, lint, TypeScript, 32 unit tests and 14 production Chromium E2E tests pass. Automated axe WCAG A/AA checks passed across 14 canonical routes. Privacy/artifact and internal-link reviews passed. Measured High/Medium both reached 60 FPS on local Intel Iris Xe; Low skips the initial 3D bundle. See PERFORMANCE.md for transfer/LCP/CLS and limitations.
+8. **QA:** production export, lint, TypeScript, 33 unit tests and 14 production Chromium E2E tests pass. Automated axe WCAG A/AA checks passed across 14 canonical routes. Privacy/artifact and internal-link reviews passed. The full two-page public CV was regenerated from the canonical model shared with HTML Resume and visually checked. Measured High/Medium both reached 60 FPS on local Intel Iris Xe; Low skips the initial 3D bundle. See PERFORMANCE.md for transfer/LCP/CLS and limitations.
 9. **Production preparation:** reproducible static `out/` artifact, source-only secrets boundary, metadata/sitemap/robots, existing owner-private Sites target retained. Updated owner-private deployment succeeded and all 14 live routes passed browser verification; receipt below.
 
 ## Test evidence
 
 - `npm run lint`: pass.
 - `npm run typecheck`: pass; now generates route types for clean checkouts.
-- `npm test`: 32 tests passed across five files.
+- `npm test`: 33 tests passed across five files.
 - `npm run build`: pass, all required static pages plus legacy aliases emitted; Toolbox live fetch verified exact source.
 - `npm run test:e2e`: **14/14 passed** after the pinned-project expansion. Includes direct routes for all eight case studies, exact project order, next links, history, rapidly interrupted cameras, installations, fallback, no-JavaScript content, mobile navigation, geography, Toolbox exactness and keyboard controls.
 - Axe checks: no violations for WCAG 2A/2AA/2.1AA on 14 canonical routes. This is automated coverage, not a complete human accessibility certification.
@@ -29,12 +29,12 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 
 ## Screenshot evidence
 
-`docs/screenshots/observatory.png` (initial composition/full scene), `installation-camicurt.png`, `installation-athra.png`, `installation-alcoholfabet.png`, `installation-trackflow.png`, `work-pinned-projects.png`, the four `case-*.png` pinned-project case studies, `work-camicurt.png`, `experience.png`, `about.png`, `resume.png`, `desktop.png`, `desktop-large.png`, `tablet.png`, `mobile.png`, `mobile-work.png` and `fallback.png`. `before-desktop.png` preserves the previous composition. Preliminary development captures are supplemental and may show the Next development overlay; final production captures do not.
+`docs/screenshots/observatory.png` (initial composition/full scene), `installation-camicurt.png`, `installation-athra.png`, `installation-alcoholfabet.png`, `installation-trackflow.png`, `work-pinned-projects.png`, the four `case-*.png` pinned-project case studies, `work-camicurt.png`, `experience.png`, `about.png`, `resume.png`, `resume-mobile.png`, `cv-review/public-cv-1.png`, `cv-review/public-cv-2.png`, `desktop.png`, `desktop-large.png`, `tablet.png`, `mobile.png`, `mobile-work.png` and `fallback.png`. `before-desktop.png` preserves the previous composition. Preliminary development captures are supplemental and may show the Next development overlay; final production captures do not.
 
 ## Known limitations and remaining review
 
 - **Public geographic redistribution:** source geometry is the game's exact historical 41-region map, traced to a 2014 GeoJSON-Mapas snapshot. Its upstream redistribution license is not established. Confirm terms or replace it with an explicitly licensed source before public release. Do not call it current official coverage or assume ICGC ownership from an old filename.
-- **CV editorial review:** the generated public PDF was checked against the actual CV and inspected for private contacts/client details. Owner editorial review is still recommended before a public launch; the original is unchanged.
+- **CV editorial review:** the complete generated public PDF and its HTML counterpart use one canonical model and were checked against the source CV. Private phone/email and client identities are omitted or anonymized. The original is unchanged.
 - **Database isolation:** no new dedicated Supabase project was provisioned. The shared connection is read-only audited and untouched; old rows are intentionally not synchronized. Snapshot mode is complete and deployable. Optional remote publishing requires a suitable isolated environment and approved parity data.
 - **Device coverage:** desktop Chromium and emulated 390/768px views tested, not physical Safari/iOS/Android devices. No long GPU-memory soak or field Web Vitals dataset.
 - **Live rendering performance:** the latest deployment rendered WebGL with three settled 60 FPS samples on the reported local Intel Iris Xe browser. This short owner-session sample does not establish stable performance across devices or longer sessions; quality controls and static fallback remain available.

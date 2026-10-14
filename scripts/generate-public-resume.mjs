@@ -3,7 +3,8 @@ import { professional } from "../lib/professional.ts";
 import { fileURLToPath } from "node:url";
 import fs from "node:fs/promises";
 
-// Generates only explicitly curated fields. The original CV is never copied.
+// The visible Resume page and the downloadable PDF use this same public model.
+// The private source CV is never copied into the public directory.
 const escape = (value) =>
   String(value).replace(
     /[&<>"']/g,
@@ -13,27 +14,49 @@ const escape = (value) =>
       ],
   );
 const root = fileURLToPath(new URL("../", import.meta.url));
+const resume = professional.resume;
+const skills = resume.skills
+  .map(
+    (group) =>
+      `<article class="skill"><h3>${escape(group.category)}</h3><p>${group.items.map(escape).join(", ")}.</p></article>`,
+  )
+  .join("");
 const experience = professional.experience
   .map(
     (position) =>
-      `<article><div class="row"><h3>${escape(position.company)}</h3><span>${escape(position.dates)}</span></div><div class="position">${escape(position.title)}</div><p>${escape(position.summary)}</p><ul>${position.responsibilities.map((item) => `<li>${escape(item)}</li>`).join("")}</ul></article>`,
+      `<article class="entry"><div class="row"><h3>${escape(position.company)}</h3><span>${escape(position.dates)}</span></div><p class="position">${escape(position.title)} · ${escape(position.location)}</p><p>${escape(position.summary)}</p><ul>${position.responsibilities.map((item) => `<li>${escape(item)}</li>`).join("")}</ul></article>`,
   )
   .join("");
 const education = professional.education
   .map(
     (item) =>
-      `<article><div class="row"><h3>${escape(item.degree)}</h3><span>${escape(item.dates)}</span></div><p class="institution">${escape(item.institution)}</p><p>${escape(item.description)}</p></article>`,
+      `<article class="entry"><div class="row"><h3>${escape(item.degree)}</h3><span>${escape(item.dates)}</span></div><p class="institution">${escape(item.institution)}</p><p>${escape(item.description)}</p></article>`,
   )
   .join("");
+const selectedWork = resume.selectedWork
+  .map(
+    (project) =>
+      `<article class="project"><h3>${escape(project.title)}</h3><p>${escape(project.description)}</p><p><strong>Technology: </strong>${escape(project.technologies)}.</p>${project.url ? `<a href="${escape(project.url)}">${escape(project.url.replace("https://", ""))}</a>` : ""}</article>`,
+  )
+  .join("");
+
 const browser = await chromium.launch({
   headless: true,
   args: ["--no-sandbox"],
 });
 try {
   const page = await browser.newPage();
-  await page.setContent(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Pau Alcázar — Public CV</title><style>
-  @page { size:A4; margin:16mm 17mm; } * { box-sizing:border-box } body { font-family:Arial,sans-serif; color:#17272e; font-size:9.5pt; line-height:1.5; margin:0 } header { border-bottom:2px solid #346d6b; padding-bottom:15px; margin-bottom:20px } h1 { font-size:29pt; letter-spacing:-1px; margin:0 0 4px } .role { font-size:13pt; margin:0 0 9px; color:#346d6b } .contact { font-size:8.5pt; color:#536168 } a { color:#346d6b; text-decoration:none } h2 { font-size:8pt; text-transform:uppercase; letter-spacing:2px; color:#346d6b; margin:23px 0 10px } h3 { font-size:11pt; margin:0 } p { margin:6px 0 9px } .row { display:flex; justify-content:space-between; gap:20px; align-items:baseline } .row span { white-space:nowrap; font-size:8pt; color:#536168 } .position { font-size:9.5pt; margin:2px 0 8px } article { margin:0 0 17px; break-inside:avoid } ul { padding-left:15px; margin:7px 0 } li { margin-bottom:4px } .institution { margin:2px 0 7px } footer { border-top:1px solid #c6d0d2; margin-top:25px; padding-top:10px; font-size:8pt; color:#536168 }
-  </style></head><body><header><h1>${escape(professional.name)}</h1><p class="role">${escape(professional.role)}</p><div class="contact">${escape(professional.location)} · <a href="https://github.com/drpauu">github.com/drpauu</a> · <a href="https://www.linkedin.com/in/pau-alcázar-perdomo/">LinkedIn</a></div></header><section><h2>Profile</h2><p>${escape(professional.summary)}</p></section><section><h2>Professional experience</h2>${experience}</section><section><h2>Education</h2>${education}</section><section><h2>Languages</h2><p>${professional.languages.map(escape).join(" · ")}</p></section><footer>Public CV · PAU.OS · Selected independent work: <a href="https://github.com/drpauu/camicurt.cat">Camí Curt</a>, <a href="https://github.com/drpauu/athra">ATHRA</a>, <a href="https://github.com/drpauu/Alcoholfabet">Alcoholfabet</a>, <a href="https://github.com/drpauu/TrackFlow">TrackFlow</a>.</footer></body></html>`);
+  await page.setContent(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${escape(resume.fullName)} — Resume</title><style>
+  @page { size:A4; margin:15mm 16mm; } * { box-sizing:border-box } body { font-family:Arial,sans-serif; color:#17272e; font-size:9pt; line-height:1.42; margin:0 } header { border-bottom:2px solid #346d6b; padding-bottom:12px; margin-bottom:15px } h1 { font-size:25pt; letter-spacing:-.7px; margin:0 0 4px } .role { font-size:10pt; font-weight:bold; margin:0 0 7px; color:#346d6b; letter-spacing:.5px } .contact { font-size:8pt; color:#536168 } a { color:#346d6b; text-decoration:none } section { margin:0 0 14px } h2 { font-size:9pt; text-transform:uppercase; letter-spacing:1.5px; color:#346d6b; margin:0 0 7px; border-bottom:1px solid #c6d0d2; padding-bottom:4px } h3 { font-size:9.5pt; margin:0 0 4px } p { margin:4px 0 6px } .row { display:flex; justify-content:space-between; gap:20px; align-items:baseline } .row span { white-space:nowrap; font-size:8pt; color:#536168 } .position { margin:2px 0 5px; font-weight:600 } .entry { margin:0 0 11px; break-inside:avoid } ul { padding-left:15px; margin:5px 0 } li { margin-bottom:3px } .institution { margin:2px 0 5px } .skill { margin:0 0 7px; break-inside:avoid } .skill h3 { display:inline; margin-right:5px } .skill p { display:inline } .project { margin:0 0 10px; break-inside:avoid } .project p { margin:3px 0 5px } .availability { margin:3px 0 0 }
+  .languages { break-inside:avoid }
+  </style></head><body><header><h1>${escape(resume.fullName)}</h1><p class="role">${escape(resume.headline)}</p><div class="contact">${escape(professional.location)} · ${escape(resume.availability)}<br><a href="https://github.com/drpauu">github.com/drpauu</a> · <a href="https://www.linkedin.com/in/pau-alcázar-perdomo/">LinkedIn</a></div></header>
+  <section><h2>Professional Summary</h2><p>${escape(resume.summary)}</p></section>
+  <section><h2>Core Technical Skills</h2>${skills}</section>
+  <section><h2>Professional Experience</h2>${experience}</section>
+  <section><h2>Education</h2>${education}</section>
+  <section class="languages"><h2>Languages</h2><p>${professional.languages.map(escape).join(" · ")}</p></section>
+  <section><h2>Selected Project Portfolio</h2>${selectedWork}</section>
+  </body></html>`);
   await page.pdf({
     path: `${root}public/pau-alcazar-resume.pdf`,
     format: "A4",
@@ -45,6 +68,14 @@ try {
     JSON.stringify(
       {
         generatedFrom: "lib/professional.ts",
+        generatedSections: [
+          "professional summary",
+          "core technical skills",
+          "professional experience",
+          "education",
+          "languages",
+          "selected project portfolio",
+        ],
         originalCopied: false,
         sourceSha256: professional.provenance.sourceSha256,
         reviewedOn: professional.provenance.reviewedOn,
@@ -52,17 +83,17 @@ try {
           "private phone",
           "private email",
           "named clients",
-          "client-specific projects",
+          "client-specific project names and identifying details",
         ],
         editorialReview:
-          "Owner review recommended before public deployment; generated public fields have been checked against the source CV.",
+          "Public resume content is generated from one canonical model used by both the HTML page and downloadable PDF. Client identities and private contact details are omitted.",
       },
       null,
       2,
     ) + "\n",
   );
   console.log(
-    "Generated privacy-safe public CV from canonical professional content.",
+    "Generated the complete privacy-safe public CV from the shared Resume content model.",
   );
 } finally {
   await browser.close();
