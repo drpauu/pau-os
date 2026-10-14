@@ -12,6 +12,8 @@ Low mode skips the 3D bundle on a fresh visit: about **64% less encoded JavaScri
 
 The contexts have isolated caches, but later runs share the browser process, OS and local server. Do not interpret the LCP difference as a controlled cross-device benchmark, or the localhost measurements as field Web Vitals. This run replaces an earlier same-page quality-switch measurement: LCP after a quality switch was not an initial-load metric and was intentionally discarded.
 
+The final owner-private deployment was also checked on the same reported Intel renderer after visiting all ten routes and switching from Static to High. The initial WebGL sample was **27 FPS**, followed by **33, 34 and 33 FPS** after settling. Draw calls/triangles matched the local High run. This is materially below the isolated local benchmark; the cause has not been isolated and a stable live 60 FPS result is **not verified**. The route-switching method differs from the fresh-context benchmark, so do not attribute the difference to hosting alone. Raw deployed evidence: `docs/live-verification.json`. Further repeatable live-device profiling and optimization remain warranted.
+
 ## Rendering budget and controls
 
 - High: maximum 1.5 device pixel ratio, local 128px procedural reflection environment, 2048px key-light shadows, modest bloom.

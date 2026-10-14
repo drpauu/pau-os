@@ -91,6 +91,20 @@ try {
   evidence.webgl = await page
     .locator("canvas")
     .evaluate((canvas) => ({ ...canvas.dataset }));
+  evidence.webglRenderer = await page.evaluate(() => {
+    const gl = document.querySelector("canvas")?.getContext("webgl2");
+    const extension = gl?.getExtension("WEBGL_debug_renderer_info");
+    return extension
+      ? gl.getParameter(extension.UNMASKED_RENDERER_WEBGL)
+      : "Unavailable";
+  });
+  evidence.settledFpsSamples = [];
+  for (let sample = 0; sample < 3; sample++) {
+    await page.waitForTimeout(3100);
+    evidence.settledFpsSamples.push(
+      await page.locator("canvas").getAttribute("data-fps"),
+    );
+  }
   await page.screenshot({ path: "docs/screenshots/live-private-3d.png" });
   if (evidence.errors.length)
     throw new Error("Deployed page reported browser errors.");

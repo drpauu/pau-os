@@ -46,6 +46,8 @@ The retained `.openai/hosting.json` identifies `appgprj_6aceae30f6588191a9cca2f3
 
 The owning agent uses the installed Sites workflow to refresh the Site metadata, open/synchronize its source with a temporary write credential, package the checked static export and publish through the owner-private operation. Credentials pass through hidden stdin, never command arguments/files/output. Preserve the existing project ID and use the workflow's returned commit/archive rather than creating a replacement Site. A new public audience or custom domain is a separate hosting decision.
 
+Before any public launch, resolve the geographic dataset's upstream redistribution terms or replace it with an explicitly licensed source; see [GEOGRAPHY.md](GEOGRAPHY.md). Owner editorial review of the sanitized CV is also recommended. The current owner-private release preserves these review boundaries.
+
 For another static host, upload only `out/`, configure directory-index routing and the final origin, then verify direct routes, browser back navigation, asset paths and CV download on that host. No Node server, service-role key, writable database, or authentication setup is required at runtime.
 
 ## Optional Supabase mirror

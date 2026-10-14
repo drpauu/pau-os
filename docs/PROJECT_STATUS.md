@@ -37,6 +37,7 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 - **CV editorial review:** the generated public PDF was checked against the actual CV and inspected for private contacts/client details. Owner editorial review is still recommended before a public launch; the original is unchanged.
 - **Database isolation:** no new dedicated Supabase project was provisioned. The shared connection is read-only audited and untouched; old rows are intentionally not synchronized. Snapshot mode is complete and deployable. Optional remote publishing requires a suitable isolated environment and approved parity data.
 - **Device coverage:** desktop Chromium and emulated 390/768px views tested, not physical Safari/iOS/Android devices. No long GPU-memory soak or field Web Vitals dataset.
+- **Live rendering performance:** the deployed High scene settled at 33–34 FPS in the final browser check, versus 60 FPS in the isolated local benchmark on the same reported GPU. The cause is not isolated; stable live 60 FPS is not verified. Quality controls and static fallback work, but further repeatable live-device profiling is warranted.
 - **Scope honesty:** illustrative exhibit curves/board/planning structures are not live application data. ATHRA remains a prototype; TrackFlow uses MongoDB. No production game sessions, health records, client records, contact-message endpoint or fabricated project metrics are published.
 - Current owner-only audience is for review, not an externally accessible recruitment URL. No sharing change, paid service or custom domain was requested/performed.
 
@@ -46,13 +47,13 @@ Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the docu
 
 ## Verified deployment receipt
 
-- Native Sites status: **succeeded**, 2026-10-14T10:11:57Z.
+- Native Sites status: **succeeded**, 2026-10-14T10:20:37Z.
 - URL: https://pau-os-laboratory.poeticcrow1.chatgpt.site
 - Audience: **owner-only**, unchanged. No public sharing enabled.
-- Deployed application/source commit: `2fc49f3b13ade373bd60ba7007d02e35ee8ec6b0`.
-- Deployment ID: `appgdep_6acf555cb8c48191ad8efa54f7be623f`.
-- Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All ten canonical routes returned 200 with the expected page headings and zero browser errors. Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png` (static presentation).
+- Deployed application/source commit: `81cf8c510e9a95c8e3a1cb564ab1663dc62f17dd`.
+- Deployment ID: `appgdep_6acf5765a66c8191a4fb434fad0fcfae`.
+- Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All ten canonical routes returned 200 with the expected page headings and zero browser errors; the live WebGL scene also rendered successfully. Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png` (static presentation), and `docs/screenshots/live-private-3d.png` (actual live scene). Both screenshots were visually inspected.
 - Sanitized native receipt: `.openai/local/deployment-observatory.json` (ignored local state).
-- This receipt and the live screenshot were recorded after publication; the subsequent documentation commit does not change the deployed application.
+- This receipt, live screenshots and extended verification-script sampling were recorded after publication; the subsequent evidence commit does not change the deployed application.
 
 Owned development/benchmark servers were stopped after validation. Restart with `npm run dev`.

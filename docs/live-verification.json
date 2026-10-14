@@ -1,7 +1,7 @@
 {
   "url": "https://pau-os-laboratory.poeticcrow1.chatgpt.site",
-  "checkedAt": "2026-10-14T10:12:14.883Z",
-  "mode": "Static presentation; existing owner-only read authorization",
+  "checkedAt": "2026-10-14T10:27:30.719Z",
+  "mode": "Ten static route checks plus live WebGL; existing owner-only read authorization",
   "routes": [
     {
       "path": "/",
@@ -54,5 +54,17 @@
       "heading": "Let’s connect."
     }
   ],
-  "errors": []
+  "errors": [],
+  "webgl": {
+    "engine": "three.js r186",
+    "fps": "27",
+    "drawCalls": "401",
+    "triangles": "98609"
+  },
+  "webglRenderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
+  "settledFpsSamples": [
+    "33",
+    "34",
+    "33"
+  ]
 }

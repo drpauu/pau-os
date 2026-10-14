@@ -12,7 +12,7 @@ The pre-existing `public/pau-alcazar-resume.pdf` was a generated, incomplete sum
 
 Verified CV facts include Data & AI Engineer positioning; Accenture, Data & AI Analyst (AI Decision Science), Jun 2023–Present; Superprof, Technology Subjects Tutor, Sep 2021–Present; UPC–EPSEVG, Bachelor of Science in Computer Engineering, 2020–2024; Catalan, Spanish and English without inferred levels. Responsibilities are concise paraphrases of page 1. No certifications or quantified professional outcomes were added.
 
-Private contacts, client identities, client-specific projects and implementation details from the CV are omitted. Unverified prior sport claims were removed. Cybersecurity appears only as a degree study topic, as documented; it is not presented as professional cybersecurity employment. Owner editorial review of the sanitized PDF is recommended before deployment; no deployment is implied by its generation.
+Private contacts, client identities, client-specific projects and implementation details from the CV are omitted. Unverified prior sport claims were removed. Cybersecurity appears only as a degree study topic, as documented; it is not presented as professional cybersecurity employment. Owner editorial review of the sanitized PDF is recommended before a public launch. The current owner-private deployment is available for review; see PROJECT_STATUS.md for the verified receipt.
 
 ## Toolbox
 
