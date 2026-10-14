@@ -134,6 +134,7 @@ try {
     );
   }
   await page.screenshot({ path: "docs/screenshots/live-private-3d.png" });
+  await context.close();
 
   const mobileContext = await browser.newContext({
     viewport: { width: 375, height: 812 },
@@ -168,9 +169,13 @@ try {
   };
   await mobilePage.screenshot({ path: "docs/screenshots/live-mobile-home.png" });
   await mobilePage.waitForTimeout(6800);
-  evidence.mobile.mediumFps = await mobilePage
+  evidence.mobile.mediumRender = await mobilePage
     .locator("canvas")
-    .getAttribute("data-fps");
+    .evaluate((canvas) => ({
+      fps: canvas.dataset.fps,
+      drawCalls: canvas.dataset.drawCalls,
+      triangles: canvas.dataset.triangles,
+    }));
   await mobilePage
     .getByRole("button", { name: "Next project installation" })
     .click();

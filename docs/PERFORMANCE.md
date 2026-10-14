@@ -18,7 +18,7 @@ A separate Chromium run used a 390×844 viewport, DPR1 and touch/mobile emulatio
 
 This measures a phone-shaped viewport and touch event model on the desktop host GPU. It does **not** predict physical iPhone or Android performance. The emulated sample also shares the limitations of a short localhost run and cannot replace testing on representative devices.
 
-The final owner-private deployment was also checked on the same reported Intel renderer after visiting all ten routes and switching from Static to High. The initial WebGL sample was **27 FPS**, followed by **33, 34 and 33 FPS** after settling. Draw calls/triangles matched the local High run. This is materially below the isolated local benchmark; the cause has not been isolated and a stable live 60 FPS result is **not verified**. The route-switching method differs from the fresh-context benchmark, so do not attribute the difference to hosting alone. Raw deployed evidence: `docs/live-verification.json`. Further repeatable live-device profiling and optimization remain warranted.
+The latest owner-private deployment was verified with independent desktop and mobile browser contexts so the desktop renderer did not compete with the mobile sample. Desktop High settled at three 60 FPS samples. At 375×812, mobile Medium measured **60 FPS**, 196 draw calls and 63,676 triangles; touch navigation and the TrackFlow cover also passed. This is a short host-GPU emulation result, not a physical phone benchmark or a long-term performance guarantee. Raw deployed evidence: `docs/live-verification.json`.
 
 ## Rendering budget and controls
 

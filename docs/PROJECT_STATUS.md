@@ -48,14 +48,13 @@ Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the docu
 
 ## Verified deployment receipt
 
-- Native Sites status: **succeeded**, 2026-10-14T11:56:04Z (complete CV update).
+- Native Sites status: **succeeded**, 2026-10-14T12:34:01Z.
 - URL: https://pau-os-laboratory.poeticcrow1.chatgpt.site
 - Audience: **owner-only**, unchanged. No public sharing enabled.
-- Deployed application/source commit: `587f08862f1440e2cd316c75f42f594b392e8e95`.
-- Deployment ID: `appgdep_6acf6dc35b588191849252e0ad7483b8`.
-- Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All 14 canonical routes returned 200 with expected headings, the browser reported zero errors, and WebGL rendered. Three settled live FPS samples were 60. `/resume/` returned the full-name heading; the downloadable PDF returned 200 and matched the local reviewed artifact byte for byte (65,039 bytes; SHA-256 `39cdbd1753e60a7d17ce505a781a7cf5ef5258d8136462d543951722fb9b0f06`). Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, `docs/screenshots/live-private-3d.png`, and `docs/screenshots/live-private-resume.png`; the Work listing with all eight loaded images is `docs/screenshots/work-pinned-projects.png`.
-- Sanitized native receipt: `.openai/local/deployment-observatory.json` (ignored local state). No shared Supabase resource was modified.
-- The deployed application corresponds to commit `587f088`. A follow-up verification-evidence commit does not change application code.
+- Deployed application/source commit: `66bb8209c140d127c44afa4e9f07ec9b1b660aee`.
+- Deployment ID: `appgdep_6acf76a784288191bec0d643f8a3dd13`; version: `appgprj_6aceae30f6588191a9cca2f37434e8f3~appgver_80efcf2b11208191a97e56edb90220fb`.
+- Live browser verification used the existing owner-authorized read token in memory. No read token was created or rotated. All 14 canonical routes returned 200 with expected headings, zero browser errors, and desktop WebGL rendered. Three settled High samples were 60 FPS. In isolated 375×812 touch emulation, Medium rendered at 60 FPS (196 draw calls, 63,676 triangles); there was no horizontal overflow, the swipe focused ATHRA, and the TrackFlow cover loaded at 1200px with descriptive alt text. `/resume/` returned the full-name heading and the downloadable PDF matched the local artifact byte for byte (65,039 bytes; SHA-256 `39cdbd1753e60a7d17ce505a781a7cf5ef5258d8136462d543951722fb9b0f06`). Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, `docs/screenshots/live-private-3d.png`, `docs/screenshots/live-private-resume.png`, `docs/screenshots/live-mobile-home.png` and `docs/screenshots/live-mobile-trackflow.png`.
+- No shared Supabase resource was modified. A follow-up commit updates verification documentation and does not change the deployed application.
 
 The four new studies appear after the four primary projects; the medical repository link remains withheld pending upstream credential and data cleanup.
 
