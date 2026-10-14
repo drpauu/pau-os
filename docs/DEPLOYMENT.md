@@ -42,7 +42,7 @@ npm run build          # rebuild after generated assets change
 
 ## Existing Sites target
 
-The retained `.openai/hosting.json` identifies `appgprj_6aceae30f6588191a9cca2f37434e8f3` with `static.directory = out`. The existing audience is owner-private; retain that audience unless the owner explicitly requests a change. This documentation does **not** claim that the current changes have been deployed. Consult `docs/PROJECT_STATUS.md` for the final verified version/status.
+The retained `.openai/hosting.json` identifies `appgprj_6aceae30f6588191a9cca2f37434e8f3` with `static.directory = out`. The existing audience is owner-private; retain that audience unless the owner explicitly requests a change. The updated owner-private deployment succeeded on 2026-10-14; ten canonical live routes passed browser verification. See `docs/PROJECT_STATUS.md` for its exact deployed source commit and receipt.
 
 The owning agent uses the installed Sites workflow to refresh the Site metadata, open/synchronize its source with a temporary write credential, package the checked static export and publish through the owner-private operation. Credentials pass through hidden stdin, never command arguments/files/output. Preserve the existing project ID and use the workflow's returned commit/archive rather than creating a replacement Site. A new public audience or custom domain is a separate hosting decision.
 

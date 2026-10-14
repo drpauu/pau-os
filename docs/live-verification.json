@@ -1,0 +1,58 @@
+{
+  "url": "https://pau-os-laboratory.poeticcrow1.chatgpt.site",
+  "checkedAt": "2026-10-14T10:12:14.883Z",
+  "mode": "Static presentation; existing owner-only read authorization",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "heading": "PAU\nALCÁZAR\n."
+    },
+    {
+      "path": "/work/",
+      "status": 200,
+      "heading": "Selected work."
+    },
+    {
+      "path": "/work/camicurt/",
+      "status": 200,
+      "heading": "CAMÍ CURT"
+    },
+    {
+      "path": "/work/athra/",
+      "status": 200,
+      "heading": "ATHRA"
+    },
+    {
+      "path": "/work/alcoholfabet/",
+      "status": 200,
+      "heading": "ALCOHOLFABET"
+    },
+    {
+      "path": "/work/trackflow/",
+      "status": 200,
+      "heading": "TRACKFLOW"
+    },
+    {
+      "path": "/experience/",
+      "status": 200,
+      "heading": "Engineering in practice."
+    },
+    {
+      "path": "/about/",
+      "status": 200,
+      "heading": "Built on curiosity."
+    },
+    {
+      "path": "/resume/",
+      "status": 200,
+      "heading": "Pau Alcázar."
+    },
+    {
+      "path": "/contact/",
+      "status": 200,
+      "heading": "Let’s connect."
+    }
+  ],
+  "errors": []
+}

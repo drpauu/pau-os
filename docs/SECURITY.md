@@ -24,4 +24,4 @@ The [Supabase changelog](https://supabase.com/changelog) and current [API securi
 
 `npm audit` reports **5 high development dependency entries** from one `braces <=3.0.3` stack-exhaustion advisory propagated through `micromatch`, `fast-glob`, Next's ESLint plugin and `eslint-config-next`. These tooling packages are not shipped in the static export. The offered automatic fix downgrades the Next ESLint configuration to a mismatched major version; no such downgrade was made. [Upstream advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm).
 
-Remaining deployment checks include confirming the hosting origin, headers and published artifact contents on the final target.
+The final owner-private target was verified through ten live routes with zero browser errors. The original CV and privileged credentials are absent from the static artifact. Header policy remains controlled by the hosting provider and should be checked for the eventual public target.

@@ -12,7 +12,7 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 6. **Motion/UX:** interruptible camera transitions, skip intro, source-map hover/selection, reduced motion, native scrolling, mobile disclosure, keyboard controls, three quality tiers and WebGL/context-loss fallback.
 7. **Visual refinement:** actual browser renders reviewed; fixed white map overexposure, opaque ground rectangle, scene/text overlap, camera cropping, intersecting gantry and caption contrast. Authentic project screenshots retained/added with provenance. Desktop/mobile professional pages reviewed.
 8. **QA:** production export, lint, TypeScript, 32 unit tests and 14 production Chromium E2E tests pass. Automated axe WCAG A/AA checks passed across ten canonical routes. Privacy/artifact and internal-link reviews passed. Measured High/Medium both reached 60 FPS on local Intel Iris Xe; Low skips the initial 3D bundle. See PERFORMANCE.md for transfer/LCP/CLS and limitations.
-9. **Production preparation:** reproducible static `out/` artifact, source-only secrets boundary, metadata/sitemap/robots, existing owner-private Sites target retained. Publication receipt will be appended below after the native operation completes.
+9. **Production preparation:** reproducible static `out/` artifact, source-only secrets boundary, metadata/sitemap/robots, existing owner-private Sites target retained. Updated owner-private deployment succeeded and ten live routes passed browser verification; receipt below.
 
 ## Test evidence
 
@@ -20,7 +20,7 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 - `npm run typecheck`: pass; now generates route types for clean checkouts.
 - `npm test`: 32 tests passed across five files.
 - `npm run build`: pass, all required static pages plus legacy aliases emitted; Toolbox live fetch verified exact source.
-- `npm run test:e2e`: **14/14 passed** on the final application revision. Includes direct routes, four-project order, next links, history, rapidly interrupted cameras, all installations, fallback, no-JavaScript content, mobile navigation, geographic routes, Toolbox exactness and keyboard controls.
+- `npm run test:e2e`: **14/14 passed** for the complete implementation; **8/8 affected tests passed again** after the final static-poster cleanup. Includes direct routes, four-project order, next links, history, rapidly interrupted cameras, all installations, fallback, no-JavaScript content, mobile navigation, geographic routes, Toolbox exactness and keyboard controls.
 - Axe checks: no violations for WCAG 2A/2AA/2.1AA on ten canonical routes. This is automated coverage, not a complete human accessibility certification.
 - Privacy review: original CV/private environments untracked and ignored; original private contacts absent from inspected source/export/PDF artifacts. Only the generated sanitized PDF is served. Source metadata retains no private contact values.
 - Static artifact scan: no privileged-key/private-key patterns; original CV and Lab route absent. Exported internal links resolve.
@@ -43,3 +43,16 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 ## Resume safely
 
 Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the documented checks after material changes; use the retained Sites project ID. Do not run seeds/migrations against the shared game database, upload the original CV, or reintroduce outdated project ordering. `scripts/capture-sources.mjs` now accepts only local previews and creates review candidates without replacing approved media/provenance.
+
+## Verified deployment receipt
+
+- Native Sites status: **succeeded**, 2026-10-14T10:11:57Z.
+- URL: https://pau-os-laboratory.poeticcrow1.chatgpt.site
+- Audience: **owner-only**, unchanged. No public sharing enabled.
+- Deployed application/source commit: `2fc49f3b13ade373bd60ba7007d02e35ee8ec6b0`.
+- Deployment ID: `appgdep_6acf555cb8c48191ad8efa54f7be623f`.
+- Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All ten canonical routes returned 200 with the expected page headings and zero browser errors. Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png` (static presentation).
+- Sanitized native receipt: `.openai/local/deployment-observatory.json` (ignored local state).
+- This receipt and the live screenshot were recorded after publication; the subsequent documentation commit does not change the deployed application.
+
+Owned development/benchmark servers were stopped after validation. Restart with `npm run dev`.

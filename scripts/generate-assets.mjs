@@ -22,7 +22,7 @@ await p.selectOption('select[aria-label="Scene quality"]', "high");
 await p.waitForTimeout(4500);
 const hidden = await p.addStyleTag({
   content:
-    ".hero-title,.hero-meta,.scene-coordinate,.scene-controls,.station-dock,.hero-bottom,.hero-grid,.scene-labels,.scene-caption,.comarca-hover{display:none!important}",
+    ".hero-title,.hero-meta,.scene-coordinate,.scene-controls,.station-dock,.hero-bottom,.hero-grid,.scene-labels,.scene-caption,.comarca-hover{display:none!important}.header{visibility:hidden!important}",
 });
 await p.locator("canvas").screenshot({ path: "docs/laboratory-render.png" });
 await sharp("docs/laboratory-render.png")

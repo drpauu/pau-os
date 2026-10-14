@@ -25,6 +25,6 @@ On small screens, the identity is presented first, with a separately composed sc
 
 ## Visual iteration evidence
 
-`docs/screenshots/before-desktop.png` retains the previous reactor composition. The first new pass revealed a gray ground-plane rectangle and overly white map. These were corrected with a transparent shadow receiver, lower exposure/key intensity, sage materials and a warm route. The map was tilted toward the viewer to improve silhouette readability. Focus cameras were widened and non-selected labels removed to reduce clutter.
+`docs/screenshots/before-desktop.png` retains the previous reactor composition. The first new pass revealed a gray ground-plane rectangle and overly white map. These were corrected with a transparent shadow receiver, lower exposure/key intensity, sage materials and a warm route. The map was tilted toward the viewer to improve silhouette readability. Focus cameras were widened and non-selected labels removed to reduce clutter. Live verification caught a sticky-header fragment in the static poster; capture now hides the header and keeps the fallback image free of HTML overlays.
 
 Final browser evidence is collected in `docs/screenshots/`. Visual review is human/agent inspection of those renders, not inferred from build success. Further authored surface detail and device testing remain possible improvements; the current assets are entirely procedural.

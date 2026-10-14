@@ -27,12 +27,18 @@ if (!origin.startsWith("https://") || !token)
 const browser = await chromium.launch({
   headless: true,
   channel: "chromium",
-  args: ["--no-sandbox"],
+  args: [
+    "--no-sandbox",
+    "--enable-gpu",
+    "--use-gl=angle",
+    "--use-angle=gl",
+    "--ignore-gpu-blocklist",
+  ],
 });
 const evidence = {
   url: origin,
   checkedAt: new Date().toISOString(),
-  mode: "Static presentation; existing owner-only read authorization",
+  mode: "Ten static route checks plus live WebGL; existing owner-only read authorization",
   routes: [],
   errors: [],
 };
@@ -76,6 +82,16 @@ try {
     if (path === "/")
       await page.screenshot({ path: "docs/screenshots/live-private.png" });
   }
+  await page.goto(origin + "/", { waitUntil: "networkidle" });
+  await page
+    .getByRole("combobox", { name: "Scene quality" })
+    .selectOption("high");
+  await page.locator("canvas").waitFor({ state: "visible", timeout: 20000 });
+  await page.waitForTimeout(4500);
+  evidence.webgl = await page
+    .locator("canvas")
+    .evaluate((canvas) => ({ ...canvas.dataset }));
+  await page.screenshot({ path: "docs/screenshots/live-private-3d.png" });
   if (evidence.errors.length)
     throw new Error("Deployed page reported browser errors.");
   await fs.writeFile(
@@ -85,6 +101,7 @@ try {
   console.log(
     JSON.stringify({
       checkedRoutes: evidence.routes.length,
+      webgl: !!evidence.webgl,
       status: "passed",
       errors: evidence.errors,
       screenshot: "docs/screenshots/live-private.png",

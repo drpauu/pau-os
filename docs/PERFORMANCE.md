@@ -4,11 +4,11 @@ Measured on 2026-10-14 against the final static export with Chromium, 1440×1000
 
 | Mode | Sample FPS | Draw calls | Triangles | Local LCP | CLS | Encoded JS transfer |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| High | 60 | 401 | 98,609 | 1,604ms | 0 | 529,163bytes |
-| Medium | 60 | 219 | 63,676 | 224ms | 0.0021 | 529,163bytes |
-| Low/static | No canvas | 0 | 0 | 232ms | 0.0021 | 192,404bytes |
+| High | 60 | 401 | 98,609 | 1,572ms | 0 | 529,125bytes |
+| Medium | 60 | 219 | 63,676 | 220ms | 0.0021 | 529,125bytes |
+| Low/static | No canvas | 0 | 0 | 240ms | 0.0021 | 192,366bytes |
 
-Low mode skips the 3D bundle on a fresh visit: about **64% less encoded JavaScript** in this run. Total transfer was1,004,589bytes in High/Medium and667,230bytes in Low, including project images preloaded/prefetched by the page. Heap samples were24MB,23MB and7MB respectively; these are brief samples, not leak/soak guarantees.
+Low mode skips the 3D bundle on a fresh visit: about **64% less encoded JavaScript** in this run. Total transfer was about 1.00MB in High/Medium and 667,169bytes in Low, including project images preloaded/prefetched by the page. Heap samples were 24MB, 23MB and 7MB respectively; these are brief samples, not leak/soak guarantees.
 
 The contexts have isolated caches, but later runs share the browser process, OS and local server. Do not interpret the LCP difference as a controlled cross-device benchmark, or the localhost measurements as field Web Vitals. This run replaces an earlier same-page quality-switch measurement: LCP after a quality switch was not an initial-load metric and was intentionally discarded.
 

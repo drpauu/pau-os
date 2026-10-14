@@ -1,12 +1,12 @@
 {
-  "time": "2026-10-14T10:07:21.376Z",
+  "time": "2026-10-14T10:15:37.302Z",
   "viewport": "1440x1000 DPR1",
   "method": "Fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample.",
   "renderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "modes": {
     "high": {
       "metrics": {
-        "lcp": 1604,
+        "lcp": 1572,
         "cls": 0
       },
       "canvas": [
@@ -20,13 +20,13 @@
       "heapMB": 24,
       "resources": {
         "requests": 55,
-        "transferBytes": 1004589,
-        "jsBytes": 529163
+        "transferBytes": 1004528,
+        "jsBytes": 529125
       }
     },
     "medium": {
       "metrics": {
-        "lcp": 224,
+        "lcp": 220,
         "cls": 0.0020608357295283566
       },
       "canvas": [
@@ -39,22 +39,22 @@
       ],
       "heapMB": 23,
       "resources": {
-        "requests": 55,
-        "transferBytes": 1004589,
-        "jsBytes": 529163
+        "requests": 53,
+        "transferBytes": 1003529,
+        "jsBytes": 529125
       }
     },
     "low": {
       "metrics": {
-        "lcp": 232,
+        "lcp": 240,
         "cls": 0.0020608357295283566
       },
       "canvas": [],
       "heapMB": 7,
       "resources": {
         "requests": 53,
-        "transferBytes": 667230,
-        "jsBytes": 192404
+        "transferBytes": 667169,
+        "jsBytes": 192366
       }
     }
   }
