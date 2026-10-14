@@ -1,6 +1,6 @@
 # PAU.OS — The Engineering Observatory
 
-Pau Alcázar’s portfolio: an original interactive 3D observatory around **Camí Curt**, followed by **ATHRA**, **Alcoholfabet** and **TrackFlow**. Professional information and case studies are independently rendered HTML; WebGL is optional.
+Pau Alcázar’s portfolio: an original interactive 3D observatory around **Camí Curt**, followed by **ATHRA**, **Alcoholfabet** and **TrackFlow**, then four additional pinned GitHub projects. Professional information and case studies are independently rendered HTML; WebGL is optional.
 
 ## Local execution
 
@@ -28,10 +28,11 @@ For first-time browser setup: `npx playwright install chromium`. On CI use `PAU_
 
 ## Architecture
 
-Next.js static export, React/TypeScript, Three.js / React Three Fiber / Drei, GSAP and a small Zustand interaction store. HTML is separate from the lazy-loaded scene. Native scrolling and shareable routes: `/`, `/work`, `/work/camicurt`, `/work/athra`, `/work/alcoholfabet`, `/work/trackflow`, `/experience`, `/about`, `/contact`, `/resume`. Legacy `/projects` links are retained; there is no Lab page.
+Next.js static export, React/TypeScript, Three.js / React Three Fiber / Drei, GSAP and a small Zustand interaction store. HTML is separate from the lazy-loaded scene. Native scrolling and shareable routes include the four additional pinned case studies at `/work/adhoc-medical-data-processing`, `/work/connect4-ai`, `/work/checkers-ai` and `/work/esinmath`, as well as the four main products and professional pages. Legacy `/projects` links are retained; there is no Lab page.
 
 - `lib/professional.ts`: privacy-reviewed CV facts shared by About, Experience, Resume and the optional terminal.
 - `lib/content.ts`: validated project facts, sources, links and explicit ordering.
+- `assets/project-artwork/`: editable vector illustrations for the four additional pinned projects, regenerated to optimized WebP by `npm run images:pinned`.
 - `data/toolbox.json` and `data/sources/github-profile-readme.md`: exact generated inventory and committed public source.
 - `lib/geography.ts` / `data/catalunya-comarques.json`: original game map decoding, shared-boundary adjacency and local routing.
 - `components/3d/`: independent scene, quality lifecycle, cancellation-safe cameras and four exhibits.
@@ -44,7 +45,7 @@ The Toolbox has no ratings or invented additions. Updates that change items/orde
 
 The original `Pau_Alcazar_CV.pdf` is private, ignored by Git and never copied into served assets. The curated public one-page PDF omits original private contact details and named clients. Its generator consumes only `lib/professional.ts`; review the derivative before a public launch. Source dates, titles, project maturity and screenshot limitations are documented in [content sources](docs/CONTENT_SOURCES.md).
 
-Project imagery shows actual applications. The observatory is an illustration. ATHRA curves contain no health data. Alcoholfabet's screenshot uses isolated menu fixtures so capture never creates production sessions.
+Featured-product imagery shows actual applications. The observatory and four pinned-project covers are original illustrations. ATHRA curves contain no health data. Alcoholfabet's screenshot uses isolated menu fixtures so capture never creates production sessions. The pinned medical data repository contains a tracked environment file and bundled data; PAU.OS withholds its source link until a privacy and credential review.
 
 ## Supabase and deployment
 

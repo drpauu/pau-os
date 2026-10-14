@@ -14,7 +14,8 @@
     "format": "prettier --write app components features hooks lib stores tests scripts",
     "content:seed": "node scripts/export-seed.mjs",
     "sync:toolbox": "node scripts/sync-toolbox.mjs",
-    "prebuild": "npm run sync:toolbox",
+    "images:pinned": "node scripts/generate-pinned-artwork.mjs",
+    "prebuild": "npm run sync:toolbox && npm run images:pinned",
     "resume:generate": "node scripts/generate-public-resume.mjs",
     "capture:assets": "node scripts/generate-assets.mjs"
   },

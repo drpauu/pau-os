@@ -30,6 +30,10 @@ const routes: Record<string, string> = {
   athra: "/work/athra/",
   alcoholfabet: "/work/alcoholfabet/",
   trackflow: "/work/trackflow/",
+  "adhoc-medical-data-processing": "/work/adhoc-medical-data-processing/",
+  "connect4-ai": "/work/connect4-ai/",
+  "checkers-ai": "/work/checkers-ai/",
+  esinmath: "/work/esinmath/",
 };
 export type CommandResult = {
   text: string;
@@ -47,7 +51,9 @@ export function runCommand(input: string): CommandResult {
         text:
           "AVAILABLE COMMANDS\n" +
           commands.filter((v) => v !== "sudo").join("  ·  ") +
-          "\n\nopen <home|work|experience|about|resume|contact|camicurt|athra|alcoholfabet|trackflow>\ntheme <ice|titanium>\nTab: autocomplete · ↑↓: history · Escape: close",
+          "\n\nopen <" +
+          Object.keys(routes).join("|") +
+          ">\ntheme <ice|titanium>\nTab: autocomplete · ↑↓: history · Escape: close",
       };
     case "whoami":
       return {

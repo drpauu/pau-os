@@ -4,23 +4,23 @@
 
 PAU.OS retains its existing TypeScript, Next.js App Router and React architecture. Next statically exports every professional/project page; Three.js is a progressive enhancement loaded only by the homepage. There is no server required for the deployed site, no production game-session connection, and no dependency on WebGL for reading content.
 
-| Boundary | Implementation | Responsibility |
-| --- | --- | --- |
-| Pages and metadata | `app/` | Shareable routes, semantic HTML, canonical URLs, sitemap and robots |
-| Navigation | `components/Shell.tsx` | Home, Work, Experience, About, Contact; persistent Resume/CV; mobile disclosure and route focus |
-| Project content | `lib/content.ts` | Zod schema, verified project facts and explicit editorial order |
-| Professional content | `lib/professional.ts` | Privacy-reviewed CV transcription with document hash and per-entry provenance |
-| Content publishing | `lib/supabase/` | Reviewed snapshot by default; explicit, server-only Supabase publishing mirror |
-| Toolbox | `scripts/toolbox.mjs`, `data/toolbox.json`, `features/toolbox/` | Exact GitHub synchronization and accessible category explorer |
-| Geography | `data/catalunya-comarques.json`, `lib/geography.ts` | Verified map, shared-arc adjacency and isolated shortest-hop routes |
-| Scene | `components/3d/Laboratory.tsx`, `components/3d/scenes/` | Rendering, camera, observatory, four distinct installations and quality modes |
-| Scene UI/state | `features/laboratory/Hero.tsx`, `stores/laboratory.ts` | Immediate HTML controls, selected installation, quality and intro state |
+| Boundary             | Implementation                                                  | Responsibility                                                                                  |
+| -------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Pages and metadata   | `app/`                                                          | Shareable routes, semantic HTML, canonical URLs, sitemap and robots                             |
+| Navigation           | `components/Shell.tsx`                                          | Home, Work, Experience, About, Contact; persistent Resume/CV; mobile disclosure and route focus |
+| Project content      | `lib/content.ts`                                                | Zod schema, verified project facts and explicit editorial order                                 |
+| Professional content | `lib/professional.ts`                                           | Privacy-reviewed CV transcription with document hash and per-entry provenance                   |
+| Content publishing   | `lib/supabase/`                                                 | Reviewed snapshot by default; explicit, server-only Supabase publishing mirror                  |
+| Toolbox              | `scripts/toolbox.mjs`, `data/toolbox.json`, `features/toolbox/` | Exact GitHub synchronization and accessible category explorer                                   |
+| Geography            | `data/catalunya-comarques.json`, `lib/geography.ts`             | Verified map, shared-arc adjacency and isolated shortest-hop routes                             |
+| Scene                | `components/3d/Laboratory.tsx`, `components/3d/scenes/`         | Rendering, camera, observatory, four distinct installations and quality modes                   |
+| Scene UI/state       | `features/laboratory/Hero.tsx`, `stores/laboratory.ts`          | Immediate HTML controls, selected installation, quality and intro state                         |
 
 ## Routes and ordering
 
-The canonical routes are `/`, `/work/`, `/work/camicurt/`, `/work/athra/`, `/work/alcoholfabet/`, `/work/trackflow/`, `/experience/`, `/about/`, `/contact/` and `/resume/`. There is no Lab route or top-level Toolbox section. Legacy `/projects/` URLs remain compatible; the old `cami-curt` alias resolves to the canonical case study and metadata points at `/work/camicurt/`.
+The canonical routes are `/`, `/work/`, the four featured product studies (`camicurt`, `athra`, `alcoholfabet`, `trackflow`), and the four current pinned GitHub studies (`adhoc-medical-data-processing`, `connect4-ai`, `checkers-ai`, `esinmath`) under `/work/`, plus `/experience/`, `/about/`, `/contact/` and `/resume/`. There is no Lab route or top-level Toolbox section. Legacy `/projects/` URLs remain compatible; the old `cami-curt` alias resolves to the canonical case study and metadata points at `/work/camicurt/`.
 
-Camí Curt → ATHRA → Alcoholfabet → TrackFlow is a content invariant, enforced by published-content validation and tests. The same order drives the homepage work list, installation dock, Work pages, case-study next links and generated SQL seed. Project navigation uses ordinary Next links and browser history. Camera focus selects an installation without delaying navigation or changing the current page.
+Camí Curt → ATHRA → Alcoholfabet → TrackFlow is a content invariant, enforced by published-content validation and tests. The four current pinned projects follow in their GitHub profile order. The featured order drives the observatory installation dock; all eight entries drive the homepage and Work list, direct case-study routes, continuation links and generated local SQL seed. Project navigation uses ordinary Next links and browser history. Camera focus selects an installation without delaying navigation or changing the current page.
 
 ## Rendering and camera
 

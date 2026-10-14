@@ -28,12 +28,12 @@ export default async function Home() {
       <section id="selected-work" className="section-wrap selected-work">
         <div className="section-heading">
           <div>
-            <Eyebrow>SELECTED WORK / 01—04</Eyebrow>
+            <Eyebrow>SELECTED WORK / 01—08</Eyebrow>
             <h2>
               Ideas, made tangible<span className="accent">.</span>
             </h2>
           </div>
-          <span className="mono muted">INDEPENDENT PRODUCTS</span>
+          <span className="mono muted">PRODUCTS + PINNED PROJECTS</span>
         </div>
         <ProjectList projects={projects} />
       </section>

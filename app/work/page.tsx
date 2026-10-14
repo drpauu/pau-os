@@ -5,7 +5,7 @@ import { getProjects } from "@/lib/supabase/content";
 export const metadata: Metadata = {
   title: "Selected projects",
   description:
-    "Camí Curt, ATHRA, Alcoholfabet and TrackFlow: verified engineering case studies.",
+    "Four independent products and four more pinned projects spanning algorithms, data and software engineering.",
 };
 export default async function Projects() {
   return (
@@ -13,7 +13,7 @@ export default async function Projects() {
       <PageIntro
         number="01"
         title="Selected work"
-        description="Independent products. Real constraints. A closer look at the decisions behind the interface."
+        description="Independent products first, followed by the projects you have pinned on GitHub."
       />
       <ProjectList projects={await getProjects()} />
     </main>

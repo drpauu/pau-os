@@ -76,14 +76,19 @@ describe("CV-derived public information", () => {
 });
 
 describe("public project source boundaries", () => {
-  it("keeps four unique verified repositories and real local cover files", () => {
+  it("keeps eight verified projects with distinct source links where safe and local cover art", () => {
+    const linkedRepositories = projects.flatMap((project) =>
+      project.repository_url ? [project.repository_url] : [],
+    );
+    expect(new Set(linkedRepositories).size).toBe(linkedRepositories.length);
     expect(
-      new Set(projects.map((project) => project.repository_url)).size,
-    ).toBe(projects.length);
+      projects.filter((project) => !project.repository_url).map((p) => p.slug),
+    ).toEqual(["adhoc-medical-data-processing"]);
     for (const project of projects) {
-      expect(project.repository_url).toMatch(
-        /^https:\/\/github\.com\/drpauu\//,
-      );
+      if (project.repository_url)
+        expect(project.repository_url).toMatch(
+          /^https:\/\/github\.com\/drpauu\//,
+        );
       expect(project.content.source.length).toBeGreaterThan(30);
       expect(
         existsSync(new URL(`../public${project.cover_image}`, import.meta.url)),
@@ -96,6 +101,7 @@ describe("public project source boundaries", () => {
       "javascript:alert(1)",
       "https://example.org/private.jpg",
       "/images/../../Pau_Alcazar_CV.pdf",
+      "data:image/svg+xml,<svg/>",
     ]) {
       expect(
         projectSchema.safeParse({ ...projects[0], gallery: [image] }).success,

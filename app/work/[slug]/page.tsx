@@ -50,9 +50,16 @@ export default async function CaseStudy({
           ))}
         </div>
         <div className="button-row">
-          <ButtonLink href={p.repository_url} external>
-            View source
-          </ButtonLink>
+          {p.repository_url ? (
+            <ButtonLink href={p.repository_url} external>
+              View source
+            </ButtonLink>
+          ) : (
+            <span className="source-review-note">
+              Source link withheld pending repository privacy and credential
+              review
+            </span>
+          )}
           {p.live_url && (
             <ButtonLink href={p.live_url} external primary>
               Open application
@@ -63,7 +70,11 @@ export default async function CaseStudy({
       <figure className={"case-image project-" + p.slug}>
         <img
           src={p.cover_image}
-          alt={p.title + " actual application interface"}
+          alt={
+            p.featured
+              ? p.title + " actual application interface"
+              : p.title + " original project illustration"
+          }
           width={1440}
           height={1000}
         />

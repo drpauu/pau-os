@@ -652,6 +652,27 @@ svg {
   border-bottom: 1px solid var(--line);
   align-items: center;
 }
+.work-divider {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 52px 0 12px;
+  border-bottom: 1px solid var(--line);
+}
+.work-divider .eyebrow,
+.work-divider .mono {
+  font-size: 9px;
+}
+.source-review-note {
+  max-width: 420px;
+  padding: 13px 16px;
+  border-left: 2px solid #e6b77a;
+  background: #e6b77a0c;
+  color: #d4c2a9;
+  font-size: 11px;
+  line-height: 1.7;
+}
 .project-row:first-child {
   padding-top: 0;
 }
@@ -1470,6 +1491,12 @@ svg {
   }
 }
 @media (max-width: 800px) {
+  .work-divider {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+    padding-top: 38px;
+  }
   .header {
     height: 72px;
   }

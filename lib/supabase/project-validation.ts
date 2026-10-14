@@ -6,6 +6,12 @@ export const REQUIRED_PROJECT_ORDER = [
   "alcoholfabet",
   "trackflow",
 ] as const;
+export const REQUIRED_PINNED_PROJECT_ORDER = [
+  "adhoc-medical-data-processing",
+  "connect4-ai",
+  "checkers-ai",
+  "esinmath",
+] as const;
 
 /** A remote CMS must not replace the flagship or silently remove a case study. */
 export function validatePublishedProjects(rows: unknown[]): Project[] {
@@ -37,6 +43,18 @@ export function validatePublishedProjects(rows: unknown[]): Project[] {
     ) {
       throw new Error(
         `Published project position ${index + 1} must be featured '${slug}'. Review the database snapshot before enabling remote content.`,
+      );
+    }
+  });
+  REQUIRED_PINNED_PROJECT_ORDER.forEach((slug, index) => {
+    const project = ordered[index + REQUIRED_PROJECT_ORDER.length];
+    if (
+      project?.slug !== slug ||
+      project?.sort_order !== index + REQUIRED_PROJECT_ORDER.length + 1 ||
+      project.featured
+    ) {
+      throw new Error(
+        `Pinned project position ${index + REQUIRED_PROJECT_ORDER.length + 1} must be '${slug}' and remain secondary to the four featured products.`,
       );
     }
   });

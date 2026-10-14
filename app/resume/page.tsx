@@ -34,15 +34,19 @@ export default function Resume() {
           <section aria-labelledby="resume-projects-heading">
             <Eyebrow>SELECTED INDEPENDENT PRODUCTS</Eyebrow>
             <h2 id="resume-projects-heading">Built beyond the brief.</h2>
-            {projects.map((project) => (
-              <article className="resume-project" key={project.slug}>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <a href={project.repository_url}>
-                  {project.repository_url.replace("https://", "")}
-                </a>
-              </article>
-            ))}
+            {projects
+              .filter((project) => project.featured)
+              .map((project) => (
+                <article className="resume-project" key={project.slug}>
+                  <h3>{project.title}</h3>
+                  <p>{project.description}</p>
+                  {project.repository_url && (
+                    <a href={project.repository_url}>
+                      {project.repository_url.replace("https://", "")}
+                    </a>
+                  )}
+                </article>
+              ))}
           </section>
         </div>
       </div>

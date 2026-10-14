@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { projects } from "../lib/content";
 import {
   REQUIRED_PROJECT_ORDER,
+  REQUIRED_PINNED_PROJECT_ORDER,
   validatePublishedProjects,
   validateSnapshotParity,
 } from "../lib/supabase/project-validation";
@@ -13,6 +14,11 @@ describe("public content publication boundary", () => {
         .slice(0, 4)
         .map((project) => project.slug),
     ).toEqual(REQUIRED_PROJECT_ORDER);
+    expect(
+      validatePublishedProjects(projects)
+        .slice(4, 8)
+        .map((project) => project.slug),
+    ).toEqual(REQUIRED_PINNED_PROJECT_ORDER);
     expect(() =>
       validatePublishedProjects(
         projects.filter((project) => project.slug !== "alcoholfabet"),

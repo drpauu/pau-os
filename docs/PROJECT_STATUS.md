@@ -4,10 +4,10 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 
 ## Implemented phases
 
-1. **Discovery:** existing project and clean Git state inspected; original CV found; six references and four project implementations reviewed; exact GitHub Toolbox fetched; shared Supabase resources audited read-only.
+1. **Discovery:** existing project and clean Git state inspected; original CV found; six references and the four main product implementations reviewed; current six GitHub pins checked against the profile README; source structure reviewed for the four additional pinned repos. The medical repository's data/config values were not read or copied. Exact GitHub Toolbox fetched; shared Supabase resources audited read-only.
 2. **Architecture:** existing Next.js static export retained, canonical content models and ordered routes implemented, rendering and professional HTML kept independent. All requested architecture/content/security documents maintained under `docs/`.
 3. **Art direction:** original machined observatory, curved lighting gantry, suspended source-derived geographic plate, procedural metal/glass materials and local reflection lighting implemented.
-4. **Complete experience:** Camí Curt → ATHRA → Alcoholfabet → TrackFlow across the home dock, Work, case studies and next links. Home, Work, Experience, About, Contact plus persistent Resume/CV. Standalone Lab removed; legacy project URLs retained. Four distinct focused installations and conventional direct navigation.
+4. **Complete experience:** Camí Curt → ATHRA → Alcoholfabet → TrackFlow across the home dock, Work, case studies and next links, followed by all four additional pinned repos in profile order. Eight responsive project cards/case studies, with original illustration covers for the four extra studies. Home, Work, Experience, About, Contact plus persistent Resume/CV. Standalone Lab removed; legacy project URLs retained. Four distinct focused 3D installations and conventional direct navigation.
 5. **Data:** CV-derived public professional model and separately generated sanitized one-page PDF; exact five-category/80-entry Toolbox with build-time sync and tested offline fallback; verified project snapshots. Optional Supabase adapter is validated but disabled by default; no shared production data changed.
 6. **Motion/UX:** interruptible camera transitions, skip intro, source-map hover/selection, reduced motion, native scrolling, mobile disclosure, keyboard controls, three quality tiers and WebGL/context-loss fallback.
 7. **Visual refinement:** actual browser renders reviewed; fixed white map overexposure, opaque ground rectangle, scene/text overlap, camera cropping, intersecting gantry and caption contrast. Authentic project screenshots retained/added with provenance. Desktop/mobile professional pages reviewed.
@@ -20,7 +20,7 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 - `npm run typecheck`: pass; now generates route types for clean checkouts.
 - `npm test`: 32 tests passed across five files.
 - `npm run build`: pass, all required static pages plus legacy aliases emitted; Toolbox live fetch verified exact source.
-- `npm run test:e2e`: **14/14 passed** for the complete implementation; **8/8 affected tests passed again** after the final static-poster cleanup. Includes direct routes, four-project order, next links, history, rapidly interrupted cameras, all installations, fallback, no-JavaScript content, mobile navigation, geographic routes, Toolbox exactness and keyboard controls.
+- `npm run test:e2e`: **14/14 passed** after the pinned-project expansion. Includes direct routes for all eight case studies, exact project order, next links, history, rapidly interrupted cameras, installations, fallback, no-JavaScript content, mobile navigation, geography, Toolbox exactness and keyboard controls.
 - Axe checks: no violations for WCAG 2A/2AA/2.1AA on ten canonical routes. This is automated coverage, not a complete human accessibility certification.
 - Privacy review: original CV/private environments untracked and ignored; original private contacts absent from inspected source/export/PDF artifacts. Only the generated sanitized PDF is served. Source metadata retains no private contact values.
 - Static artifact scan: no privileged-key/private-key patterns; original CV and Lab route absent. Exported internal links resolve.
@@ -39,6 +39,7 @@ Updated: 2026-10-14. Checkout: `/home/pau/Documents/pau-os`. This document super
 - **Device coverage:** desktop Chromium and emulated 390/768px views tested, not physical Safari/iOS/Android devices. No long GPU-memory soak or field Web Vitals dataset.
 - **Live rendering performance:** the deployed High scene settled at 33–34 FPS in the final browser check, versus 60 FPS in the isolated local benchmark on the same reported GPU. The cause is not isolated; stable live 60 FPS is not verified. Quality controls and static fallback work, but further repeatable live-device profiling is warranted.
 - **Scope honesty:** illustrative exhibit curves/board/planning structures are not live application data. ATHRA remains a prototype; TrackFlow uses MongoDB. No production game sessions, health records, client records, contact-message endpoint or fabricated project metrics are published.
+- **Pinned medical-data repository:** the public repo contains a tracked environment file with a credential-shaped Mongo connection value and bundled data files. Its PAU.OS case study uses only the public profile summary and source-tree metadata; the repository action is withheld. Review and sanitize the upstream GitHub repo before linking it from a publicly accessible portfolio. No credential value or medical data was read into the app or documentation.
 - Current owner-only audience is for review, not an externally accessible recruitment URL. No sharing change, paid service or custom domain was requested/performed.
 
 ## Resume safely
@@ -55,5 +56,7 @@ Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the docu
 - Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All ten canonical routes returned 200 with the expected page headings and zero browser errors; the live WebGL scene also rendered successfully. Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png` (static presentation), and `docs/screenshots/live-private-3d.png` (actual live scene). Both screenshots were visually inspected.
 - Sanitized native receipt: `.openai/local/deployment-observatory.json` (ignored local state).
 - This receipt, live screenshots and extended verification-script sampling were recorded after publication; the subsequent evidence commit does not change the deployed application.
+
+The pinned-project additions are included in a new private deployment after this receipt. The four new studies appear after the four primary projects; the medical repository link remains withheld pending upstream credential and data cleanup. Updated live route verification is recorded below.
 
 Owned development/benchmark servers were stopped after validation. Restart with `npm run dev`.

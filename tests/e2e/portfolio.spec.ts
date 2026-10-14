@@ -8,8 +8,28 @@ const toolbox: { categories: { title: string; items: string[] }[] } =
       "utf8",
     ),
   );
-const slugs = ["camicurt", "athra", "alcoholfabet", "trackflow"];
-const titles = ["CAMÍ CURT", "ATHRA", "ALCOHOLFABET", "TRACKFLOW"];
+const slugs = [
+  "camicurt",
+  "athra",
+  "alcoholfabet",
+  "trackflow",
+  "adhoc-medical-data-processing",
+  "connect4-ai",
+  "checkers-ai",
+  "esinmath",
+];
+const titles = [
+  "CAMÍ CURT",
+  "ATHRA",
+  "ALCOHOLFABET",
+  "TRACKFLOW",
+  "AD-HOC MEDICAL DATA PROCESSING",
+  "CONNECT4 AI",
+  "CHECKERS AI",
+  "ESINMATH",
+];
+const installationSlugs = slugs.slice(0, 4);
+const installationTitles = titles.slice(0, 4);
 const routes = [
   "/",
   "/work/",
@@ -54,6 +74,10 @@ test("direct routes, verified media, exact main navigation and browser history",
     ...["athra", "trackflow", "cami-curt", "alcoholfabet", "laboratory"].map(
       (s) => `/images/${s}.webp`,
     ),
+    "/images/pinned-medical-operations.webp",
+    "/images/pinned-connect4-ai.webp",
+    "/images/pinned-checkers-ai.webp",
+    "/images/pinned-esinmath.webp",
     "/images/og.png",
     "/sitemap.xml",
     "/robots.txt",
@@ -61,6 +85,13 @@ test("direct routes, verified media, exact main navigation and browser history",
     expect((await request.get(asset)).status()).toBe(200);
   expect((await request.get("/Pau_Alcazar_CV.pdf")).status()).toBe(404);
   expect((await request.get("/lab/")).status()).toBe(404);
+  await page.goto("/work/adhoc-medical-data-processing/");
+  await expect(
+    page.getByText(/Source link withheld pending repository privacy/),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "View source" })).toHaveCount(0);
+  await page.goto("/resume/");
+  await expect(page.locator("main")).not.toContainText("CONNECT4 AI");
   const legacy = await page.goto("/projects/cami-curt/");
   expect(legacy?.status()).toBe(200);
   await expect(page.locator("link[rel=canonical]")).toHaveAttribute(
@@ -70,7 +101,7 @@ test("direct routes, verified media, exact main navigation and browser history",
   expect(errors).toEqual([]);
 });
 
-test("all editorial surfaces preserve the four-project order", async ({
+test("home and Work preserve the featured-product then GitHub-pin order", async ({
   page,
 }) => {
   await page.addInitScript(() => localStorage.setItem("pau-quality", "low"));
@@ -126,16 +157,18 @@ test("camera redirects safely, every installation focuses, and quality fallback 
     .selectOption("high");
   await expect(page.locator("canvas")).toBeVisible();
   await page.waitForTimeout(1800);
-  for (let i = 0; i < titles.length; i++) {
+  for (let i = 0; i < installationTitles.length; i++) {
     await page
-      .getByRole("button", { name: `Focus ${titles[i]} station` })
+      .getByRole("button", { name: `Focus ${installationTitles[i]} station` })
       .click();
     await page.waitForTimeout(1150);
     await expect(
-      page.getByRole("button", { name: `Focus ${titles[i]} station` }),
+      page.getByRole("button", {
+        name: `Focus ${installationTitles[i]} station`,
+      }),
     ).toHaveAttribute("aria-pressed", "true");
     await page.screenshot({
-      path: `docs/screenshots/installation-${slugs[i]}.png`,
+      path: `docs/screenshots/installation-${installationSlugs[i]}.png`,
     });
   }
   await page.getByRole("button", { name: "Focus ATHRA station" }).click();
@@ -152,7 +185,7 @@ test("camera redirects safely, every installation focuses, and quality fallback 
     .getByRole("combobox", { name: "Scene quality" })
     .selectOption("low");
   await expect(page.locator("canvas")).toHaveCount(0);
-  for (const title of titles)
+  for (const title of installationTitles)
     await expect(
       page.getByRole("link", { name: `Read ${title} case study` }),
     ).toBeVisible();

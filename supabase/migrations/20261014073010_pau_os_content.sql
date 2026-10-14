@@ -8,7 +8,7 @@ create table if not exists public.portfolio_projects (
  subtitle text not null default '', description text not null default '',
  content jsonb not null default '{}'::jsonb check (jsonb_typeof(content) = 'object'),
  technologies text[] not null default '{}', category text not null default '',
- repository_url text not null check (repository_url ~ '^https://'),
+ repository_url text check (repository_url is null or repository_url ~ '^https://'),
  live_url text check (live_url ~ '^https://'),
  cover_image text not null check (cover_image ~ '^/images/[a-z0-9-]+\.(webp|png|jpg)$'),
  gallery jsonb not null default '[]'::jsonb check (jsonb_typeof(gallery) = 'array'),
