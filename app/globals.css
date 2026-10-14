@@ -2289,6 +2289,9 @@ main:focus {
   }
 }
 @media (max-width: 1100px) and (min-width: 801px) {
+  .hero-title {
+    top: 15%;
+  }
   .hero-title h1 {
     font-size: 76px;
   }
@@ -2347,7 +2350,7 @@ main:focus {
     position: relative;
     top: auto;
     left: auto;
-    padding: 78px 7% 0;
+    padding: 64px 7% 0;
   }
   .hero-title h1 {
     font-size: clamp(60px, 13vw, 100px);

@@ -438,6 +438,16 @@ test("reduced motion, keyboard navigation and WCAG automated checks", async ({
       });
   }
 });
+test("tablet hero keeps clear space between the call to action and project dock", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1024, height: 768 });
+  await page.goto("/");
+  const actions = await page.locator(".hero-actions").boundingBox();
+  const dock = await page.locator(".station-dock").boundingBox();
+  if (!actions || !dock) throw new Error("Hero controls are not measurable.");
+  expect(dock.y - (actions.y + actions.height)).toBeGreaterThanOrEqual(36);
+});
 for (const [name, width, height] of [
   ["desktop-large", 1920, 1080],
   ["desktop", 1440, 1000],
