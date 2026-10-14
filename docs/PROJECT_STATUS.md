@@ -48,14 +48,14 @@ Read this file and ARCHITECTURE.md. `npm run dev` serves port 3100. Run the docu
 
 ## Verified deployment receipt
 
-- Native Sites status: **succeeded**, 2026-10-14 (pinned-project update).
+- Native Sites status: **succeeded**, 2026-10-14T11:56:04Z (complete CV update).
 - URL: https://pau-os-laboratory.poeticcrow1.chatgpt.site
 - Audience: **owner-only**, unchanged. No public sharing enabled.
-- Deployed application/source commit: `bee43097922d35e6a19639c76f046702494ffae1`.
-- Deployment ID: `appgdep_6acf6a2a08a8819185d1e512d53f95d3`.
-- Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All 14 canonical routes returned 200 with expected headings, the browser reported zero errors, and WebGL rendered. Three settled live FPS samples were 60. Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, and `docs/screenshots/live-private-3d.png`; the Work listing with all eight loaded images is `docs/screenshots/work-pinned-projects.png`.
+- Deployed application/source commit: `587f08862f1440e2cd316c75f42f594b392e8e95`.
+- Deployment ID: `appgdep_6acf6dc35b588191849252e0ad7483b8`.
+- Follow-up live browser verification used an already existing owner-authorized read token in memory. No token was created, rotated, printed or saved. All 14 canonical routes returned 200 with expected headings, the browser reported zero errors, and WebGL rendered. Three settled live FPS samples were 60. `/resume/` returned the full-name heading; the downloadable PDF returned 200 and matched the local reviewed artifact byte for byte (65,039 bytes; SHA-256 `39cdbd1753e60a7d17ce505a781a7cf5ef5258d8136462d543951722fb9b0f06`). Evidence: `docs/live-verification.json`, `docs/screenshots/live-private.png`, `docs/screenshots/live-private-3d.png`, and `docs/screenshots/live-private-resume.png`; the Work listing with all eight loaded images is `docs/screenshots/work-pinned-projects.png`.
 - Sanitized native receipt: `.openai/local/deployment-observatory.json` (ignored local state). No shared Supabase resource was modified.
-- The deployed application corresponds to commit `bee4309`. A follow-up documentation/evidence-only commit records verification and does not change the deployed application.
+- The deployed application corresponds to commit `587f088`. A follow-up verification-evidence commit does not change application code.
 
 The four new studies appear after the four primary projects; the medical repository link remains withheld pending upstream credential and data cleanup.
 

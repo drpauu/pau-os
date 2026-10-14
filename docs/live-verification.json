@@ -1,7 +1,7 @@
 {
   "url": "https://pau-os-laboratory.poeticcrow1.chatgpt.site",
-  "checkedAt": "2026-10-14T11:40:53.244Z",
-  "mode": "Ten static route checks plus live WebGL; existing owner-only read authorization",
+  "checkedAt": "2026-10-14T11:57:23.678Z",
+  "mode": "Fourteen static route checks plus live WebGL; existing owner-only read authorization",
   "routes": [
     {
       "path": "/",
@@ -66,7 +66,7 @@
     {
       "path": "/resume/",
       "status": 200,
-      "heading": "Pau Alcázar."
+      "heading": "Pau Alcázar Perdomo"
     },
     {
       "path": "/contact/",
@@ -75,6 +75,13 @@
     }
   ],
   "errors": [],
+  "resumePdf": {
+    "status": 200,
+    "contentType": "application/pdf",
+    "bytes": 65039,
+    "matchesLocalArtifact": true,
+    "sha256": "39cdbd1753e60a7d17ce505a781a7cf5ef5258d8136462d543951722fb9b0f06"
+  },
   "webgl": {
     "engine": "three.js r186",
     "fps": "52",

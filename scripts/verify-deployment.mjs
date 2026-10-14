@@ -1,5 +1,6 @@
 import { chromium } from "@playwright/test";
 import fs from "node:fs/promises";
+import { createHash } from "node:crypto";
 
 // Existing owner-authorized read token only. Never create/rotate access credentials.
 if (!process.stdin.isTTY)
@@ -86,6 +87,29 @@ try {
     if (path === "/")
       await page.screenshot({ path: "docs/screenshots/live-private.png" });
   }
+  const livePdf = await context.request.get(
+    origin + "/pau-alcazar-resume.pdf",
+    { headers: { "OAI-Sites-Authorization": `Bearer ${token}` } },
+  );
+  const livePdfBytes = await livePdf.body();
+  const localPdfBytes = await fs.readFile("public/pau-alcazar-resume.pdf");
+  evidence.resumePdf = {
+    status: livePdf.status(),
+    contentType: livePdf.headers()["content-type"],
+    bytes: livePdfBytes.length,
+    matchesLocalArtifact:
+      livePdf.status() === 200 && livePdfBytes.equals(localPdfBytes),
+    sha256: createHash("sha256").update(livePdfBytes).digest("hex"),
+  };
+  if (!evidence.resumePdf.matchesLocalArtifact)
+    throw new Error(
+      "Deployed public CV PDF differs from the verified local artifact.",
+    );
+  await page.goto(origin + "/resume/", { waitUntil: "networkidle" });
+  await page.screenshot({
+    path: "docs/screenshots/live-private-resume.png",
+    fullPage: true,
+  });
   await page.goto(origin + "/", { waitUntil: "networkidle" });
   await page
     .getByRole("combobox", { name: "Scene quality" })
@@ -120,6 +144,7 @@ try {
     JSON.stringify({
       checkedRoutes: evidence.routes.length,
       webgl: !!evidence.webgl,
+      resumePdfMatches: evidence.resumePdf.matchesLocalArtifact,
       status: "passed",
       errors: evidence.errors,
       screenshot: "docs/screenshots/live-private.png",
