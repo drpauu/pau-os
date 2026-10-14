@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-10-14T07:53:41.207Z",
+  "results": [
+    {
+      "slug": "trackflow",
+      "url": "http://127.0.0.1:5177",
+      "status": 200,
+      "note": "Unauthenticated local frontend; prior public deployment returned 404"
+    },
+    {
+      "slug": "cami-curt",
+      "url": "https://camicurt.cat",
+      "status": 200,
+      "title": "Camicurt - Joc de rutes entre comarques",
+      "text": "camicurt.cat\ndimecres 14 de octubre del 2026\nNou mapa\nDiari\nCalendari\nInici:\nAlt Penedès\nDestí:\nBages\nNorma: Travessa la comarca on els cellers modernistes semblen catedrals agrícoles i la brasa i el romesco marquen l’hivern.\n+\n−\nRecentrar\nESCRIU UNA COMARCA\nEsbrina\nIntents\n0/6\nCOMODINS\nRevela un pas\n2\nRevelar norma\n1\nInicials (5s)\n2\nOpcions\nInici:\nSegarra\nDestí:\nTerra Alta\nNorma:\npassa per Osona\n"
+    },
+    {
+      "slug": "athra",
+      "url": "http://localhost:3000",
+      "status": 200,
+      "title": "Garmin Athlete Analytics Platform",
+      "text": "K\nOS\nKINETICOS\n/\nGarmin Athlete Analytics\nFR245 + CIRQA\n\nAlex Vance • 1500m/5K • Threshold HR 174 bpm • Base 220s/km\n\nDEVICE: FR245_INT\nSYNC: AUTO\nSYNC\nUPLOAD FIT FILE\nToday\nTraining\nRecovery\nSleep\nActivities\nTrends\nAI Coach\nGEMINI\nData Explorer\nSettings\nREADINESS ASSESSMENT\nPRODUCTIVE\n// ENGINE V1.4.0 DETERMINISTIC\nBalanced recovery. Suitable for aerobic base, tempo, or moderate density.\n\nAutonom"
+    }
+  ]
+}

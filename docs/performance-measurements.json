@@ -1,0 +1,50 @@
+{
+  "time": "2026-10-14T08:06:25.370Z",
+  "viewport": "1440x1000 DPR1",
+  "renderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
+  "modes": {
+    "high": {
+      "metrics": {
+        "lcp": 1536,
+        "cls": 0.00030094328703703706
+      },
+      "canvas": [
+        {
+          "engine": "three.js r186",
+          "fps": "60",
+          "drawCalls": "266",
+          "triangles": "87523"
+        }
+      ],
+      "heapMB": 23
+    },
+    "medium": {
+      "metrics": {
+        "lcp": 1536,
+        "cls": 0.00030094328703703706
+      },
+      "canvas": [
+        {
+          "engine": "three.js r186",
+          "fps": "60",
+          "drawCalls": "161",
+          "triangles": "55282"
+        }
+      ],
+      "heapMB": 20
+    },
+    "low": {
+      "metrics": {
+        "lcp": 15888,
+        "cls": 0.00030094328703703706
+      },
+      "canvas": [],
+      "heapMB": 21
+    }
+  },
+  "resources": {
+    "requests": 47,
+    "transferBytes": 784355,
+    "jsBytes": 513105
+  }
+}

@@ -1,0 +1,24 @@
+# Reference engineering study
+
+Audited local checkouts are in `../pau-os-references/`. They were cloned independently, inspected, and retained. PAU.OS does not merge their runtimes or copy their distinctive assets. Commit links below pin the audited versions.
+
+| Reference                                                                                      | Commit / license           | Examined patterns                                                                                                   | PAU.OS decision                                                                                                                                 |
+| ---------------------------------------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Bruno Simon folio-2025](https://github.com/brunosimon/folio-2025/tree/41046b5)                | 41046b5 / MIT              | README, Quality.js, View.js: prioritized loop, quality, camera-controls, Rapier, staged resources; Three/WebGPU/TSL | Adopt lifecycle/quality separation and a coherent scene; use R3F/WebGL2 for broader compatibility. No driving simulation or copied world.       |
+| [Vairuh Mac_OS](https://github.com/Vairuh/Mac_OS/tree/7273681)                                 | 7273681 / no LICENSE found | React/Vite, Macwindow.jsx, keyed window state, react-rnd                                                            | Study event/focus/window state only. Native dialog for a bounded terminal. No source, branding or assets reused.                                |
+| [trevsm 3D-Portfolio](https://github.com/trevsm/3D-Portfolio/tree/690c184)                     | 690c184 / MIT              | R3F 8, React 18, camera composition, Spring, Suspense and HTML overlays                                             | Narrow purposeful camera transitions and lazy render boundary; do not combine old React/R3F versions.                                           |
+| [Txemalon 3d-portfolio](https://github.com/Txemalon/3d-portfolio/tree/52cfcb8)                 | 52cfcb8 / MIT              | Next/R3F, FrozenKeyboard.tsx, section navigation, frozen geometry, lazy media                                       | Static content routes around an independently loaded scene; finite stations rather than global keyboard capture.                                |
+| [ITomPoland portfolio-itom](https://github.com/ITomPoland/portfolio-itom/tree/3e82d28)         | 3e82d28 / MIT              | PerformanceContext, useScrollCamera, GSAP transitions, sampled FPS                                                  | Explicit quality tiers plus measured degradation. Avoid global wheel hijacking.                                                                 |
+| [nothingnothings r3f-portfolio](https://github.com/nothingnothings/r3f-portfolio/tree/cbb19ac) | cbb19ac / MIT              | Zustand, PageMoveButton/Html, camera tween, environment                                                             | Small global interaction store, station links and predictable camera targets. Use DOM projection to avoid nested React-root lifecycle problems. |
+
+## Cross-cutting findings
+
+A render-loop boundary must own resource cleanup, visibility and quality; React state should not update each frame. Camera easing should move a target instead of allocating a second navigation system. HTML overlays need proper focus and independent URLs. R3F suspense and error boundaries give a natural split between useful page content and optional GPU work. Instancing is suitable for calibration marks; reused procedural geometry avoids a large model pipeline.
+
+No physics or collision engine is needed for constrained camera exploration. Audio should start only on user input. A reduced-motion mode must affect the actual renderer, not only CSS. Headless browser screenshots can use a software rasterizer by default, so performance must state its renderer.
+
+## Licensing
+
+No third-party reference source, model, shader, texture, illustration or audio was copied. Consequently, there are no copied MIT blocks to attribute; the links credit architectural study. The unlicensed Mac_OS repository was used for read-only inspection. ATHRA, TrackFlow and Camí Curt are the owner’s actual portfolio works; their source was not incorporated into the runtime. TrackFlow retains its MPL-2.0 source license in its separate checkout.
+
+Library notices stay in their installed distributions; font OFL notices are also supplied under `public/licenses/`. All procedural graphics and the limited terminal were written for PAU.OS.
