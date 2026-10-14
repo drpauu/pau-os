@@ -1,7 +1,7 @@
 {
   "url": "https://pau-os-laboratory.poeticcrow1.chatgpt.site",
-  "checkedAt": "2026-10-14T12:52:53.149Z",
-  "mode": "Fourteen static routes, desktop WebGL, mobile touch navigation and TrackFlow artwork; existing owner-only read authorization",
+  "checkedAt": "2026-10-14T13:16:42.044Z",
+  "mode": "Fourteen static routes, eight-project observatory, desktop WebGL, mobile drag-to-orbit and TrackFlow artwork; existing owner-only read authorization",
   "routes": [
     {
       "path": "/",
@@ -94,7 +94,7 @@
   },
   "webgl": {
     "engine": "three.js r186",
-    "fps": "52",
+    "fps": "51",
     "drawCalls": "425",
     "triangles": "129391"
   },
@@ -112,7 +112,7 @@
       "drawCalls": "252",
       "triangles": "84978"
     },
-    "swipeFocusedAthra": true,
+    "horizontalDragOrbits": true,
     "lastDockProjectFocused": true,
     "trackflowImage": {
       "naturalWidth": 1200,

@@ -18,7 +18,7 @@ A separate Chromium run used a 390×844 viewport, DPR1 and touch/mobile emulatio
 
 This measures a phone-shaped viewport and touch event model on the desktop host GPU. It does **not** predict physical iPhone or Android performance. The emulated sample also shares the limitations of a short localhost run and cannot replace testing on representative devices.
 
-The prior owner-private deployment was verified with independent desktop and mobile browser contexts. The current code is measured locally above; the follow-up production deployment still needs live performance verification. Host-GPU emulation is not a physical phone benchmark or a long-term performance guarantee. Raw evidence from the previous publication: `docs/live-verification.json`.
+Owner-private version 9 was verified with independent desktop and mobile browser contexts. Desktop High settled at three 60 FPS samples. At 375×812, mobile Medium measured **60 FPS**, 252 draw calls and 84,978 triangles; horizontal drag changed the camera, the project dock reached ESINMATH, and no page overflow occurred. The FPS sample is from a settled scene, not a sustained drag benchmark. Host-GPU emulation is not a physical phone benchmark or a long-term performance guarantee. Evidence: `docs/live-verification.json`.
 
 ## Rendering budget and controls
 
