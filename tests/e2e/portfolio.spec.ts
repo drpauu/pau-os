@@ -168,6 +168,23 @@ test("camera redirects safely, every installation focuses, and quality fallback 
     .selectOption("high");
   await expect(page.locator("canvas")).toBeVisible();
   await page.waitForTimeout(1800);
+  const orbitScene = page.locator(".scene-container");
+  const startingYaw = await orbitScene.getAttribute("data-orbit-yaw");
+  const canvasBox = await page.locator("canvas").boundingBox();
+  if (!canvasBox) throw new Error("3D canvas has no visible bounds.");
+  await page.mouse.move(canvasBox.x + canvasBox.width / 2, canvasBox.y + 300);
+  await page.mouse.down();
+  await page.mouse.move(
+    canvasBox.x + canvasBox.width / 2 + 80,
+    canvasBox.y + 325,
+    { steps: 5 },
+  );
+  await page.mouse.up();
+  await expect(orbitScene).not.toHaveAttribute(
+    "data-orbit-yaw",
+    startingYaw ?? "0.000",
+  );
+  await page.screenshot({ path: "docs/screenshots/orbit-drag-desktop.png" });
   for (let i = 0; i < installationTitles.length; i++) {
     await page
       .getByRole("button", { name: `Focus ${installationTitles[i]} station` })
@@ -203,7 +220,7 @@ test("camera redirects safely, every installation focuses, and quality fallback 
   expect(errors).toEqual([]);
 });
 
-test("mobile observatory supports touch swipes and touch-sized project controls", async ({
+test("mobile observatory supports touch orbit and touch-sized project controls", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 375, height: 812 });
@@ -222,9 +239,12 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
   ).toHaveAttribute("aria-pressed", "true");
 
   const scene = page.locator(".scene-container");
+  const yawBeforeDrag = await scene.getAttribute("data-orbit-yaw");
   await scene.evaluate((element) => {
+    const canvas = element.querySelector("canvas");
+    if (!canvas) throw new Error("3D canvas is missing.");
     const send = (type: string, x: number, y: number) =>
-      element.dispatchEvent(
+      canvas.dispatchEvent(
         new PointerEvent(type, {
           bubbles: true,
           pointerType: "touch",
@@ -233,10 +253,16 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
         }),
       );
     send("pointerdown", 280, 490);
+    send("pointermove", 190, 493);
     send("pointerup", 190, 493);
   });
+  await expect(scene).not.toHaveAttribute(
+    "data-orbit-yaw",
+    yawBeforeDrag ?? "0.000",
+  );
+  await page.screenshot({ path: "docs/screenshots/orbit-drag-mobile.png" });
   await expect(
-    page.getByRole("button", { name: "Focus ATHRA station" }),
+    page.getByRole("button", { name: "Focus CAMÍ CURT station" }),
   ).toHaveAttribute("aria-pressed", "true");
 
   const projectStations = page.locator(".station-card");
@@ -254,9 +280,12 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
     page.getByRole("button", { name: "Focus ESINMATH station" }),
   ).toHaveAttribute("aria-pressed", "true");
 
+  const yawBeforeVerticalGesture = await scene.getAttribute("data-orbit-yaw");
   await scene.evaluate((element) => {
+    const canvas = element.querySelector("canvas");
+    if (!canvas) throw new Error("3D canvas is missing.");
     const send = (type: string, x: number, y: number) =>
-      element.dispatchEvent(
+      canvas.dispatchEvent(
         new PointerEvent(type, {
           bubbles: true,
           pointerType: "touch",
@@ -265,8 +294,13 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
         }),
       );
     send("pointerdown", 200, 490);
-    send("pointerup", 210, 570);
+    send("pointermove", 200, 570);
+    send("pointerup", 200, 570);
   });
+  await expect(scene).toHaveAttribute(
+    "data-orbit-yaw",
+    yawBeforeVerticalGesture ?? "0.000",
+  );
   await expect(
     page.getByRole("button", { name: "Focus ESINMATH station" }),
   ).toHaveAttribute("aria-pressed", "true");

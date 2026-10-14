@@ -28,9 +28,25 @@ const destinations: { id: Station; name: string; tag: string }[] = projects.map(
 export function Hero() {
   const [introPending, setIntroPending] = useState(true);
   const [qualityReady, setQualityReady] = useState(false);
-  const touchStart = useRef<{ x: number; y: number } | null>(null);
-  const { station, select, quality, setQuality, skipIntro, introSkipped } =
-    useLaboratory();
+  const [isDragging, setIsDragging] = useState(false);
+  const drag = useRef<{
+    pointerId: number;
+    x: number;
+    y: number;
+    lastX: number;
+    lastY: number;
+    moved: boolean;
+  } | null>(null);
+  const {
+    station,
+    orbit,
+    select,
+    rotate,
+    quality,
+    setQuality,
+    skipIntro,
+    introSkipped,
+  } = useLaboratory();
   useEffect(() => {
     const t = setTimeout(() => setIntroPending(false), 2200);
     try {
@@ -51,14 +67,42 @@ export function Hero() {
           destinations.length;
     select(destinations[nextIndex].id);
   };
-  const handleScenePointerUp = (event: PointerEvent<HTMLDivElement>) => {
-    const start = touchStart.current;
-    touchStart.current = null;
-    if (!start || event.pointerType !== "touch") return;
-    const dx = event.clientX - start.x;
-    const dy = event.clientY - start.y;
-    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
-    moveStation(dx < 0 ? 1 : -1);
+  const handleScenePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (!(event.target instanceof HTMLCanvasElement) || event.button !== 0)
+      return;
+    drag.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      lastX: event.clientX,
+      lastY: event.clientY,
+      moved: false,
+    };
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {}
+  };
+  const handleScenePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    const active = drag.current;
+    if (!active || active.pointerId !== event.pointerId) return;
+    const dx = event.clientX - active.lastX;
+    const dy = event.clientY - active.lastY;
+    active.lastX = event.clientX;
+    active.lastY = event.clientY;
+    if (
+      !active.moved &&
+      Math.hypot(event.clientX - active.x, event.clientY - active.y) > 4
+    ) {
+      active.moved = true;
+      setIsDragging(true);
+    }
+    if (active.moved)
+      rotate(-dx * 0.006, event.pointerType === "touch" ? 0 : dy * 0.0035);
+  };
+  const finishSceneDrag = (event: PointerEvent<HTMLDivElement>) => {
+    if (drag.current?.pointerId !== event.pointerId) return;
+    drag.current = null;
+    setIsDragging(false);
   };
   return (
     <section
@@ -101,15 +145,14 @@ export function Hero() {
         </div>
       </div>
       <div
-        className="scene-container"
-        onPointerDown={(event) => {
-          if (event.pointerType === "touch")
-            touchStart.current = { x: event.clientX, y: event.clientY };
-        }}
-        onPointerUp={handleScenePointerUp}
-        onPointerCancel={() => {
-          touchStart.current = null;
-        }}
+        className={"scene-container" + (isDragging ? " is-dragging" : "")}
+        data-orbit-yaw={orbit[0].toFixed(3)}
+        role="group"
+        aria-label="Interactive 3D observatory. Drag the scene to look around; use the project controls to choose an installation."
+        onPointerDown={handleScenePointerDown}
+        onPointerMove={handleScenePointerMove}
+        onPointerUp={finishSceneDrag}
+        onPointerCancel={finishSceneDrag}
       >
         {qualityReady && quality !== "low" ? <Laboratory /> : <StaticScene />}
       </div>
@@ -143,7 +186,7 @@ export function Hero() {
               destinations.findIndex((d) => d.id === current.id) + 1,
             ).padStart(2, "0")}
             <i />
-            {String(destinations.length).padStart(2, "0")} · SWIPE TO EXPLORE
+            {String(destinations.length).padStart(2, "0")} · DRAG TO ORBIT
           </span>
           <button
             type="button"
@@ -217,7 +260,7 @@ export function Hero() {
         <a href="#selected-work">
           SCROLL TO DISCOVER <ArrowDown size={14} />
         </a>
-        <span>EIGHT PROJECTS. ONE ENGINEERING MINDSET.</span>
+        <span>DRAG TO ORBIT · EIGHT PROJECTS TO EXPLORE.</span>
       </div>
     </section>
   );

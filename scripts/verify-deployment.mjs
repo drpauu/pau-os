@@ -202,13 +202,17 @@ try {
   await mobilePage
     .getByRole("button", { name: "Next project installation" })
     .click();
-  const scene = mobilePage.locator(".scene-container");
-  await scene.evaluate((element) => {
+  const orbitScene = mobilePage.locator(".scene-container");
+  const yawBeforeDrag = await orbitScene.getAttribute("data-orbit-yaw");
+  await orbitScene.evaluate((element) => {
+    const canvas = element.querySelector("canvas");
+    if (!canvas) throw new Error("3D canvas is missing.");
     for (const [type, x, y] of [
       ["pointerdown", 280, 490],
+      ["pointermove", 190, 493],
       ["pointerup", 190, 493],
     ])
-      element.dispatchEvent(
+      canvas.dispatchEvent(
         new PointerEvent(type, {
           bubbles: true,
           pointerType: "touch",
@@ -217,13 +221,16 @@ try {
         }),
       );
   });
-  const athraFocus = mobilePage.getByRole("button", {
-    name: "Focus ATHRA station",
+  const camiFocus = mobilePage.getByRole("button", {
+    name: "Focus CAMÍ CURT station",
   });
-  await athraFocus.waitFor();
-  if ((await athraFocus.getAttribute("aria-pressed")) !== "true")
-    throw new Error("Deployed mobile swipe did not focus ATHRA.");
-  evidence.mobile.swipeFocusedAthra = true;
+  if ((await camiFocus.getAttribute("aria-pressed")) !== "true")
+    throw new Error(
+      "Dragging the deployed scene unexpectedly changed stations.",
+    );
+  if ((await orbitScene.getAttribute("data-orbit-yaw")) === yawBeforeDrag)
+    throw new Error("Dragging the deployed scene did not orbit the camera.");
+  evidence.mobile.horizontalDragOrbits = true;
   await mobilePage.locator(".station-card").nth(7).scrollIntoViewIfNeeded();
   const finalProject = mobilePage.getByRole("button", {
     name: "Focus ESINMATH station",

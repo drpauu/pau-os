@@ -2652,3 +2652,12 @@ main:focus {
     padding: 10px;
   }
 }
+
+.scene-container canvas {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+.scene-container.is-dragging canvas {
+  cursor: grabbing;
+}

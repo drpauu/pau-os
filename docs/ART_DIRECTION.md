@@ -23,7 +23,7 @@ The Work-list and case-study cover use an original editorial illustration: a run
 
 Camera destinations are centralized. GSAP tweens a shared camera position and look target; changing selection kills the prior tweens and continues from their current values. Normal transitions last 0.95 seconds, initial reveal 1.6 seconds and can be skipped. Pointer motion is small. Reduced motion removes cinematic travel and uses demand rendering. No scroll hijacking or exploration controls stand between a visitor and content.
 
-On small screens, the identity is presented first, with a separately composed scene below and a two-column ordered project dock. The scene responds to horizontal touch swipes, with large previous/next buttons as a direct alternative; the vertical page scroll remains native. Native HTML remains primary for long content. Headings use local Manrope; instrumentation uses local IBM Plex Mono. Mint accents are used sparingly, warm gold belongs to the route and board.
+On small screens, the identity is presented first, with a separately composed scene below and a horizontally scrollable, ordered project dock. Dragging the scene orbits the camera; large previous/next buttons choose installations, while vertical page scroll remains native. Native HTML remains primary for long content. Headings use local Manrope; instrumentation uses local IBM Plex Mono. Mint accents are used sparingly, warm gold belongs to the route and board.
 
 ## Visual iteration evidence
 

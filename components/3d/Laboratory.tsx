@@ -56,8 +56,12 @@ class CanvasBoundary extends Component<
 function CameraRig({ reduced }: { reduced: boolean }) {
   const { camera, pointer, invalidate, size } = useThree();
   const station = useLaboratory((s) => s.station),
-    skipped = useLaboratory((s) => s.introSkipped);
-  const destination = useRef(new THREE.Vector3());
+    skipped = useLaboratory((s) => s.introSkipped),
+    orbit = useLaboratory((s) => s.orbit);
+  const destination = useRef(new THREE.Vector3()),
+    oriented = useRef(new THREE.Vector3()),
+    pointerOffset = useRef(new THREE.Vector3()),
+    orbitRotation = useRef(new THREE.Euler(0, 0, 0, "YXZ"));
   const skipState = useRef(false);
   const look = useRef(new THREE.Vector3(0, 1.1, 0)),
     base = useRef({ x: 11.5, y: 14, z: 17 }),
@@ -92,12 +96,21 @@ function CameraRig({ reduced }: { reduced: boolean }) {
   }, [station, reduced, skipped, invalidate, size.width, size.height]);
   useFrame((_, delta) => {
     const p = base.current;
+    const position = oriented.current
+      .set(p.x, p.y, p.z)
+      .sub(look.current)
+      .applyEuler(orbitRotation.current.set(orbit[1], orbit[0], 0, "YXZ"))
+      .add(look.current);
     camera.position.lerp(
-      destination.current.set(
-        p.x + (reduced ? 0 : pointer.x * 0.35),
-        p.y + (reduced ? 0 : pointer.y * 0.2),
-        p.z,
-      ),
+      destination.current
+        .copy(position)
+        .add(
+          pointerOffset.current.set(
+            reduced ? 0 : pointer.x * 0.35,
+            reduced ? 0 : pointer.y * 0.2,
+            0,
+          ),
+        ),
       reduced ? 1 : 1 - Math.exp(-delta * 6),
     );
     camera.lookAt(look.current);
