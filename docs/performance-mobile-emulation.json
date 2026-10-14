@@ -1,60 +1,60 @@
 {
-  "time": "2026-10-14T12:29:22.235Z",
+  "time": "2026-10-14T12:49:48.481Z",
   "viewport": "390x844 DPR1 touch emulation",
   "method": "Chromium touch/mobile emulation on the host GPU; fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample. This does not represent physical phone performance.",
   "renderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "modes": {
     "high": {
       "metrics": {
-        "lcp": 1908,
-        "cls": 0
-      },
-      "canvas": [
-        {
-          "engine": "three.js r186",
-          "fps": "38",
-          "drawCalls": "355",
-          "triangles": "98609"
-        }
-      ],
-      "heapMB": 26,
-      "resources": {
-        "requests": 35,
-        "transferBytes": 777571,
-        "jsBytes": 531933
-      }
-    },
-    "medium": {
-      "metrics": {
-        "lcp": 536,
+        "lcp": 532,
         "cls": 0
       },
       "canvas": [
         {
           "engine": "three.js r186",
           "fps": "60",
-          "drawCalls": "196",
-          "triangles": "63676"
+          "drawCalls": "425",
+          "triangles": "129391"
         }
       ],
-      "heapMB": 22,
+      "heapMB": 29,
       "resources": {
-        "requests": 35,
-        "transferBytes": 777571,
-        "jsBytes": 531933
+        "requests": 31,
+        "transferBytes": 700599,
+        "jsBytes": 532522
+      }
+    },
+    "medium": {
+      "metrics": {
+        "lcp": 204,
+        "cls": 0
+      },
+      "canvas": [
+        {
+          "engine": "three.js r186",
+          "fps": "60",
+          "drawCalls": "252",
+          "triangles": "84978"
+        }
+      ],
+      "heapMB": 25,
+      "resources": {
+        "requests": 31,
+        "transferBytes": 700599,
+        "jsBytes": 532522
       }
     },
     "low": {
       "metrics": {
-        "lcp": 480,
+        "lcp": 200,
         "cls": 0
       },
       "canvas": [],
       "heapMB": 6,
       "resources": {
-        "requests": 33,
-        "transferBytes": 440157,
-        "jsBytes": 195119
+        "requests": 29,
+        "transferBytes": 362404,
+        "jsBytes": 194927
       }
     }
   }

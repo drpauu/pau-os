@@ -28,8 +28,8 @@ const titles = [
   "CHECKERS AI",
   "ESINMATH",
 ];
-const installationSlugs = slugs.slice(0, 4);
-const installationTitles = titles.slice(0, 4);
+const installationSlugs = slugs;
+const installationTitles = titles;
 const routes = [
   "/",
   "/work/",
@@ -210,7 +210,9 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
   await page.addInitScript(() => localStorage.setItem("pau-quality", "medium"));
   await page.goto("/");
   await expect(page.locator("canvas")).toBeVisible();
-  await page.screenshot({ path: "docs/screenshots/mobile-home-interactive.png" });
+  await page.screenshot({
+    path: "docs/screenshots/mobile-home-interactive.png",
+  });
   const next = page.getByRole("button", { name: "Next project installation" });
   await expect(next).toBeVisible();
   await expect(next).toHaveCSS("width", "44px");
@@ -237,6 +239,21 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
     page.getByRole("button", { name: "Focus ATHRA station" }),
   ).toHaveAttribute("aria-pressed", "true");
 
+  const projectStations = page.locator(".station-card");
+  await expect(projectStations).toHaveCount(8);
+  await expect(
+    projectStations
+      .nth(7)
+      .getByRole("button", { name: "Focus ESINMATH station" }),
+  ).toBeVisible();
+  await projectStations
+    .nth(7)
+    .getByRole("button", { name: "Focus ESINMATH station" })
+    .click();
+  await expect(
+    page.getByRole("button", { name: "Focus ESINMATH station" }),
+  ).toHaveAttribute("aria-pressed", "true");
+
   await scene.evaluate((element) => {
     const send = (type: string, x: number, y: number) =>
       element.dispatchEvent(
@@ -251,18 +268,21 @@ test("mobile observatory supports touch swipes and touch-sized project controls"
     send("pointerup", 210, 570);
   });
   await expect(
-    page.getByRole("button", { name: "Focus ATHRA station" }),
+    page.getByRole("button", { name: "Focus ESINMATH station" }),
   ).toHaveAttribute("aria-pressed", "true");
 
   await page.goto("/work/");
   const trackflowImage = page.locator(".project-trackflow img");
+  await trackflowImage.scrollIntoViewIfNeeded();
   await expect(trackflowImage).toBeVisible();
   await expect(trackflowImage).toHaveAttribute(
     "alt",
     /weekly training plan represented as a running track/,
   );
   await expect
-    .poll(() => trackflowImage.evaluate((image: HTMLImageElement) => image.naturalWidth))
+    .poll(() =>
+      trackflowImage.evaluate((image: HTMLImageElement) => image.naturalWidth),
+    )
     .toBe(1200);
   await page.locator(".project-trackflow").screenshot({
     path: "docs/screenshots/mobile-trackflow-card.png",

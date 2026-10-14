@@ -4,21 +4,21 @@ Measured on 2026-10-14 against the final static export with Chromium, 1440×1000
 
 | Mode | Sample FPS | Draw calls | Triangles | Local LCP | CLS | Encoded JS transfer |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| High | 60 | 401 | 98,609 | 1,572ms | 0 | 529,125bytes |
-| Medium | 60 | 219 | 63,676 | 220ms | 0.0021 | 529,125bytes |
-| Low/static | No canvas | 0 | 0 | 240ms | 0.0021 | 192,366bytes |
+| High | 60 | 425 | 129,391 | 1,560ms | 0 | 535,189bytes |
+| Medium | 60 | 252 | 84,978 | 232ms | 0.0021 | 535,189bytes |
+| Low/static | No canvas | 0 | 0 | 224ms | 0.0021 | 197,594bytes |
 
-Low mode skips the 3D bundle on a fresh visit: about **64% less encoded JavaScript** in this run. Total transfer was about 1.00MB in High/Medium and 667,169bytes in Low, including project images preloaded/prefetched by the page. Heap samples were 24MB, 23MB and 7MB respectively; these are brief samples, not leak/soak guarantees.
+Low mode skips the 3D bundle on a fresh visit: about **63% less encoded JavaScript** in this run. Total transfer was about 1.23MB in High/Medium and 890,495bytes in Low, including project images preloaded/prefetched by the page. Heap samples were 22MB, 22MB and 6MB respectively; these are brief samples, not leak/soak guarantees.
 
 The contexts have isolated caches, but later runs share the browser process, OS and local server. Do not interpret the LCP difference as a controlled cross-device benchmark, or the localhost measurements as field Web Vitals. This run replaces an earlier same-page quality-switch measurement: LCP after a quality switch was not an initial-load metric and was intentionally discarded.
 
 ## Mobile touch emulation
 
-A separate Chromium run used a 390×844 viewport, DPR1 and touch/mobile emulation on the same Intel Iris Xe host. After instancing repeated board and planning details, the latest 6.8-second sample rendered at **60 FPS in Medium** with 196 draw calls and 63,676 triangles; High reached 38 FPS. Medium LCP was 536ms with CLS 0. Low retained the static scene at 480ms LCP and loaded no canvas. Earlier Medium samples ranged from 30–56 FPS before this optimization, so these short runs still do not guarantee the same rate on a physical phone. Auto selects Medium below 800px, keeping the 3D exhibit interactive at the lower render cost. Raw results: `docs/performance-mobile-emulation.json`.
+A separate Chromium run used a 390×844 viewport, DPR1 and touch/mobile emulation on the same Intel Iris Xe host. With all eight exhibits, the latest 6.8-second sample rendered at **60 FPS in Medium** with 252 draw calls and 84,978 triangles; High also reached 60 FPS. Medium LCP was 204ms with CLS 0. Low retained the static scene at 200ms LCP and loaded no canvas. These short runs do not guarantee the same rate on a physical phone. Auto selects Medium below 800px, keeping the 3D observatory interactive at the lower render cost. Raw results: `docs/performance-mobile-emulation.json`.
 
 This measures a phone-shaped viewport and touch event model on the desktop host GPU. It does **not** predict physical iPhone or Android performance. The emulated sample also shares the limitations of a short localhost run and cannot replace testing on representative devices.
 
-The latest owner-private deployment was verified with independent desktop and mobile browser contexts so the desktop renderer did not compete with the mobile sample. Desktop High settled at three 60 FPS samples. At 375×812, mobile Medium measured **60 FPS**, 196 draw calls and 63,676 triangles; touch navigation and the TrackFlow cover also passed. This is a short host-GPU emulation result, not a physical phone benchmark or a long-term performance guarantee. Raw deployed evidence: `docs/live-verification.json`.
+The prior owner-private deployment was verified with independent desktop and mobile browser contexts. The current code is measured locally above; the follow-up production deployment still needs live performance verification. Host-GPU emulation is not a physical phone benchmark or a long-term performance guarantee. Raw evidence from the previous publication: `docs/live-verification.json`.
 
 ## Rendering budget and controls
 

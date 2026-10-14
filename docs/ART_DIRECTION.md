@@ -4,7 +4,7 @@
 
 An intentionally compact observatory built around a suspended geographic instrument. The first view balances large editorial identity at left with the actual Camí Curt comarca silhouette at right. The map is the largest exhibit and the first link in every project surface. The architectural gantry frames it; a machined circular stage connects the secondary exhibits.
 
-The central assembly has beveled lathed titanium drums, a brushed collar, an inset glass-like instrument surface, a restrained warm calibration ring, instanced machining details and four bolted mounts. A curved task-light gantry provides spatial context. The tilted, layered comarca plate is made from the actual game geometry. Hover raises a region; selection updates an adjacent-region route and announces it in HTML.
+The central assembly has beveled lathed titanium drums, a brushed collar, an inset glass-like instrument surface, a restrained warm calibration ring, instanced machining details and four bolted mounts. A curved task-light gantry provides spatial context. The tilted, layered comarca plate is made from the actual game geometry. Hover raises a region; selection updates an adjacent-region route and announces it in HTML. Four compact peripheral exhibits represent the other pinned projects; every project is reachable in editorial order from the main dock and selects a camera view without requiring free exploration.
 
 ## Material and lighting vocabulary
 

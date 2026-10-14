@@ -17,6 +17,7 @@ import {
   PerformanceExhibit,
   BoardExhibit,
   PlanningExhibit,
+  PinnedExhibits,
 } from "./scenes/Observatory";
 import { StaticScene } from "@/features/laboratory/StaticScene";
 import { Catalonia } from "./scenes/Catalonia";
@@ -32,6 +33,13 @@ const targets: Record<
   athra: { position: [-1.5, 4, 6.7], look: [-4.8, 1, 1.2] },
   alcoholfabet: { position: [7, 5, 8], look: [3.8, 0.85, 4.1] },
   trackflow: { position: [8, 4.5, 2], look: [3.85, 1, -3.1] },
+  "adhoc-medical-data-processing": {
+    position: [-9.1, 4.5, -5.35],
+    look: [-5.15, 0.9, -3.05],
+  },
+  "connect4-ai": { position: [-0.65, 4.5, 10.35], look: [-0.65, 0.9, 5.85] },
+  "checkers-ai": { position: [9.95, 4.1, 0.15], look: [5.55, 0.9, 0.15] },
+  esinmath: { position: [-1.25, 4.2, -10.3], look: [-1.25, 0.9, -5.8] },
 };
 class CanvasBoundary extends Component<
   { children: ReactNode },
@@ -105,6 +113,14 @@ const labels: {
   { id: "athra", title: "02 / ATHRA", point: [-4.8, 1.9, 1.2] },
   { id: "alcoholfabet", title: "03 / ALCOHOLFABET", point: [3.8, 1.65, 4.1] },
   { id: "trackflow", title: "04 / TRACKFLOW", point: [3.85, 2.05, -3.1] },
+  {
+    id: "adhoc-medical-data-processing",
+    title: "05 / MEDICAL DATA",
+    point: [-5.15, 1.8, -3.05],
+  },
+  { id: "connect4-ai", title: "06 / CONNECT4 AI", point: [-0.65, 1.8, 5.85] },
+  { id: "checkers-ai", title: "07 / CHECKERS AI", point: [5.55, 1.8, 0.15] },
+  { id: "esinmath", title: "08 / ESINMATH", point: [-1.25, 1.8, -5.8] },
 ];
 function ProjectLabels() {
   const { camera, size, gl } = useThree();
@@ -128,7 +144,11 @@ function SceneLabels() {
   return (
     <div className="scene-labels">
       {labels
-        .filter((label) => station === "core" || station === label.id)
+        .filter(
+          (label) =>
+            station === label.id ||
+            (station === "core" && labels.indexOf(label) < 4),
+        )
         .map((label) => (
           <div
             data-station={label.id}
@@ -324,6 +344,7 @@ export default function Laboratory() {
             <PerformanceExhibit reduced={reduced} />
             <BoardExhibit />
             <PlanningExhibit reduced={reduced} />
+            <PinnedExhibits />
             <Runtime
               reduced={reduced}
               onDegrade={() => {

@@ -35,7 +35,7 @@ Next.js static export, React/TypeScript, Three.js / React Three Fiber / Drei, GS
 - `assets/project-artwork/`: editable vector illustrations for the four additional pinned projects, regenerated to optimized WebP by `npm run images:pinned`.
 - `data/toolbox.json` and `data/sources/github-profile-readme.md`: exact generated inventory and committed public source.
 - `lib/geography.ts` / `data/catalunya-comarques.json`: original game map decoding, shared-boundary adjacency and local routing.
-- `components/3d/`: independent scene, quality lifecycle, cancellation-safe cameras and four exhibits.
+- `components/3d/`: independent scene, quality lifecycle, cancellation-safe cameras, four primary installations and four compact pinned-project studies around the central Camí Curt map.
 - `features/camicurt/`: accessible isolated geographic explorer, available without WebGL.
 - `lib/supabase/`: optional build-only published-content adapter with strict validation.
 

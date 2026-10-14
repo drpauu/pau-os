@@ -282,9 +282,21 @@ const boardTiles = Array.from({ length: 24 }, (_, i) => {
   const j = i % 6;
   return {
     position: [
-      side === 0 ? -0.9 + j * 0.3 : side === 1 ? 0.9 : side === 2 ? 0.9 - j * 0.3 : -0.9,
+      side === 0
+        ? -0.9 + j * 0.3
+        : side === 1
+          ? 0.9
+          : side === 2
+            ? 0.9 - j * 0.3
+            : -0.9,
       0.89,
-      side === 0 ? -0.9 : side === 1 ? -0.9 + j * 0.3 : side === 2 ? 0.9 : 0.9 - j * 0.3,
+      side === 0
+        ? -0.9
+        : side === 1
+          ? -0.9 + j * 0.3
+          : side === 2
+            ? 0.9
+            : 0.9 - j * 0.3,
     ] as [number, number, number],
     color: boardColors[i % boardColors.length],
   };
@@ -416,5 +428,177 @@ export function PlanningExhibit({ reduced }: { reduced: boolean }) {
         <meshBasicMaterial color="#d0e3df" />
       </mesh>
     </group>
+  );
+}
+
+/** Four compact, tactile studies keep the rest of the pinned portfolio present
+ * in the same room without competing with Camí Curt's central map. */
+export function PinnedExhibits() {
+  const select = useLaboratory((s) => s.select);
+  const projects = [
+    {
+      id: "adhoc-medical-data-processing" as const,
+      position: [-5.15, 0, -3.05] as [number, number, number],
+      color: "#9fc9d3",
+    },
+    {
+      id: "connect4-ai" as const,
+      position: [-0.65, 0, 5.85] as [number, number, number],
+      color: "#d67c69",
+    },
+    {
+      id: "checkers-ai" as const,
+      position: [5.55, 0, 0.15] as [number, number, number],
+      color: "#d9c797",
+    },
+    {
+      id: "esinmath" as const,
+      position: [-1.25, 0, -5.8] as [number, number, number],
+      color: "#b4afe0",
+    },
+  ];
+  return (
+    <>
+      {projects.map((project, projectIndex) => (
+        <group
+          key={project.id}
+          position={project.position}
+          onClick={(event) => {
+            event.stopPropagation();
+            select(project.id);
+          }}
+        >
+          <ExhibitBase color={project.color} />
+          {projectIndex === 0 && (
+            <>
+              {[-0.58, 0, 0.58].map((x, i) => (
+                <group key={x}>
+                  <Line
+                    points={[
+                      [x, 0.82, -0.46],
+                      [x * 0.75, 1.2 + (i % 2) * 0.18, 0],
+                      [x * 0.5, 0.9, 0.46],
+                    ]}
+                    color={project.color}
+                    lineWidth={1.4}
+                  />
+                  <mesh position={[x * 0.75, 1.2 + (i % 2) * 0.18, 0]}>
+                    <sphereGeometry args={[0.105, 16, 12]} />
+                    <meshStandardMaterial
+                      color={project.color}
+                      metalness={0.45}
+                      roughness={0.25}
+                    />
+                  </mesh>
+                </group>
+              ))}
+            </>
+          )}
+          {projectIndex === 1 && (
+            <>
+              <Body
+                position={[0, 0.83, 0]}
+                scale={[0.96, 0.09, 0.72]}
+                color="#27363d"
+              />
+              {Array.from({ length: 7 }, (_, i) => (
+                <mesh
+                  key={i}
+                  position={[
+                    -0.66 + (i % 4) * 0.44,
+                    0.98,
+                    -0.45 + Math.floor(i / 4) * 0.52,
+                  ]}
+                >
+                  <cylinderGeometry args={[0.13, 0.13, 0.12, 24]} />
+                  <meshStandardMaterial
+                    color={i % 2 ? "#e6c66f" : "#d66f61"}
+                    metalness={0.35}
+                    roughness={0.28}
+                  />
+                </mesh>
+              ))}
+            </>
+          )}
+          {projectIndex === 2 && (
+            <>
+              <Body
+                position={[0, 0.82, 0]}
+                scale={[0.95, 0.08, 0.72]}
+                color="#28343a"
+              />
+              {Array.from({ length: 16 }, (_, i) => (
+                <mesh
+                  key={i}
+                  position={[
+                    -0.66 + (i % 4) * 0.44,
+                    0.93,
+                    -0.48 + Math.floor(i / 4) * 0.32,
+                  ]}
+                >
+                  <boxGeometry args={[0.22, 0.025, 0.16]} />
+                  <meshStandardMaterial
+                    color={(i + Math.floor(i / 4)) % 2 ? "#87918b" : "#34434a"}
+                    metalness={0.4}
+                    roughness={0.38}
+                  />
+                </mesh>
+              ))}
+              {[
+                [0, 0.98, -0.32],
+                [0.44, 0.98, 0],
+                [-0.44, 0.98, 0.32],
+              ].map((p, i) => (
+                <mesh key={i} position={p as [number, number, number]}>
+                  <cylinderGeometry args={[0.095, 0.095, 0.09, 20]} />
+                  <meshStandardMaterial
+                    color={i === 1 ? "#d4c49a" : "#202b30"}
+                    metalness={0.5}
+                    roughness={0.24}
+                  />
+                </mesh>
+              ))}
+            </>
+          )}
+          {projectIndex === 3 && (
+            <>
+              <Line
+                points={[
+                  [-0.82, 0.86, 0.2],
+                  [-0.3, 1.42, 0],
+                  [0.22, 0.94, -0.04],
+                  [0.78, 1.3, 0.12],
+                ]}
+                color={project.color}
+                lineWidth={2}
+              />
+              {[
+                [-0.3, 1.42, 0],
+                [0.22, 0.94, -0.04],
+                [0.78, 1.3, 0.12],
+                [-0.82, 0.86, 0.2],
+              ].map((p, i) => (
+                <mesh key={i} position={p as [number, number, number]}>
+                  <sphereGeometry args={[0.12, 16, 12]} />
+                  <meshStandardMaterial
+                    color={project.color}
+                    metalness={0.5}
+                    roughness={0.22}
+                  />
+                </mesh>
+              ))}
+              <mesh position={[0, 1.06, 0.02]}>
+                <octahedronGeometry args={[0.28, 0]} />
+                <meshStandardMaterial
+                  color="#e0d8ff"
+                  metalness={0.55}
+                  roughness={0.22}
+                />
+              </mesh>
+            </>
+          )}
+        </group>
+      ))}
+    </>
   );
 }

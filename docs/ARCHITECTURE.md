@@ -13,14 +13,14 @@ PAU.OS retains its existing TypeScript, Next.js App Router and React architectur
 | Content publishing   | `lib/supabase/`                                                 | Reviewed snapshot by default; explicit, server-only Supabase publishing mirror                  |
 | Toolbox              | `scripts/toolbox.mjs`, `data/toolbox.json`, `features/toolbox/` | Exact GitHub synchronization and accessible category explorer                                   |
 | Geography            | `data/catalunya-comarques.json`, `lib/geography.ts`             | Verified map, shared-arc adjacency and isolated shortest-hop routes                             |
-| Scene                | `components/3d/Laboratory.tsx`, `components/3d/scenes/`         | Rendering, camera, observatory, four distinct installations and quality modes                   |
+| Scene                | `components/3d/Laboratory.tsx`, `components/3d/scenes/`         | Rendering, camera, observatory, eight selectable project installations and quality modes         |
 | Scene UI/state       | `features/laboratory/Hero.tsx`, `stores/laboratory.ts`          | Immediate HTML controls, selected installation, quality and intro state                         |
 
 ## Routes and ordering
 
 The canonical routes are `/`, `/work/`, the four featured product studies (`camicurt`, `athra`, `alcoholfabet`, `trackflow`), and the four current pinned GitHub studies (`adhoc-medical-data-processing`, `connect4-ai`, `checkers-ai`, `esinmath`) under `/work/`, plus `/experience/`, `/about/`, `/contact/` and `/resume/`. There is no Lab route or top-level Toolbox section. Legacy `/projects/` URLs remain compatible; the old `cami-curt` alias resolves to the canonical case study and metadata points at `/work/camicurt/`.
 
-Camí Curt → ATHRA → Alcoholfabet → TrackFlow is a content invariant, enforced by published-content validation and tests. The four current pinned projects follow in their GitHub profile order. The featured order drives the observatory installation dock; all eight entries drive the homepage and Work list, direct case-study routes, continuation links and generated local SQL seed. Project navigation uses ordinary Next links and browser history. Camera focus selects an installation without delaying navigation or changing the current page.
+Camí Curt → ATHRA → Alcoholfabet → TrackFlow is a content invariant, enforced by published-content validation and tests. The four current pinned projects follow in their GitHub profile order. All eight entries drive the observatory selector, homepage and Work list, direct case-study routes, continuation links and generated local SQL seed. The first four are the large primary installations; the remaining four are compact, clickable studies around the central map. Project navigation uses ordinary Next links and browser history. Camera focus selects an installation without delaying navigation or changing the current page.
 
 ## Rendering and camera
 

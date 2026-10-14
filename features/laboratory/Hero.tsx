@@ -13,16 +13,18 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { useLaboratory, type Quality, type Station } from "@/stores/laboratory";
+import { projects } from "@/lib/content";
 const Laboratory = dynamic(() => import("@/components/3d/Laboratory"), {
   ssr: false,
   loading: () => <div className="scene-poster" aria-hidden="true" />,
 });
-const destinations: { id: Station; name: string; tag: string }[] = [
-  { id: "camicurt", name: "CAMÍ CURT", tag: "GEOGRAPHY × GRAPH THEORY" },
-  { id: "athra", name: "ATHRA", tag: "HUMAN PERFORMANCE" },
-  { id: "alcoholfabet", name: "ALCOHOLFABET", tag: "PLAY × SHARED STATE" },
-  { id: "trackflow", name: "TRACKFLOW", tag: "STRUCTURE × TIME" },
-];
+const destinations: { id: Station; name: string; tag: string }[] = projects.map(
+  (project) => ({
+    id: project.slug as Station,
+    name: project.title,
+    tag: project.category,
+  }),
+);
 export function Hero() {
   const [introPending, setIntroPending] = useState(true);
   const [qualityReady, setQualityReady] = useState(false);
@@ -45,7 +47,8 @@ export function Hero() {
     const nextIndex =
       currentIndex < 0
         ? 0
-        : (currentIndex + direction + destinations.length) % destinations.length;
+        : (currentIndex + direction + destinations.length) %
+          destinations.length;
     select(destinations[nextIndex].id);
   };
   const handleScenePointerUp = (event: PointerEvent<HTMLDivElement>) => {
@@ -124,7 +127,10 @@ export function Hero() {
           {current.name} <ArrowUpRight size={17} />
         </Link>
         <span className="mono">{current.tag}</span>
-        <div className="mobile-scene-nav" aria-label="Browse project installations">
+        <div
+          className="mobile-scene-nav"
+          aria-label="Browse project installations"
+        >
           <button
             type="button"
             aria-label="Previous project installation"
@@ -133,8 +139,11 @@ export function Hero() {
             <ArrowLeft size={17} />
           </button>
           <span className="mono">
-            {String(destinations.findIndex((d) => d.id === current.id) + 1).padStart(2, "0")}
-            <i />04 · SWIPE TO EXPLORE
+            {String(
+              destinations.findIndex((d) => d.id === current.id) + 1,
+            ).padStart(2, "0")}
+            <i />
+            {String(destinations.length).padStart(2, "0")} · SWIPE TO EXPLORE
           </span>
           <button
             type="button"
@@ -208,7 +217,7 @@ export function Hero() {
         <a href="#selected-work">
           SCROLL TO DISCOVER <ArrowDown size={14} />
         </a>
-        <span>FOUR PRODUCTS. ONE ENGINEERING MINDSET.</span>
+        <span>EIGHT PROJECTS. ONE ENGINEERING MINDSET.</span>
       </div>
     </section>
   );

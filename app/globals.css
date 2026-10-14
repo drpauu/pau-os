@@ -1403,6 +1403,28 @@ svg {
     bottom: 205px;
   }
 }
+
+/* The main observatory dock doubles as a complete project index. */
+@media (min-width: 801px) {
+  .station-dock {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: minmax(68px, auto);
+    min-height: 0;
+  }
+  .station-card {
+    min-width: 0;
+    border-bottom: 1px solid #52677655;
+  }
+  .station-card > button {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .station-card strong,
+  .station-card small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 @media (max-width: 1100px) {
   .header {
     gap: 25px;
@@ -2484,6 +2506,9 @@ main:focus {
     right: -6%;
     mask-image: linear-gradient(90deg, transparent, #000 18%);
   }
+  .scene-controls {
+    bottom: 230px;
+  }
 }
 @media (min-width: 1700px) {
   .scene-container {
@@ -2586,5 +2611,44 @@ main:focus {
   }
   .station-card small {
     font-size: 5px;
+  }
+}
+
+@media (max-width: 800px) {
+  .station-dock {
+    display: flex;
+    height: 82px;
+    min-height: 82px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #587b7b #101b21;
+  }
+  .station-card {
+    flex: 0 0 min(210px, 72vw);
+    min-width: 0;
+    scroll-snap-align: start;
+    border-left: 0;
+    border-right: 1px solid #52677655;
+  }
+  .station-card > button {
+    min-width: 0;
+    padding: 10px 9px;
+    gap: 8px;
+  }
+  .station-card strong,
+  .station-card small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .station-card small {
+    white-space: normal;
+    line-height: 1.35;
+    max-height: 2.7em;
+  }
+  .station-card > a {
+    padding: 10px;
   }
 }

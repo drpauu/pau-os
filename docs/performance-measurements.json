@@ -1,60 +1,60 @@
 {
-  "time": "2026-10-14T10:15:37.302Z",
+  "time": "2026-10-14T12:49:18.639Z",
   "viewport": "1440x1000 DPR1",
   "method": "Fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample.",
   "renderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "modes": {
     "high": {
       "metrics": {
-        "lcp": 1572,
+        "lcp": 1560,
         "cls": 0
       },
       "canvas": [
         {
           "engine": "three.js r186",
           "fps": "60",
-          "drawCalls": "401",
-          "triangles": "98609"
+          "drawCalls": "425",
+          "triangles": "129391"
         }
       ],
-      "heapMB": 24,
+      "heapMB": 22,
       "resources": {
-        "requests": 55,
-        "transferBytes": 1004528,
-        "jsBytes": 529125
+        "requests": 63,
+        "transferBytes": 1228690,
+        "jsBytes": 535189
       }
     },
     "medium": {
       "metrics": {
-        "lcp": 220,
-        "cls": 0.0020608357295283566
+        "lcp": 232,
+        "cls": 0.0020660064245153357
       },
       "canvas": [
         {
           "engine": "three.js r186",
           "fps": "60",
-          "drawCalls": "219",
-          "triangles": "63676"
+          "drawCalls": "252",
+          "triangles": "84978"
         }
       ],
-      "heapMB": 23,
+      "heapMB": 22,
       "resources": {
-        "requests": 53,
-        "transferBytes": 1003529,
-        "jsBytes": 529125
+        "requests": 63,
+        "transferBytes": 1228690,
+        "jsBytes": 535189
       }
     },
     "low": {
       "metrics": {
-        "lcp": 240,
-        "cls": 0.0020608357295283566
+        "lcp": 224,
+        "cls": 0.0020660064245153357
       },
       "canvas": [],
-      "heapMB": 7,
+      "heapMB": 6,
       "resources": {
-        "requests": 53,
-        "transferBytes": 667169,
-        "jsBytes": 192366
+        "requests": 61,
+        "transferBytes": 890495,
+        "jsBytes": 197594
       }
     }
   }
