@@ -3,8 +3,15 @@ import dynamic from "next/dynamic";
 import { StaticScene } from "./StaticScene";
 import { professional } from "@/lib/professional";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Focus, RotateCcw } from "lucide-react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
+import {
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Focus,
+  RotateCcw,
+} from "lucide-react";
 import { useLaboratory, type Quality, type Station } from "@/stores/laboratory";
 const Laboratory = dynamic(() => import("@/components/3d/Laboratory"), {
   ssr: false,
@@ -19,6 +26,7 @@ const destinations: { id: Station; name: string; tag: string }[] = [
 export function Hero() {
   const [introPending, setIntroPending] = useState(true);
   const [qualityReady, setQualityReady] = useState(false);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
   const { station, select, quality, setQuality, skipIntro, introSkipped } =
     useLaboratory();
   useEffect(() => {
@@ -32,6 +40,23 @@ export function Hero() {
     return () => clearTimeout(t);
   }, [setQuality]);
   const current = destinations.find((d) => d.id === station) ?? destinations[0];
+  const moveStation = (direction: -1 | 1) => {
+    const currentIndex = destinations.findIndex((d) => d.id === station);
+    const nextIndex =
+      currentIndex < 0
+        ? 0
+        : (currentIndex + direction + destinations.length) % destinations.length;
+    select(destinations[nextIndex].id);
+  };
+  const handleScenePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start || event.pointerType !== "touch") return;
+    const dx = event.clientX - start.x;
+    const dy = event.clientY - start.y;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    moveStation(dx < 0 ? 1 : -1);
+  };
   return (
     <section
       className="hero"
@@ -72,7 +97,17 @@ export function Hero() {
           </Link>
         </div>
       </div>
-      <div className="scene-container">
+      <div
+        className="scene-container"
+        onPointerDown={(event) => {
+          if (event.pointerType === "touch")
+            touchStart.current = { x: event.clientX, y: event.clientY };
+        }}
+        onPointerUp={handleScenePointerUp}
+        onPointerCancel={() => {
+          touchStart.current = null;
+        }}
+      >
         {qualityReady && quality !== "low" ? <Laboratory /> : <StaticScene />}
       </div>
       <div className="scene-coordinate mono">
@@ -89,6 +124,26 @@ export function Hero() {
           {current.name} <ArrowUpRight size={17} />
         </Link>
         <span className="mono">{current.tag}</span>
+        <div className="mobile-scene-nav" aria-label="Browse project installations">
+          <button
+            type="button"
+            aria-label="Previous project installation"
+            onClick={() => moveStation(-1)}
+          >
+            <ArrowLeft size={17} />
+          </button>
+          <span className="mono">
+            {String(destinations.findIndex((d) => d.id === current.id) + 1).padStart(2, "0")}
+            <i />04 · SWIPE TO EXPLORE
+          </span>
+          <button
+            type="button"
+            aria-label="Next project installation"
+            onClick={() => moveStation(1)}
+          >
+            <ArrowRight size={17} />
+          </button>
+        </div>
       </div>
       <div className="scene-controls">
         <button

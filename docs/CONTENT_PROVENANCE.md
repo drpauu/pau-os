@@ -18,7 +18,7 @@ Audited 2026-10-14. This replaces the prior provenance assumptions with the owne
 | Camí Curt image | Existing public-page browser capture | No sign-in or private data. |
 | ATHRA image | Existing local application browser capture | Shipped sample data; interface currently calls itself KINETICOS. |
 | Alcoholfabet image | Public interface with local menu fixture | Empty score and fictional auth fixture; backend fully intercepted. |
-| TrackFlow image | Existing local unauthenticated frontend | No athlete data or login credentials used. |
+| TrackFlow project cover | Original generated editorial illustration of a running track linked to weekly training sessions | Clearly labeled as an illustration, not a screenshot or live athlete data; no private athlete information. |
 | Public CV PDF and HTML Resume | Generated/rendered from the same `professional.resume` model in `lib/professional.ts` | Complete two-page CV; private contacts omitted and client-identifying project details anonymized. |
 
 No original CV bytes, personal contact details, private application rows, health records, online player codes or privileged credentials were copied into published assets. Source CV remains ignored. The generator reads the curated TypeScript model and never reads or copies the PDF. `docs/public-cv-review.json` records the source hash and review boundary without sensitive values.

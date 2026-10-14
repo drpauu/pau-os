@@ -17,11 +17,13 @@ Graphite and dark titanium surfaces, muted sage geographic tops, dark extruded e
 3. **Alcoholfabet:** machined physical board, colored perimeter positions, sculpted player pieces and a die. This is an artistic interpretation, not a replica of a live session.
 4. **TrackFlow:** three supported planning layers with arranged task blocks and a moving temporal marker. An illustration of coordination, not a live dashboard.
 
+The Work-list and case-study cover use an original editorial illustration: a running track connects to six translucent weekly session panels through precise timeline rails. It replaces the unauthenticated login capture and is labeled as an illustration, not an application screenshot.
+
 ## Motion and access
 
 Camera destinations are centralized. GSAP tweens a shared camera position and look target; changing selection kills the prior tweens and continues from their current values. Normal transitions last 0.95 seconds, initial reveal 1.6 seconds and can be skipped. Pointer motion is small. Reduced motion removes cinematic travel and uses demand rendering. No scroll hijacking or exploration controls stand between a visitor and content.
 
-On small screens, the identity is presented first, with a separately composed scene below and a two-column ordered project dock. Native HTML remains primary for long content. Headings use local Manrope; instrumentation uses local IBM Plex Mono. Mint accents are used sparingly, warm gold belongs to the route and board.
+On small screens, the identity is presented first, with a separately composed scene below and a two-column ordered project dock. The scene responds to horizontal touch swipes, with large previous/next buttons as a direct alternative; the vertical page scroll remains native. Native HTML remains primary for long content. Headings use local Manrope; instrumentation uses local IBM Plex Mono. Mint accents are used sparingly, warm gold belongs to the route and board.
 
 ## Visual iteration evidence
 

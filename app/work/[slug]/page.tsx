@@ -71,12 +71,14 @@ export default async function CaseStudy({
         <img
           src={p.cover_image}
           alt={
-            p.featured
-              ? p.title + " actual application interface"
-              : p.title + " original project illustration"
+            p.slug === "trackflow"
+              ? "TrackFlow weekly training plan represented as a running track and connected session timeline"
+              : p.featured
+                ? p.title + " actual application interface"
+                : p.title + " original project illustration"
           }
-          width={1440}
-          height={1000}
+          width={p.slug === "trackflow" ? 1200 : 1440}
+          height={p.slug === "trackflow" ? 800 : 1000}
         />
         <figcaption>{p.content.caption}</figcaption>
       </figure>

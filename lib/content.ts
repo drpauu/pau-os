@@ -252,7 +252,7 @@ export const projects: Project[] = [
       source:
         "Source reviewed at 1b730d6: README.md, frontend/src and server/src.",
       caption:
-        "Actual local application · unauthenticated entry screen. No athlete records displayed.",
+        "Original editorial illustration of TrackFlow’s weekly planning workflow, not a product screenshot or live athlete data.",
     },
   },
   {

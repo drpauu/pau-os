@@ -1497,6 +1497,10 @@ svg {
     font-size: 7px;
   }
 }
+.mobile-scene-nav {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .work-divider {
     align-items: flex-start;
@@ -2498,5 +2502,89 @@ main:focus {
   .hero:not([data-view="core"]) .scene-caption {
     padding: 6px 9px;
     left: 6%;
+  }
+}
+
+@media (max-width: 800px) {
+  .scene-container {
+    touch-action: pan-y;
+  }
+  .hero[data-view="core"] .scene-caption {
+    background: #0b171edc;
+    border-left: 1px solid #6e8b7c;
+    padding: 7px 10px;
+    backdrop-filter: blur(8px);
+  }
+  .mobile-scene-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .mobile-scene-nav button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 auto;
+    color: var(--accent);
+    background: #13232a;
+    border: 1px solid #66817466;
+    border-radius: 50%;
+    touch-action: manipulation;
+  }
+  .mobile-scene-nav span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #a8b8b8;
+    font-size: 7px;
+    letter-spacing: 0.08em;
+  }
+  .mobile-scene-nav i {
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: #678579;
+  }
+  .station-dock button,
+  .station-dock > .station-card > a {
+    min-height: 46px;
+  }
+  .scene-controls > button,
+  .scene-controls label,
+  .scene-controls select {
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero {
+    min-height: 1160px;
+  }
+  .scene-container {
+    top: 400px;
+    height: 390px;
+    left: -19%;
+    right: -19%;
+  }
+  .scene-caption {
+    top: 756px;
+  }
+  .scene-controls {
+    top: 777px;
+  }
+  .station-dock {
+    bottom: 62px;
+  }
+  .station-card button {
+    padding: 12px 7px;
+    gap: 6px;
+  }
+  .station-card strong {
+    font-size: 8px;
+  }
+  .station-card small {
+    font-size: 5px;
   }
 }

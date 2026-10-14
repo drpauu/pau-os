@@ -13,17 +13,23 @@ const browser = await chromium.launch({
 });
 const result = {
   time: new Date().toISOString(),
-  viewport: "1440x1000 DPR1",
-  method:
-    "Fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample.",
+  viewport: process.env.PAU_BENCHMARK_VIEWPORT === "mobile"
+    ? "390x844 DPR1 touch emulation"
+    : "1440x1000 DPR1",
+  method: process.env.PAU_BENCHMARK_VIEWPORT === "mobile"
+    ? "Chromium touch/mobile emulation on the host GPU; fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample. This does not represent physical phone performance."
+    : "Fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample.",
   renderer: null,
   modes: {},
 };
 try {
   for (const quality of ["high", "medium", "low"]) {
+    const mobile = process.env.PAU_BENCHMARK_VIEWPORT === "mobile";
     const context = await browser.newContext({
-      viewport: { width: 1440, height: 1000 },
+      viewport: mobile ? { width: 390, height: 844 } : { width: 1440, height: 1000 },
       deviceScaleFactor: 1,
+      isMobile: mobile,
+      hasTouch: mobile,
     });
     const page = await context.newPage();
     await page.addInitScript((q) => {
@@ -70,8 +76,11 @@ try {
       });
     await context.close();
   }
+  const output = process.env.PAU_BENCHMARK_VIEWPORT === "mobile"
+    ? "docs/performance-mobile-emulation.json"
+    : "docs/performance-measurements.json";
   await fs.writeFile(
-    "docs/performance-measurements.json",
+    output,
     JSON.stringify(result, null, 2) + "\n",
   );
   console.log(JSON.stringify(result, null, 2));
