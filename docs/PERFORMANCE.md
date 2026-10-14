@@ -25,7 +25,7 @@ Owner-private version 9 was verified with independent desktop and mobile browser
 - High: maximum 1.5 device pixel ratio, local 128px procedural reflection environment, 2048px key-light shadows, modest bloom.
 - Medium: DPR1, no shadow render pass or postprocessing; same essential exhibits and interaction.
 - Low: optimized WebP capture of the actual scene. No WebGL canvas or initial 3D bundle; all content and routes remain available.
-- Auto: conservative initial tier on small/low-concurrency devices and sustained frame-time monitoring. Two slow samples below 25 FPS downgrade a tier; manual selection is respected.
+- Auto is the only mode: the viewport and hardware concurrency pick the initial tier. Two consecutive slow samples below 25 FPS downgrade a tier; WebGL loss switches to the static scene. Visitors do not need to manage a quality setting.
 - Rendering pauses offscreen or when the document is hidden. Reduced motion uses demand rendering and removes camera travel.
 - Heavy scene modules are dynamically loaded independently from useful HTML. Fonts are self-hosted. There are no model, HDRI or texture CDN requests.
 

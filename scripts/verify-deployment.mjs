@@ -69,7 +69,6 @@ try {
   });
   const page = await context.newPage();
   page.on("pageerror", (e) => evidence.errors.push(e.message));
-  await page.addInitScript(() => localStorage.setItem("pau-quality", "low"));
   for (const path of [
     "/",
     "/work/",
@@ -132,9 +131,8 @@ try {
     fullPage: true,
   });
   await page.goto(origin + "/", { waitUntil: "networkidle" });
-  await page
-    .getByRole("combobox", { name: "Scene quality" })
-    .selectOption("high");
+  if (await page.getByRole("combobox", { name: "Scene quality" }).count())
+    throw new Error("Manual quality selector should not be present.");
   await page.locator("canvas").waitFor({ state: "visible", timeout: 20000 });
   await page.waitForTimeout(4500);
   evidence.webgl = await page
@@ -174,9 +172,6 @@ try {
   });
   const mobilePage = await mobileContext.newPage();
   mobilePage.on("pageerror", (e) => evidence.errors.push(e.message));
-  await mobilePage.addInitScript(() =>
-    localStorage.setItem("pau-quality", "medium"),
-  );
   await mobilePage.goto(origin + "/", { waitUntil: "networkidle" });
   await mobilePage.locator("canvas").waitFor({
     state: "visible",
@@ -184,10 +179,13 @@ try {
   });
   evidence.mobile = {
     viewport: "375x812 touch emulation",
+    automaticQuality: await mobilePage.locator(".canvas-wrapper").getAttribute("data-quality"),
     horizontalOverflow: await mobilePage.evaluate(
       () => document.documentElement.scrollWidth > innerWidth,
     ),
   };
+  if (evidence.mobile.automaticQuality !== "medium")
+    throw new Error("Automatic mobile quality tier was not selected.");
   await mobilePage.screenshot({
     path: "docs/screenshots/live-mobile-home.png",
   });

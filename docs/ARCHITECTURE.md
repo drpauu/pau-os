@@ -13,8 +13,8 @@ PAU.OS retains its existing TypeScript, Next.js App Router and React architectur
 | Content publishing   | `lib/supabase/`                                                 | Reviewed snapshot by default; explicit, server-only Supabase publishing mirror                  |
 | Toolbox              | `scripts/toolbox.mjs`, `data/toolbox.json`, `features/toolbox/` | Exact GitHub synchronization and accessible category explorer                                   |
 | Geography            | `data/catalunya-comarques.json`, `lib/geography.ts`             | Verified map, shared-arc adjacency and isolated shortest-hop routes                             |
-| Scene                | `components/3d/Laboratory.tsx`, `components/3d/scenes/`         | Rendering, camera, observatory, eight selectable project installations and quality modes         |
-| Scene UI/state       | `features/laboratory/Hero.tsx`, `stores/laboratory.ts`          | Immediate HTML controls, selected installation, quality and intro state                         |
+| Scene                | `components/3d/Laboratory.tsx`, `components/3d/scenes/`         | Rendering, camera, observatory, eight selectable project installations and automatic quality    |
+| Scene UI/state       | `features/laboratory/Hero.tsx`, `stores/laboratory.ts`          | Immediate HTML controls, selected installation, orbit and intro state                          |
 
 ## Routes and ordering
 
@@ -24,7 +24,7 @@ Camí Curt → ATHRA → Alcoholfabet → TrackFlow is a content invariant, enfo
 
 ## Rendering and camera
 
-`Hero` renders immediate identity, links, project selectors and a static visual. It imports the WebGL renderer dynamically with `ssr: false`. A failed WebGL capability check, low-quality selection, renderer exception or lost context retains the static observatory and ordinary navigation.
+`Hero` renders immediate identity, links, project selectors and a static poster while the WebGL renderer loads dynamically with `ssr: false`. Quality is always automatic: viewport and hardware concurrency select the initial tier, sustained slow frames lower it, and unsupported/lost WebGL falls back to the static observatory. No quality preference or selector is exposed; ordinary navigation remains available.
 
 `CameraRig` is the single owner of camera destination/look targets. GSAP interpolates its target values; a frame loop follows them smoothly. Effect cleanup kills both tweens when the destination changes, so rapid station selections redirect the current animation. Reduced-motion mode uses immediate target changes and no pointer parallax. Aspect ratio scales camera framing; mobile CSS supplies a separate composition.
 
@@ -34,7 +34,7 @@ ATHRA's performance instrument, Alcoholfabet's board and TrackFlow's planning st
 
 ## Quality and lifecycle
 
-High quality uses shadows, capped device pixel ratio, local environment lightformers and restrained bloom. Medium reduces pixel ratio and removes shadows/postprocessing. Low is the static observatory and skips the 3D module on a fresh page load. Auto starts conservatively on smaller/fewer-core devices and degrades after repeated slow frame samples. A visitor can explicitly choose a mode; the preference persists locally.
+High quality uses shadows, capped device pixel ratio, local environment lightformers and restrained bloom. Medium reduces pixel ratio and removes shadows/postprocessing. Low is the static observatory. Auto starts conservatively on smaller/fewer-core devices and degrades after repeated slow frame samples. The selected tier is runtime-only and automatic.
 
 Intersection/document visibility stop the frame loop when the scene is out of view. Reduced motion uses demand rendering. GPU counters and sample FPS are exposed as canvas data attributes for measurement; reported numbers belong in `docs/PERFORMANCE.md`, not inferred from renderer settings.
 

@@ -437,23 +437,6 @@ svg {
 .scene-controls button:hover {
   background: #28414e;
 }
-.scene-controls label {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 0 8px;
-}
-.scene-controls select {
-  color: #b4c8d4;
-  background: transparent;
-  border: 0;
-  max-width: 100px;
-  font: 9px var(--mono);
-  cursor: pointer;
-}
-.scene-controls option {
-  background: #101c25;
-}
 .scene-controls .skip-intro {
   font-size: 8px;
 }
@@ -2576,9 +2559,7 @@ main:focus {
   .station-dock > .station-card > a {
     min-height: 46px;
   }
-  .scene-controls > button,
-  .scene-controls label,
-  .scene-controls select {
+  .scene-controls > button {
     min-height: 42px;
   }
 }

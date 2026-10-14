@@ -55,7 +55,7 @@ PAU.OS uses a small interaction store, separate world components and HTML projec
 
 - The existing Next application was extended rather than migrating frameworks. Server-rendered content and direct URLs remain useful without a WebGL context.
 - The previous generic central reactor has been replaced by the suspended Camí Curt geographic instrument. A machined circular platform, calibrated pedestal, curved gantry and task lights compose one finite observatory.
-- `components/3d/Laboratory.tsx` owns the render boundary, camera rig, quality selection and projected HTML station labels. `scenes/Observatory.tsx` owns the architecture plus distinct performance, board-game and planning exhibits; `scenes/Catalonia.tsx` owns the map installation.
+- `components/3d/Laboratory.tsx` owns the render boundary, camera rig, automatic quality tiers and projected HTML station labels. `scenes/Observatory.tsx` owns the architecture plus distinct performance, board-game and planning exhibits; `scenes/Catalonia.tsx` owns the map installation.
 - The station order is **Camí Curt, ATHRA, Alcoholfabet, TrackFlow**. That same order belongs to the content model, Work view and project continuation links.
 - Camera transitions are bounded and cancellable. The map uses a higher overview than the secondary instruments; mobile scales composition explicitly. Reduced motion affects render behavior as well as CSS.
 - High/medium/low/static choices, lazy scene loading and a static fallback keep GPU work optional. Repeated calibration marks use instancing; geography is a small committed topology. These are architecture decisions, not unmeasured performance claims; see performance documentation for actual measurements.

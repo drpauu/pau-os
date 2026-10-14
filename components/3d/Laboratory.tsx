@@ -190,9 +190,11 @@ function SceneLabels() {
 }
 function Runtime({
   onDegrade,
+  onContextLost,
   reduced,
 }: {
   onDegrade: () => void;
+  onContextLost: () => void;
   reduced: boolean;
 }) {
   const { gl, setFrameloop, invalidate } = useThree();
@@ -245,16 +247,15 @@ function Runtime({
   useEffect(() => {
     const lost = (e: Event) => {
       e.preventDefault();
-      useLaboratory.getState().setQuality("low");
+      onContextLost();
     };
     gl.domElement.addEventListener("webglcontextlost", lost);
     return () => gl.domElement.removeEventListener("webglcontextlost", lost);
-  }, [gl]);
+  }, [gl, onContextLost]);
   return null;
 }
 export default function Laboratory() {
-  const quality = useLaboratory((s) => s.quality),
-    [tier, setTier] = useState<"high" | "medium" | "low">("medium"),
+  const [tier, setTier] = useState<"high" | "medium" | "low">("medium"),
     [supported, setSupported] = useState(false),
     [reduced, setReduced] = useState(false),
     [hovered, setHovered] = useState<string | null>(null),
@@ -276,7 +277,7 @@ export default function Laboratory() {
     );
     return () => motion.removeEventListener("change", change);
   }, []);
-  const actual = quality === "auto" ? tier : quality;
+  const actual = tier;
   if (!supported || actual === "low") return <StaticScene />;
   return (
     <CanvasBoundary>
@@ -360,9 +361,9 @@ export default function Laboratory() {
             <PinnedExhibits />
             <Runtime
               reduced={reduced}
+              onContextLost={() => setTier("low")}
               onDegrade={() => {
-                if (quality === "auto")
-                  setTier((t) => (t === "high" ? "medium" : "low"));
+                setTier((t) => (t === "high" ? "medium" : "low"));
               }}
             />
             {actual === "high" && (

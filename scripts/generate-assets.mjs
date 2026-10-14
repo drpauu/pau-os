@@ -18,7 +18,6 @@ const p = await b.newPage({
 await p.goto(process.env.PAU_CAPTURE_URL ?? "http://127.0.0.1:3100", {
   waitUntil: "networkidle",
 });
-await p.selectOption('select[aria-label="Scene quality"]', "high");
 await p.waitForTimeout(4500);
 const hidden = await p.addStyleTag({
   content:

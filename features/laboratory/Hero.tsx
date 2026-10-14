@@ -1,6 +1,5 @@
 "use client";
 import dynamic from "next/dynamic";
-import { StaticScene } from "./StaticScene";
 import { professional } from "@/lib/professional";
 import Link from "next/link";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
@@ -9,10 +8,9 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  Focus,
   RotateCcw,
 } from "lucide-react";
-import { useLaboratory, type Quality, type Station } from "@/stores/laboratory";
+import { useLaboratory, type Station } from "@/stores/laboratory";
 import { projects } from "@/lib/content";
 const Laboratory = dynamic(() => import("@/components/3d/Laboratory"), {
   ssr: false,
@@ -27,7 +25,6 @@ const destinations: { id: Station; name: string; tag: string }[] = projects.map(
 );
 export function Hero() {
   const [introPending, setIntroPending] = useState(true);
-  const [qualityReady, setQualityReady] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const drag = useRef<{
     pointerId: number;
@@ -42,21 +39,13 @@ export function Hero() {
     orbit,
     select,
     rotate,
-    quality,
-    setQuality,
     skipIntro,
     introSkipped,
   } = useLaboratory();
   useEffect(() => {
     const t = setTimeout(() => setIntroPending(false), 2200);
-    try {
-      const q = localStorage.getItem("pau-quality");
-      if (["auto", "high", "medium", "low"].includes(q ?? ""))
-        setQuality(q as Quality);
-    } catch {}
-    setQualityReady(true);
     return () => clearTimeout(t);
-  }, [setQuality]);
+  }, []);
   const current = destinations.find((d) => d.id === station) ?? destinations[0];
   const moveStation = (direction: -1 | 1) => {
     const currentIndex = destinations.findIndex((d) => d.id === station);
@@ -154,7 +143,7 @@ export function Hero() {
         onPointerUp={finishSceneDrag}
         onPointerCancel={finishSceneDrag}
       >
-        {qualityReady && quality !== "low" ? <Laboratory /> : <StaticScene />}
+        <Laboratory />
       </div>
       <div className="scene-coordinate mono">
         <span>OBSERVATORY / 01</span>
@@ -205,20 +194,6 @@ export function Hero() {
         >
           <RotateCcw size={15} />
         </button>
-        <label>
-          <Focus size={15} />
-          <span className="sr-only">Scene quality</span>
-          <select
-            aria-label="Scene quality"
-            value={quality}
-            onChange={(e) => setQuality(e.target.value as Quality)}
-          >
-            <option value="auto">AUTO</option>
-            <option value="high">HIGH</option>
-            <option value="medium">MEDIUM</option>
-            <option value="low">LOW / STATIC</option>
-          </select>
-        </label>
         {introPending && !introSkipped && (
           <button className="skip-intro" onClick={skipIntro}>
             Skip intro

@@ -46,7 +46,6 @@ test("direct routes, verified media, exact main navigation and browser history",
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.addInitScript(() => localStorage.setItem("pau-quality", "low"));
   for (const route of routes) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);
@@ -115,7 +114,6 @@ test("direct routes, verified media, exact main navigation and browser history",
 test("home and Work preserve the featured-product then GitHub-pin order", async ({
   page,
 }) => {
-  await page.addInitScript(() => localStorage.setItem("pau-quality", "low"));
   for (const route of ["/", "/work/"]) {
     await page.goto(route);
     expect(await page.locator(".project-copy h2").allTextContents()).toEqual(
@@ -157,15 +155,14 @@ test("terminal remains an optional keyboard easter egg with safe commands", asyn
   await expect(page).toHaveURL(/\/work\/athra\/$/);
 });
 
-test("camera redirects safely, every installation focuses, and quality fallback works", async ({
+test("camera redirects safely, every installation focuses, and quality stays automatic", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  await page.addInitScript(() => localStorage.setItem("pau-quality", "low"));
   await page.goto("/");
-  await page
-    .getByRole("combobox", { name: "Scene quality" })
-    .selectOption("high");
+  await expect(page.getByRole("combobox", { name: "Scene quality" })).toHaveCount(0);
   await expect(page.locator("canvas")).toBeVisible();
   await page.waitForTimeout(1800);
   const orbitScene = page.locator(".scene-container");
@@ -203,16 +200,16 @@ test("camera redirects safely, every installation focuses, and quality fallback 
   await page.getByRole("button", { name: "Focus CAMÍ CURT station" }).click();
   await page.getByRole("button", { name: "Focus TRACKFLOW station" }).click();
   await page.waitForTimeout(1400);
-  await expect(
-    page.locator("[data-station=trackflow] .station-visit"),
-  ).toBeVisible();
+  await expect(page.locator(".scene-caption > a")).toHaveAttribute(
+    "href",
+    "/work/trackflow/",
+  );
   await page.getByRole("button", { name: "Reset observatory view" }).click();
   await page.waitForTimeout(1300);
   await page.screenshot({ path: "docs/screenshots/observatory.png" });
-  await page
-    .getByRole("combobox", { name: "Scene quality" })
-    .selectOption("low");
-  await expect(page.locator("canvas")).toHaveCount(0);
+  const canvas = page.locator("canvas");
+  if ((await canvas.count()) > 0) await expect(canvas).toBeVisible();
+  else await expect(page.getByRole("img", { name: /static mode/ })).toBeVisible();
   for (const title of installationTitles)
     await expect(
       page.getByRole("link", { name: `Read ${title} case study` }),
@@ -224,7 +221,6 @@ test("mobile observatory supports touch orbit and touch-sized project controls",
   page,
 }) => {
   await page.setViewportSize({ width: 375, height: 812 });
-  await page.addInitScript(() => localStorage.setItem("pau-quality", "medium"));
   await page.goto("/");
   await expect(page.locator("canvas")).toBeVisible();
   await page.screenshot({
@@ -453,9 +449,7 @@ for (const [name, width, height] of [
   }) => {
     await page.setViewportSize({ width, height });
     await page.goto("/");
-    await page
-      .getByRole("combobox", { name: "Scene quality" })
-      .selectOption(width > 800 ? "high" : "medium");
+    await expect(page.getByRole("combobox", { name: "Scene quality" })).toHaveCount(0);
     await page.waitForTimeout(2400);
     expect(
       await page.evaluate(

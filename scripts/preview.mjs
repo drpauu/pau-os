@@ -23,7 +23,6 @@ await page.goto("http://127.0.0.1:3100", {
   waitUntil: "networkidle",
   timeout: 90000,
 });
-await page.selectOption('select[aria-label="Scene quality"]', "high");
 await page.waitForTimeout(6000);
 await page.screenshot({ path: "docs/first-desktop.png" });
 console.log(
