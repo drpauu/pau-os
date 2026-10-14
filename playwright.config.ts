@@ -13,7 +13,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
     channel: "chromium",
     launchOptions: {
-      args: [
+      args: process.env.PAU_SOFTWARE_GPU === "1" ? ["--no-sandbox", "--use-angle=swiftshader"] : [
         "--no-sandbox",
         "--enable-gpu",
         "--use-gl=angle",

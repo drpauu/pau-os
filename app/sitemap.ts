@@ -7,12 +7,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "https://pau-os-laboratory.poeticcrow1.chatgpt.site";
   return [
     "",
-    "projects/",
+    "work/",
     "about/",
-    "lab/",
+    "experience/",
     "resume/",
     "contact/",
-    ...(await getProjects()).map((p) => "projects/" + p.slug + "/"),
+    ...(await getProjects()).map((p) => "work/" + p.slug + "/"),
   ].map((path) => ({
     url: base + "/" + path,
     changeFrequency: "monthly",

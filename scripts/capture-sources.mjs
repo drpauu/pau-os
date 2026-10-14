@@ -1,45 +1,57 @@
 import { chromium } from "@playwright/test";
-import sharp from "sharp";
 import fs from "node:fs/promises";
+
+// Review-first, local-only replacement for the obsolete bulk live-site capture.
+// Existing published media and provenance are never overwritten by this helper.
+const [slug, address] = process.argv.slice(2);
+if (!["athra", "trackflow", "cami-curt"].includes(slug) || !address) {
+  throw new Error(
+    "Usage: node scripts/capture-sources.mjs <athra|trackflow|cami-curt> <local-preview-url>. Use fixture data only. Alcoholfabet has its own isolated capture script.",
+  );
+}
+const url = new URL(address);
+if (
+  !["localhost", "127.0.0.1", "[::1]"].includes(url.hostname) ||
+  url.protocol !== "http:" ||
+  url.username ||
+  url.password
+) {
+  throw new Error(
+    "Source captures require a local HTTP preview; remote applications are not contacted.",
+  );
+}
 const browser = await chromium.launch({
   headless: true,
-  args: ["--no-sandbox", "--enable-unsafe-swiftshader"],
+  args: ["--no-sandbox"],
 });
-const results = [];
-for (const [slug, url] of [
-  ["trackflow", "https://track-flow-frontend.vercel.app"],
-  ["cami-curt", "https://camicurt.cat"],
-  ["athra", "http://localhost:3000"],
-]) {
+try {
   const page = await browser.newPage({
     viewport: { width: 1440, height: 1000 },
-    deviceScaleFactor: 1,
   });
-  try {
-    const response = await page.goto(url, {
-      waitUntil: "networkidle",
-      timeout: 60000,
-    });
-    await page.waitForTimeout(1800);
-    await page.screenshot({ path: `docs/${slug}-source.png` });
-    await sharp(`docs/${slug}-source.png`)
-      .webp({ quality: 86 })
-      .toFile(`public/images/${slug}.webp`);
-    results.push({
-      slug,
-      url,
-      status: response.status(),
-      title: await page.title(),
-      text: (await page.locator("body").innerText()).slice(0, 400),
-    });
-  } catch (e) {
-    results.push({ slug, error: e.message });
-  }
-  await page.close();
+  await page.route("**/*", (route) => {
+    const request = route.request(),
+      target = new URL(request.url());
+    if (
+      !["localhost", "127.0.0.1", "[::1]"].includes(target.hostname) ||
+      !["GET", "HEAD"].includes(request.method())
+    )
+      return route.abort();
+    return route.continue();
+  });
+  const response = await page.goto(url.href, {
+    waitUntil: "networkidle",
+    timeout: 30000,
+  });
+  if (!response?.ok())
+    throw new Error(
+      `Capture refused: HTTP ${response?.status() ?? "unavailable"}`,
+    );
+  await fs.mkdir("docs/media-review", { recursive: true });
+  const output = `docs/media-review/${slug}-candidate.png`;
+  await page.screenshot({ path: output });
+  console.log(
+    `Candidate saved to ${output}. Inspect for private data and errors before publishing; existing images/provenance unchanged.`,
+  );
+} finally {
+  await browser.close();
 }
-await fs.writeFile(
-  "docs/screenshots-provenance.json",
-  JSON.stringify({ capturedAt: new Date().toISOString(), results }, null, 2),
-);
-console.log(JSON.stringify(results, null, 2));
-await browser.close();

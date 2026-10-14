@@ -1,71 +1,52 @@
 "use client";
 import dynamic from "next/dynamic";
+import { StaticScene } from "./StaticScene";
+import { professional } from "@/lib/professional";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  ArrowDown,
-  ArrowUpRight,
-  Focus,
-  RotateCcw,
-  Volume2,
-  VolumeX,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight, Focus, RotateCcw } from "lucide-react";
 import { useLaboratory, type Quality, type Station } from "@/stores/laboratory";
-import { useAmbientAudio } from "@/hooks/useAmbientAudio";
 const Laboratory = dynamic(() => import("@/components/3d/Laboratory"), {
   ssr: false,
   loading: () => <div className="scene-poster" aria-hidden="true" />,
 });
-const destinations: { id: Station; name: string; tag: string; href: string }[] =
-  [
-    {
-      id: "athra",
-      name: "ATHRA",
-      tag: "HUMAN PERFORMANCE",
-      href: "/projects/athra/",
-    },
-    {
-      id: "trackflow",
-      name: "TRACKFLOW",
-      tag: "CONNECTED SYSTEMS",
-      href: "/projects/trackflow/",
-    },
-    {
-      id: "cami-curt",
-      name: "CAMÍ CURT",
-      tag: "PLAYFUL ALGORITHMS",
-      href: "/projects/cami-curt/",
-    },
-  ];
+const destinations: { id: Station; name: string; tag: string }[] = [
+  { id: "camicurt", name: "CAMÍ CURT", tag: "GEOGRAPHY × GRAPH THEORY" },
+  { id: "athra", name: "ATHRA", tag: "HUMAN PERFORMANCE" },
+  { id: "alcoholfabet", name: "ALCOHOLFABET", tag: "PLAY × SHARED STATE" },
+  { id: "trackflow", name: "TRACKFLOW", tag: "STRUCTURE × TIME" },
+];
 export function Hero() {
   const [introPending, setIntroPending] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setIntroPending(false), 3500);
-    return () => clearTimeout(t);
-  }, []);
+  const [qualityReady, setQualityReady] = useState(false);
   const { station, select, quality, setQuality, skipIntro, introSkipped } =
-      useLaboratory(),
-    { enabled, toggle } = useAmbientAudio();
+    useLaboratory();
   useEffect(() => {
+    const t = setTimeout(() => setIntroPending(false), 2200);
     try {
       const q = localStorage.getItem("pau-quality");
       if (["auto", "high", "medium", "low"].includes(q ?? ""))
         setQuality(q as Quality);
     } catch {}
+    setQualityReady(true);
+    return () => clearTimeout(t);
   }, [setQuality]);
+  const current = destinations.find((d) => d.id === station) ?? destinations[0];
   return (
-    <section className="hero" aria-label="Interactive engineering laboratory">
+    <section
+      className="hero"
+      data-view={station}
+      aria-label="Interactive engineering observatory"
+    >
       <div className="hero-grid" aria-hidden="true" />
       <div className="hero-meta mono">
         <span>
-          <i className="status-dot" /> INTERACTIVE ENGINEERING LABORATORY
+          <i className="status-dot" /> THE ENGINEERING OBSERVATORY
         </span>
-        <span>BARCELONA / EST. IN CURIOSITY</span>
+        <span>BARCELONA, ES &nbsp; / &nbsp; 41.38° N · 2.17° E</span>
       </div>
       <div className="hero-title">
-        <p className="hero-issue mono">
-          SOFTWARE ENGINEER & DATA / AI CONSULTANT
-        </p>
+        <p className="hero-issue mono">SOFTWARE · DATA · DIGITAL PRODUCTS</p>
         <h1>
           PAU
           <br />
@@ -73,36 +54,46 @@ export function Hero() {
           <span className="title-period">.</span>
         </h1>
         <p className="hero-statement">
-          Building what
+          Ideas into systems.
           <br />
-          <em>comes next.</em>
+          <em>Systems into experiences.</em>
         </p>
         <p className="hero-description">
-          An interactive space for engineering,
-          <br className="desktop-break" /> data and independent digital
-          products.
+          I’m a {professional.role} who builds useful
+          <br className="desktop-break" /> products, from the algorithm to the
+          interface.
         </p>
         <div className="hero-actions">
-          <Link className="button primary" href="/projects/">
+          <Link className="button primary" href="/work/">
             Explore my work <ArrowUpRight size={17} />
           </Link>
           <Link className="hero-resume" href="/resume/">
-            Resume <ArrowUpRight size={14} />
+            View resume <ArrowUpRight size={14} />
           </Link>
         </div>
       </div>
       <div className="scene-container">
-        <Laboratory />
+        {qualityReady && quality !== "low" ? <Laboratory /> : <StaticScene />}
       </div>
       <div className="scene-coordinate mono">
-        <span>FIG. 001</span>
-        <strong>THE IDEA REACTOR</strong>
-        <span>SELECT A STATION TO EXPLORE</span>
+        <span>OBSERVATORY / 01</span>
+        <strong>EVERY CONNECTION TELLS A STORY.</strong>
+      </div>
+      <div className="scene-caption">
+        <span className="mono">
+          {station === "core" || station === "camicurt"
+            ? "01 / FEATURED INSTALLATION"
+            : "PROJECT INSTALLATION"}
+        </span>
+        <Link href={"/work/" + current.id + "/"}>
+          {current.name} <ArrowUpRight size={17} />
+        </Link>
+        <span className="mono">{current.tag}</span>
       </div>
       <div className="scene-controls">
         <button
           title="Return to overview"
-          aria-label="Reset laboratory view"
+          aria-label="Reset observatory view"
           onClick={() => select("core")}
         >
           <RotateCcw size={15} />
@@ -121,27 +112,21 @@ export function Hero() {
             <option value="low">LOW / STATIC</option>
           </select>
         </label>
-        <button
-          onClick={toggle}
-          aria-label={enabled ? "Mute ambient audio" : "Enable ambient audio"}
-          aria-pressed={enabled}
-        >
-          {enabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
-        </button>
         {introPending && !introSkipped && (
           <button className="skip-intro" onClick={skipIntro}>
             Skip intro
           </button>
         )}
       </div>
-      <div className="station-dock">
-        <div className="dock-label mono">
-          <span className="status-dot" /> THE LABORATORY
-          <span>CHOOSE YOUR NEXT STOP</span>
-        </div>
+      <div className="station-dock" aria-label="Project installations">
         {destinations.map((d, i) => (
           <div
-            className={"station-card " + (station === d.id ? "selected" : "")}
+            className={
+              "station-card " +
+              (station === d.id || (station === "core" && i === 0)
+                ? "selected"
+                : "")
+            }
             key={d.id}
           >
             <button
@@ -154,9 +139,11 @@ export function Hero() {
                 <strong>{d.name}</strong>
                 <small>{d.tag}</small>
               </span>
-              <span className="station-dot" />
             </button>
-            <Link href={d.href} aria-label={"Read " + d.name + " case study"}>
+            <Link
+              href={"/work/" + d.id + "/"}
+              aria-label={"Read " + d.name + " case study"}
+            >
               <ArrowUpRight size={20} />
             </Link>
           </div>
@@ -166,7 +153,7 @@ export function Hero() {
         <a href="#selected-work">
           SCROLL TO DISCOVER <ArrowDown size={14} />
         </a>
-        <span>MADE OF CODE. DRIVEN BY CURIOSITY.</span>
+        <span>FOUR PRODUCTS. ONE ENGINEERING MINDSET.</span>
       </div>
     </section>
   );

@@ -1,21 +1,24 @@
-# Content and asset provenance
+# Public content and asset provenance
 
-Audited on 2026-10-14. No private application rows or personal health records were accessed for this portfolio.
+Audited 2026-10-14. This replaces the prior provenance assumptions with the owner-supplied CV and verified project commits. Detailed evidence and qualifications are in `CONTENT_SOURCES.md`.
 
-| Claim / asset                               | Evidence                                                                                                                                                                                                                               |
-| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Pau Alcázar; Data & AI Consultant / Analyst | Owner’s instruction and existing `/home/pau/Documents/github-profile-readme/README.md`                                                                                                                                                 |
-| Computer Science degree at UPC              | Owner’s instruction and public profile README                                                                                                                                                                                          |
-| Accenture experience in data and technology | Owner-supplied context; no dates, client names or quantified results invented                                                                                                                                                          |
-| High-performance sport                      | Owner-supplied context; no medals, rankings or results invented                                                                                                                                                                        |
-| LinkedIn / GitHub                           | Links in the owner’s profile README; github.com/drpauu identity verified with gh                                                                                                                                                       |
-| ATHRA                                       | [Repository at c755f20](https://github.com/drpauu/athra/tree/c755f20): App.tsx, server.ts, src domain/import/repository/API files. In-memory persistence, FIT import and deterministic recovery engine verified.                       |
-| ATHRA image                                 | Captured local application on port 3000 with its shipped demonstration seed, including the fictional sample athlete. No real health data. Existing interface calls itself KINETICOS; the portfolio labels the actual ATHRA repository. |
-| TrackFlow                                   | [Repository at 1b730d6](https://github.com/drpauu/TrackFlow/tree/1b730d6): README, frontend and server. Coach/athlete plans, MongoDB canonical model and incremental synchronization inspected.                                        |
-| TrackFlow image                             | Local frontend on port 5177, unauthenticated entry view. No backend login or seed-user credentials used. Previously advertised Vercel URL returned 404; no dead demo button is published.                                              |
-| Camí Curt                                   | [Public game](https://camicurt.cat) and owner’s existing source checkout. React/D3/TopoJSON, daily route challenges and graph engine verified.                                                                                         |
-| Camí Curt image                             | Public page captured without sign-in, first-run tutorial dismissed through its own Skip button. No account or private leaderboard data.                                                                                                |
-| Laboratory fallback                         | Browser render of the original PAU.OS procedural scene. UI was hidden during capture; no external visual assets used.                                                                                                                  |
-| Resume                                      | Generated from the HTML resume as a one-page A4 PDF; owner-confirmed facts only, optional dates omitted.                                                                                                                               |
+| Public content | Authority / evidence | Publication boundary |
+| --- | --- | --- |
+| Name, professional positioning and location | Owner-supplied `Pau_Alcazar_CV.pdf`, page 1 | Public model uses Pau Alcázar, Data & AI Engineer, Barcelona, Spain. |
+| Accenture role, dates and responsibilities | CV page 1, Professional Experience | Exact title and dates; responsibilities paraphrased without named clients. |
+| Superprof role and dates | CV page 1, Professional Experience | No invented teaching metrics. |
+| UPC–EPSEVG degree and dates | CV page 1, Education | Degree title preserved; cybersecurity is a study topic only. |
+| Languages | CV page 1, Languages | No proficiency levels or certification claims inferred. |
+| GitHub and LinkedIn | Existing public GitHub profile README | Public professional links only. |
+| Toolbox | Public GitHub README `## Toolbox` | Exact categories, wording and order; no expertise rankings. |
+| Camí Curt implementation | Public commit 612657b plus source geography and worker | Game data, not a claim of current official administrative completeness. |
+| ATHRA implementation | Commit c755f20; importer, analytics engine, in-memory repository, API | Development prototype; no production wearable or clinical claims. |
+| Alcoholfabet implementation | Public commit d184832, matching local checkout | Source-verified game state, role-aware views and private channels; no production sessions touched. |
+| TrackFlow implementation | Commit 1b730d6, frontend and MongoDB API | MongoDB architecture; no incorrect Supabase attribution. |
+| Camí Curt image | Existing public-page browser capture | No sign-in or private data. |
+| ATHRA image | Existing local application browser capture | Shipped sample data; interface currently calls itself KINETICOS. |
+| Alcoholfabet image | Public interface with local menu fixture | Empty score and fictional auth fixture; backend fully intercepted. |
+| TrackFlow image | Existing local unauthenticated frontend | No athlete data or login credentials used. |
+| Public CV PDF | Generated from `lib/professional.ts` with `scripts/generate-public-resume.mjs` | Private contacts and client-specific detail excluded; one-page output visually reviewed. Owner editorial review recommended before deployment. |
 
-Raw project captures: `docs/*-source.png`; optimized derivatives: `public/images/*.webp`. Capture origins and time: `docs/screenshots-provenance.json`. Owner projects’ source is retained separately and not redistributed in this application.
+No original CV bytes, personal contact details, private application rows, health records, online player codes or privileged credentials were copied into published assets. Source CV remains ignored. The generator reads the curated TypeScript model and never reads or copies the PDF. `docs/public-cv-review.json` records the source hash and review boundary without sensitive values.

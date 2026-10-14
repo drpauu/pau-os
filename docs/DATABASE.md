@@ -1,37 +1,54 @@
-# Portfolio database
+# Portfolio database boundary
 
-The connected Supabase account exposed one project-scoped MCP connection; organization enumeration and free project creation were not available. No new subscription or project was created. PAU.OS uses isolated `public.portfolio_*` tables in the connected project. Existing application tables, policies, auth configuration and private data were not modified.
+## Current state, inspected 2026-10-14
 
-## Current integration
+The available Supabase MCP connection is scoped to the existing **Tecla&Pau** project, as confirmed against the local application's setup documentation. It contains production application tables and three pre-existing `public.portfolio_*` tables. There is no organization/project enumeration or free-project creation tool in this connection. No project, subscription, schema, migration, record, policy, auth setting or storage object was created or modified in this implementation.
 
-`portfolio_projects` contains ATHRA, TrackFlow and Camí Curt, all explicitly published. The Next.js build reads these records using a publishable key. Every project uses the same Zod schema and case-study template. `portfolio_experience` and `portfolio_content` are empty optional extension tables; the factual professional snapshot remains source-controlled. No messages table is needed because contact is through verified external links.
+Only schema metadata, access-control metadata and published portfolio slugs/order were queried. No game sessions, personal records, credentials, unpublished content or health data were read into the portfolio. The connected database is not evidence that Camí Curt, ATHRA or TrackFlow use it.
 
-## Owner administration
+The old published records are `athra` (1), `trackflow` (2), and `cami-curt` (3). They lack Alcoholfabet and conflict with the required flagship/order. They remain untouched.
 
-Open Supabase Studio → Table Editor → `portfolio_projects`. The project owner’s Supabase organization membership authorizes Studio edits. Application clients have SELECT only. There are deliberately no authenticated-user INSERT/UPDATE/DELETE grants and no write policies; simply signing into an unrelated application on this project does not grant editorial access.
+## Explicit content modes
 
-1. Edit a project’s text/JSON or insert a complete record with a unique slug.
-2. Upload its image through the source workflow to `public/images/`; set the local path.
-3. Set `published=true` only when content is verified and public.
-4. Set `updated_at=now()` in SQL when editing; no global trigger was introduced.
-5. Run `npm run build` and publish the new static export.
+`PAU_CONTENT_SOURCE=snapshot` is the default. `lib/supabase/content.ts` validates and returns the reviewed local project model. Legacy `.env.local` Supabase settings cannot silently override this mode. Professional content remains CV-derived; Toolbox remains GitHub-derived.
 
-**Publication boundary:** cached/static HTML is public once deployed. Turning `published` off only affects the next build. Rebuild/redeploy to withdraw content. Never store sensitive data in these editorial tables, even as unpublished drafts. A configured backend error fails the build; it does not silently restore older content.
+`PAU_CONTENT_SOURCE=supabase` explicitly enables build-time remote reads. Use `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY`; the earlier `NEXT_PUBLIC_` names are supported for compatibility. The module is marked `server-only`, uses no persistent authentication session, performs SELECT only and times out after five seconds. Privileged Supabase keys are rejected.
 
-## Migration and rollback
+Remote data must pass Zod validation, publication checks, unique slug/order checks and this exact first-four sequence:
 
-`20261014073010_pau_os_content.sql` creates three namespaced tables, enables RLS, adds a partial published/sort-order index and grants only SELECT. Re-running it changes only its own named policies. `seed.sql` uses `ON CONFLICT DO NOTHING` to preserve editorial edits.
+1. `camicurt`, featured, sort order 1
+2. `athra`, featured, sort order 2
+3. `alcoholfabet`, featured, sort order 3
+4. `trackflow`, featured, sort order 4
 
-For a new dedicated project, run the migration and seed in Studio, set the new URL/publishable key, verify with `npm run db:test`, rebuild and deploy. No secret key is needed.
+It must also match the source-reviewed snapshot. Supabase is a publishing mirror, not an unreviewed source of claims. An outage, incomplete data, unexpected content or stale ordering fails a remote-mode build. Snapshot mode is a deliberate alternative, not a silent fallback after a published record is withdrawn.
 
-Rollback is deliberately **manual and approval-gated** because removing the three tables destroys editorial content. Export their data first, remove PAU.OS deployment references, then drop only `portfolio_projects`, `portfolio_experience` and `portfolio_content`. Do not run broad schema cleanup or reset the shared project.
+## Prepared model
 
-## Verification performed
+The existing migration `supabase/migrations/20261014073010_pau_os_content.sql` is retained as historical/local setup code. It defines:
 
-- Public REST query returned three published slugs.
-- Anonymous INSERT and UPDATE were rejected with PostgreSQL `42501`.
-- Transaction-local unpublished probes were invisible to `anon` and `authenticated`; probes were rolled back.
-- All three tables have RLS enabled and SELECT-only policies.
-- Security advisors reported no findings for PAU.OS tables. Existing project advisories concern unrelated resources and were left untouched. [Supabase advisor reference](https://supabase.com/docs/guides/database/database-linter).
+| Content | Representation |
+| --- | --- |
+| Projects and case studies | `portfolio_projects`: slug, explicit order, publication, repository/live URLs, technology array, case-study JSON |
+| Media | Local optimized files referenced by `cover_image` and `gallery` |
+| Experience | Optional `portfolio_experience`; the CV-derived source model currently supplies the site |
+| Public profile and education | Source-controlled professional model; optional `portfolio_content` sections can mirror approved public JSON |
+| Contact | Verified external links; no messages table, form endpoint or visitor data collection |
 
-The reusable REST test is `scripts/verify-database.mjs`. It tests denied writes against a nonexistent `permission-test` slug and never requests a privileged key.
+The migration enables RLS and explicitly grants only SELECT to `anon` and `authenticated`. Policies permit `published = true`. Supabase Studio project-owner access is the intended editorial channel; signing into another application on the shared project grants no portfolio editing rights. There are no browser write policies or public administrator functions. Current documentation stresses that grants and RLS are separate controls: [Supabase API security](https://supabase.com/docs/guides/api/securing-your-api) and [RLS](https://supabase.com/docs/guides/database/postgres/row-level-security).
+
+`npm run content:seed` regenerates a local reviewed-project SQL file. It never contacts Supabase. `ON CONFLICT DO NOTHING` preserves previous edits, so running it against the old shared database would not reconcile stale records. Do not do that automatically. Prefer a separately approved dedicated project; review content and migration scope before applying any SQL.
+
+## Verification actually performed
+
+- Metadata confirmed RLS enabled on all three portfolio tables.
+- `pg_policies` confirmed SELECT-only policies for `anon` and `authenticated`, each requiring `published = true`.
+- `information_schema.role_table_grants` confirmed only SELECT grants for both client roles on those tables.
+- `npm run db:test` performed an anonymous public read successfully, then exited **2** to flag the known project/order mismatch. The command now performs only SELECT; legacy INSERT/UPDATE probes were removed.
+- Unit tests verify missing featured projects, incorrect ordering, duplicate slugs, unpublished data and remote content drift are rejected.
+
+No mutation-based RLS probes were run against the shared production application. No isolated database was provisioned, so an executable allow/deny SQL fixture suite against a fresh local database remains unverified. The metadata audit supports the existing boundary; it is not a claim of a complete production database security test.
+
+## Publication and withdrawal
+
+A static export is public until rebuilt/redeployed. Changing database publication flags alone cannot recall existing deployed HTML. Never store confidential drafts in these public editorial tables. The current release uses the reviewed snapshot, so database edits do not affect it until explicitly reviewed and integrated.

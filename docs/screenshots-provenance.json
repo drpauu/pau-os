@@ -20,6 +20,24 @@
       "status": 200,
       "title": "Garmin Athlete Analytics Platform",
       "text": "K\nOS\nKINETICOS\n/\nGarmin Athlete Analytics\nFR245 + CIRQA\n\nAlex Vance • 1500m/5K • Threshold HR 174 bpm • Base 220s/km\n\nDEVICE: FR245_INT\nSYNC: AUTO\nSYNC\nUPLOAD FIT FILE\nToday\nTraining\nRecovery\nSleep\nActivities\nTrends\nAI Coach\nGEMINI\nData Explorer\nSettings\nREADINESS ASSESSMENT\nPRODUCTIVE\n// ENGINE V1.4.0 DETERMINISTIC\nBalanced recovery. Suitable for aerobic base, tempo, or moderate density.\n\nAutonom"
+    },
+    {
+      "slug": "alcoholfabet",
+      "url": "https://alcoholfabet.cat",
+      "status": 200,
+      "capturedAt": "2026-10-14T09:50:39.721Z",
+      "title": "Alcoholfabet",
+      "note": "Actual public interface rendered with an isolated anonymous menu fixture and empty score. All Supabase requests intercepted locally. No production auth or game session created.",
+      "interceptedRequests": [
+        {
+          "path": "/auth/v1/signup",
+          "method": "POST"
+        },
+        {
+          "path": "/rest/v1/rpc/get_access_context",
+          "method": "POST"
+        }
+      ]
     }
   ]
 }

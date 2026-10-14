@@ -1,50 +1,61 @@
 {
-  "time": "2026-10-14T08:06:25.370Z",
+  "time": "2026-10-14T10:07:21.376Z",
   "viewport": "1440x1000 DPR1",
+  "method": "Fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample.",
   "renderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "modes": {
     "high": {
       "metrics": {
-        "lcp": 1536,
-        "cls": 0.00030094328703703706
+        "lcp": 1604,
+        "cls": 0
       },
       "canvas": [
         {
           "engine": "three.js r186",
           "fps": "60",
-          "drawCalls": "266",
-          "triangles": "87523"
+          "drawCalls": "401",
+          "triangles": "98609"
         }
       ],
-      "heapMB": 23
+      "heapMB": 24,
+      "resources": {
+        "requests": 55,
+        "transferBytes": 1004589,
+        "jsBytes": 529163
+      }
     },
     "medium": {
       "metrics": {
-        "lcp": 1536,
-        "cls": 0.00030094328703703706
+        "lcp": 224,
+        "cls": 0.0020608357295283566
       },
       "canvas": [
         {
           "engine": "three.js r186",
           "fps": "60",
-          "drawCalls": "161",
-          "triangles": "55282"
+          "drawCalls": "219",
+          "triangles": "63676"
         }
       ],
-      "heapMB": 20
+      "heapMB": 23,
+      "resources": {
+        "requests": 55,
+        "transferBytes": 1004589,
+        "jsBytes": 529163
+      }
     },
     "low": {
       "metrics": {
-        "lcp": 15888,
-        "cls": 0.00030094328703703706
+        "lcp": 232,
+        "cls": 0.0020608357295283566
       },
       "canvas": [],
-      "heapMB": 21
+      "heapMB": 7,
+      "resources": {
+        "requests": 53,
+        "transferBytes": 667230,
+        "jsBytes": 192404
+      }
     }
-  },
-  "resources": {
-    "requests": 47,
-    "transferBytes": 784355,
-    "jsBytes": 513105
   }
 }

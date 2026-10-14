@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { shortestPath, edges } from "../features/lab/pathfinding";
-import { runCommand, completeCommand } from "../features/terminal/commands";
+import {
+  commands,
+  runCommand,
+  completeCommand,
+} from "../features/terminal/commands";
 import { projects, projectSchema } from "../lib/content";
 describe("Dijkstra", () => {
   it("finds lowest weight rather than fewest edges", () => {
@@ -40,7 +44,9 @@ describe("Dijkstra", () => {
 });
 describe("portfolio terminal", () => {
   it("accepts only known internal destinations", () => {
-    expect(runCommand("open athra").route).toBe("/projects/athra/");
+    expect(runCommand("open athra").route).toBe("/work/athra/");
+    expect(runCommand("open camicurt").route).toBe("/work/camicurt/");
+    expect(runCommand("open alcoholfabet").route).toBe("/work/alcoholfabet/");
     expect(runCommand("open https://evil.example").route).toBeUndefined();
   });
   it("does not execute injected commands or HTML", () => {
@@ -49,18 +55,17 @@ describe("portfolio terminal", () => {
   });
   it("autocompletes commands and preserves ambiguous input", () => {
     expect(completeCommand("who")).toBe("whoami");
-    expect(completeCommand("s")).toBe("s");
+    expect(completeCommand("e")).toBe("e");
   });
   it("restricts theme names", () => {
     expect(runCommand("theme titanium").theme).toBe("titanium");
     expect(runCommand("theme javascript:alert(1)").theme).toBeUndefined();
   });
-  it("implements the required command vocabulary", () => {
+  it("implements its documented command vocabulary", () => {
     for (const c of [
       "help",
       "whoami",
       "projects",
-      "skills",
       "experience",
       "education",
       "github",
@@ -70,8 +75,10 @@ describe("portfolio terminal", () => {
       "ls",
       "open",
       "theme",
-    ])
-      expect(runCommand(c)).toBeDefined();
+    ]) {
+      expect(commands).toContain(c);
+      expect(runCommand(c).text).not.toContain("Command not found:");
+    }
   });
 });
 describe("public content", () => {

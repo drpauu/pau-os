@@ -7,3 +7,7 @@ test-results/
 playwright-report/
 *.tsbuildinfo
 .openai/local/
+
+# Original CV is private; only the reviewed generated public resume is shipped.
+/Pau_Alcazar_CV.pdf
+/private/

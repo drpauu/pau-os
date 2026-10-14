@@ -8,7 +8,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
         <article className={"project-row project-" + p.slug} key={p.slug}>
           <Link
             className="project-image"
-            href={"/projects/" + p.slug + "/"}
+            href={"/work/" + p.slug + "/"}
             aria-label={"Explore " + p.title}
           >
             <img
@@ -28,9 +28,9 @@ export function ProjectList({ projects }: { projects: Project[] }) {
               0{i + 1}
               <span>{p.category}</span>
             </div>
-            <h3>
-              <Link href={"/projects/" + p.slug + "/"}>{p.title}</Link>
-            </h3>
+            <h2>
+              <Link href={"/work/" + p.slug + "/"}>{p.title}</Link>
+            </h2>
             <p className="project-subtitle">{p.subtitle}</p>
             <p className="muted">{p.description}</p>
             <div className="tags">
@@ -38,7 +38,7 @@ export function ProjectList({ projects }: { projects: Project[] }) {
                 <span key={t}>{t}</span>
               ))}
             </div>
-            <Link className="text-link" href={"/projects/" + p.slug + "/"}>
+            <Link className="text-link" href={"/work/" + p.slug + "/"}>
               Inside the project <ArrowUpRight size={16} />
             </Link>
           </div>

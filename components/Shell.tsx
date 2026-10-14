@@ -1,17 +1,16 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ArrowUpRight, Command, Menu, X } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { useLaboratory } from "@/stores/laboratory";
 import { Terminal } from "@/features/terminal/Terminal";
 import { ScrollReveal } from "./ScrollReveal";
 const nav = [
   ["/", "Home"],
-  ["/projects/", "Projects"],
+  ["/work/", "Work"],
+  ["/experience/", "Experience"],
   ["/about/", "About"],
-  ["/lab/", "Lab"],
-  ["/resume/", "Resume"],
   ["/contact/", "Contact"],
 ];
 export function Shell({ children }: { children: React.ReactNode }) {
@@ -20,8 +19,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const terminal = useLaboratory((s) => s.terminal),
     setTerminal = useLaboratory((s) => s.setTerminal),
     theme = useLaboratory((s) => s.theme);
+  const previousPath = useRef(path);
   useEffect(() => {
     setMenu(false);
+    if (previousPath.current !== path)
+      document.getElementById("main")?.focus({ preventScroll: true });
+    previousPath.current = path;
   }, [path]);
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -53,6 +56,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </Link>
         <nav
           className={menu ? "navigation open" : "navigation"}
+          id="primary-navigation"
           aria-label="Main navigation"
         >
           {nav.map(([href, label]) => (
@@ -60,7 +64,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
               key={href}
               href={href}
               aria-current={
-                path === href || path === href.slice(0, -1) ? "page" : undefined
+                path === href ||
+                (href !== "/" && path.startsWith(href.slice(0, -1)))
+                  ? "page"
+                  : undefined
               }
             >
               {label}
@@ -68,19 +75,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="header-tools">
-          <button
-            className="terminal-trigger"
-            onClick={() => setTerminal(true)}
-            aria-label="Open terminal"
-          >
-            <Command size={15} />
-            <span>Terminal</span>
-            <kbd>⌘ K</kbd>
-          </button>
+          <Link className="header-resume" href="/resume/">
+            Resume / CV <ArrowUpRight size={14} />
+          </Link>
           <button
             className="mobile-menu icon-button"
             aria-label={menu ? "Close navigation" : "Open navigation"}
             aria-expanded={menu}
+            aria-controls="primary-navigation"
             onClick={() => setMenu(!menu)}
           >
             {menu ? <X size={20} /> : <Menu size={20} />}

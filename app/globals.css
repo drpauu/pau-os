@@ -2014,3 +2014,445 @@ main:focus {
     transform: none;
   }
 }
+
+/* The Engineering Observatory — restrained light, machining and editorial space. */
+:root {
+  --bg: #0b1217;
+  --surface: #142127;
+  --accent: #c2e4d5;
+  --line: #2b3a40;
+  --muted: #a1b0b8;
+}
+.header {
+  position: sticky;
+  top: 0;
+  height: 80px;
+  background: #0b1217ed;
+  backdrop-filter: blur(18px);
+}
+.brand-symbol {
+  color: #c3dbcc;
+}
+.header-resume {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font-size: 11px;
+  border-bottom: 1px solid #7b8d8d;
+  padding: 8px 0;
+  white-space: nowrap;
+}
+.navigation {
+  gap: 28px;
+}
+.navigation a[aria-current]:after {
+  bottom: -23px;
+}
+.hero {
+  height: min(940px, calc(100svh - 80px));
+  min-height: 780px;
+  background: radial-gradient(ellipse at 71% 35%, #28424870, transparent 62%);
+}
+.hero-title {
+  left: 5.1%;
+  top: 17%;
+}
+.hero-title h1 {
+  font-size: clamp(70px, 7.3vw, 132px);
+  letter-spacing: -0.075em;
+  font-weight: 500;
+}
+.hero-title h1 span:not(.title-period) {
+  color: #edf0e9;
+  -webkit-text-stroke: 0;
+}
+.title-period {
+  color: #c5dcbb;
+}
+.hero-issue {
+  font-size: 9px;
+  color: #c4cfc8;
+  margin-bottom: 25px;
+}
+.hero-statement {
+  font-size: clamp(23px, 2.05vw, 35px);
+  margin-top: 32px;
+  line-height: 1.2;
+}
+.hero-statement em {
+  color: #abc6bc;
+}
+.hero-description {
+  max-width: 345px;
+  font-size: 12px;
+  color: #aabac0;
+}
+.hero-meta {
+  color: #a5b8b9;
+}
+.scene-container {
+  left: 28%;
+  right: -8%;
+  top: -1%;
+  height: 86%;
+  mask-image: linear-gradient(90deg, transparent, #000 13%);
+}
+.scene-coordinate {
+  top: 10%;
+  right: 4.2%;
+  color: #b3c7c4;
+}
+.scene-coordinate strong {
+  font-size: 8px;
+  color: #99aaa9;
+}
+.scene-caption {
+  position: absolute;
+  right: 7%;
+  bottom: 205px;
+  z-index: 4;
+  display: grid;
+  gap: 7px;
+  text-align: right;
+}
+.scene-caption > span {
+  font-size: 8px;
+  color: #9ab3ad;
+}
+.scene-caption > a {
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+}
+.scene-caption > span:first-child {
+  color: #d4d8bc;
+}
+.scene-controls {
+  right: auto;
+  left: 47%;
+  bottom: 192px;
+  height: 36px;
+  background: #101c22de;
+}
+.scene-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.projected-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: auto;
+}
+.station-label {
+  font-size: 8px;
+  padding: 8px 10px;
+  color: #d1dfd7;
+  background: #12232be8;
+  border-color: #57706e;
+  gap: 8px;
+  box-shadow: 0 8px 24px #0004;
+}
+.station-label.active,
+.station-label:hover {
+  background: #243e40;
+}
+.station-visit {
+  font-size: 9px;
+  padding: 10px;
+}
+.station-dock {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  min-height: 90px;
+  background: #101b21b5;
+  border-color: #536a6570;
+}
+.station-card:first-child {
+  border-left: 0;
+}
+.station-card.selected {
+  background: #c6e6d608;
+  box-shadow: inset 0 2px #bfd9c2;
+}
+.station-card button {
+  padding: 20px;
+}
+.station-card strong {
+  font-size: 11px;
+}
+.station-card small {
+  font-size: 7px;
+}
+.station-number {
+  color: #adc3b8;
+}
+.comarca-hover {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0d2229ee;
+  color: #e0edda;
+  border: 1px solid #668c81;
+  padding: 9px 16px;
+  pointer-events: none;
+}
+.project-copy h2 {
+  font-size: clamp(34px, 3.9vw, 64px);
+  margin: 22px 0 14px;
+}
+.project-camicurt .project-image,
+.project-camicurt.case-image {
+  background: radial-gradient(ellipse at 45% 30%, #56654e, #263532 75%);
+}
+.project-alcoholfabet .project-image,
+.project-alcoholfabet.case-image {
+  background: radial-gradient(ellipse at 45% 30%, #4e3f3c, #252b32 75%);
+}
+.project-camicurt .project-index {
+  color: #d7ddba;
+}
+.experience-entry {
+  padding: 26px 0;
+  border-top: 1px solid var(--line);
+}
+.experience-entry:first-child {
+  margin-top: 22px;
+}
+.position-title {
+  color: #e0e8df;
+}
+.responsibility-list {
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.85;
+  font-size: 14px;
+}
+.responsibility-list li {
+  margin: 10px 0;
+}
+@media (min-width: 1700px) {
+  .hero-title {
+    left: 6%;
+    top: 18%;
+  }
+  .scene-container {
+    left: 29%;
+    right: -4%;
+  }
+}
+@media (max-width: 1100px) and (min-width: 801px) {
+  .hero-title h1 {
+    font-size: 76px;
+  }
+  .hero-statement {
+    font-size: 25px;
+  }
+  .hero-description {
+    max-width: 280px;
+  }
+  .station-card button {
+    padding: 18px 12px;
+    gap: 10px;
+  }
+  .station-card small {
+    font-size: 6px;
+  }
+  .header {
+    gap: 20px;
+  }
+  .navigation {
+    gap: 18px;
+  }
+}
+@media (max-width: 800px) {
+  .header {
+    height: 70px;
+    padding: 0 6%;
+    gap: 10px;
+  }
+  .header-tools {
+    margin-left: auto;
+    gap: 18px;
+  }
+  .header-resume {
+    font-size: 10px;
+    gap: 8px;
+  }
+  .navigation.open {
+    top: 70px;
+    background: #111e25;
+  }
+  .hero {
+    height: auto;
+    min-height: 1080px;
+  }
+  .hero-meta {
+    top: 22px;
+    left: 6%;
+    right: 6%;
+    font-size: 7px;
+  }
+  .hero-meta > span:last-child {
+    display: none;
+  }
+  .hero-title {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding: 78px 7% 0;
+  }
+  .hero-title h1 {
+    font-size: clamp(60px, 13vw, 100px);
+    line-height: 0.9;
+  }
+  .hero-title h1 br {
+    display: none;
+  }
+  .hero-title h1 span:not(.title-period) {
+    display: block;
+  }
+  .title-period {
+    right: auto;
+    margin-left: 2px;
+  }
+  .hero-issue {
+    font-size: 8px;
+    margin-bottom: 20px;
+  }
+  .hero-statement {
+    font-size: 25px;
+    margin: 23px 0 12px;
+  }
+  .hero-description {
+    max-width: 330px;
+    font-size: 12px;
+  }
+  .hero-actions {
+    margin-top: 20px;
+    gap: 22px;
+  }
+  .scene-container {
+    top: 410px;
+    left: -16%;
+    right: -16%;
+    height: 420px;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 12%,
+      #000 85%,
+      transparent
+    );
+  }
+  .scene-coordinate {
+    display: none;
+  }
+  .scene-labels {
+    display: none;
+  }
+  .scene-caption {
+    top: 790px;
+    bottom: auto;
+    left: 7%;
+    right: auto;
+    text-align: left;
+    gap: 3px;
+  }
+  .scene-caption > a {
+    font-size: 18px;
+    justify-content: flex-start;
+  }
+  .scene-caption > span {
+    font-size: 7px;
+  }
+  .scene-controls {
+    bottom: auto;
+    top: 811px;
+    left: auto;
+    right: 6%;
+    height: 36px;
+  }
+  .station-dock {
+    left: 6%;
+    right: 6%;
+    bottom: 65px;
+    grid-template-columns: 1fr 1fr;
+    min-height: 146px;
+  }
+  .station-card {
+    border-bottom: 1px solid #52677655;
+  }
+  .station-card:nth-child(3) {
+    border-left: 0;
+  }
+  .station-card button {
+    padding: 15px 10px;
+    gap: 8px;
+  }
+  .station-card > a {
+    padding: 10px;
+  }
+  .station-card strong {
+    font-size: 9px;
+  }
+  .station-card small {
+    font-size: 6px;
+    letter-spacing: 0;
+  }
+  .station-number {
+    font-size: 7px;
+  }
+  .hero-bottom {
+    bottom: 25px;
+    left: 6%;
+    right: 6%;
+    font-size: 7px;
+  }
+  .hero-bottom > span {
+    display: none;
+  }
+  .fallback-label {
+    bottom: 12%;
+    right: 19%;
+    font-size: 6px;
+  }
+  .comarca-hover {
+    bottom: 18%;
+  }
+  .project-copy h2 {
+    font-size: 37px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (min-width: 801px) {
+  .scene-container {
+    left: 34%;
+    right: -6%;
+    mask-image: linear-gradient(90deg, transparent, #000 18%);
+  }
+}
+@media (min-width: 1700px) {
+  .scene-container {
+    left: 32%;
+    right: -4%;
+  }
+}
+
+.hero:not([data-view="core"]) .scene-caption { background: #0b171eeb; border-left: 1px solid #6e8b7c; padding:12px 16px; backdrop-filter:blur(8px); }
+@media(max-width:800px) { .hero:not([data-view="core"]) .scene-caption { padding:6px 9px;left:6%; } }

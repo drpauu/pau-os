@@ -3,6 +3,7 @@ import "@fontsource-variable/manrope";
 import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./globals.css";
+import { professional } from "@/lib/professional";
 import { Shell } from "@/components/Shell";
 const origin =
   process.env.NEXT_PUBLIC_SITE_URL ||
@@ -11,10 +12,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(origin),
   title: { default: "Pau Alcázar — PAU.OS", template: "%s — PAU.OS" },
   description:
-    "Software engineer and Data & AI consultant. Explore an interactive laboratory of engineering, data and independent digital products by Pau Alcázar.",
+    "Pau Alcázar, Data & AI Engineer. Explore the Engineering Observatory: software, algorithms and independent digital products.",
   openGraph: {
     title: "PAU.OS — Pau Alcázar",
-    description: "Software. Data. Human performance.",
+    description: "Software. Data. Independent products.",
     images: ["/images/og.png"],
     type: "website",
   },
@@ -31,9 +32,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              name: "Pau Alcázar",
+              name: professional.name,
               url: origin,
-              jobTitle: "Software Engineer · Data & AI Consultant",
+              jobTitle: professional.role,
               alumniOf: {
                 "@type": "CollegeOrUniversity",
                 name: "Universitat Politècnica de Catalunya",

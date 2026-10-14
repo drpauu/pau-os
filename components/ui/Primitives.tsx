@@ -18,7 +18,7 @@ export function PageIntro({
 }) {
   return (
     <div className="page-intro">
-      <Eyebrow>{number} / THE LABORATORY</Eyebrow>
+      <Eyebrow>{number} / THE OBSERVATORY</Eyebrow>
       <h1>
         {title}
         <span className="accent">.</span>

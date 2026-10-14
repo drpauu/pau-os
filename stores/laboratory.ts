@@ -2,7 +2,7 @@
 import { create } from "zustand";
 export type Quality = "auto" | "high" | "medium" | "low";
 export type Station =
-  "core" | "athra" | "trackflow" | "cami-curt" | "lab" | "about";
+  "core" | "camicurt" | "athra" | "alcoholfabet" | "trackflow";
 type State = {
   station: Station;
   quality: Quality;

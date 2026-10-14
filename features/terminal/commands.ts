@@ -1,9 +1,10 @@
 import { profile, projects } from "@/lib/content";
+import { professional } from "@/lib/professional";
 export const commands = [
   "help",
   "whoami",
   "projects",
-  "skills",
+
   "experience",
   "education",
   "github",
@@ -18,14 +19,17 @@ export const commands = [
 ];
 const routes: Record<string, string> = {
   home: "/",
-  projects: "/projects/",
+  work: "/work/",
+  projects: "/work/",
+  experience: "/experience/",
   about: "/about/",
-  lab: "/lab/",
   resume: "/resume/",
   contact: "/contact/",
-  athra: "/projects/athra/",
-  trackflow: "/projects/trackflow/",
-  "cami-curt": "/projects/cami-curt/",
+  camicurt: "/work/camicurt/",
+  "cami-curt": "/work/camicurt/",
+  athra: "/work/athra/",
+  alcoholfabet: "/work/alcoholfabet/",
+  trackflow: "/work/trackflow/",
 };
 export type CommandResult = {
   text: string;
@@ -43,7 +47,7 @@ export function runCommand(input: string): CommandResult {
         text:
           "AVAILABLE COMMANDS\n" +
           commands.filter((v) => v !== "sudo").join("  ·  ") +
-          "\n\nopen <home|projects|about|lab|resume|contact|athra|trackflow|cami-curt>\ntheme <ice|titanium>\nTab: autocomplete · ↑↓: history · Escape: close",
+          "\n\nopen <home|work|experience|about|resume|contact|camicurt|athra|alcoholfabet|trackflow>\ntheme <ice|titanium>\nTab: autocomplete · ↑↓: history · Escape: close",
       };
     case "whoami":
       return {
@@ -56,19 +60,17 @@ export function runCommand(input: string): CommandResult {
           .map((p) => p.slug.padEnd(12) + " " + p.description)
           .join("\n"),
       };
-    case "skills":
-      return {
-        text: Object.entries(profile.skills)
-          .map(([k, v]) => k + "\n  " + v.join(" · "))
-          .join("\n\n"),
-      };
     case "experience":
       return {
-        text: "Accenture\nData & AI Consultant · Analyst\nProfessional experience in data and technology.",
+        text: professional.experience
+          .map((e) => e.company + "\n" + e.title + " · " + e.dates)
+          .join("\n\n"),
       };
     case "education":
       return {
-        text: "Computer Science degree\nUniversitat Politècnica de Catalunya (UPC)",
+        text: professional.education
+          .map((e) => e.degree + "\n" + e.institution + " · " + e.dates)
+          .join("\n"),
       };
     case "github":
       return {
@@ -92,7 +94,7 @@ export function runCommand(input: string): CommandResult {
         : { text: "Choose a theme: theme ice | theme titanium" };
     case "diagnostics":
       return {
-        text: "PAU.OS / ENGINEERING LABORATORY\nNext.js · React Three Fiber · Three.js · TypeScript\nProcedural geometry · static HTML content · Supabase published-content API\nTerminal: isolated command interpreter. No shell access.",
+        text: "PAU.OS / ENGINEERING OBSERVATORY\nNext.js · React Three Fiber · Three.js · TypeScript\nProcedural geometry · static HTML content · verified local content snapshot\nTerminal: isolated command interpreter. No shell access.",
       };
     case "sudo":
       return {

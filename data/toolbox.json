@@ -1,0 +1,111 @@
+{
+  "source": "https://raw.githubusercontent.com/drpauu/drpauu/main/README.md",
+  "sectionSha256": "a437752ddce17699ccac423612a2622a0f16ba9266b7fa0ce68fb98b684549e9",
+  "categories": [
+    {
+      "title": "Languages and data formats",
+      "items": [
+        "C++",
+        "C",
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "Java",
+        "Erlang",
+        "MATLAB",
+        "Shell",
+        "PowerShell",
+        "SQL",
+        "PL/pgSQL",
+        "HTML",
+        "CSS",
+        "ReScript",
+        "JSON",
+        "Jupyter Notebooks",
+        "Make"
+      ]
+    },
+    {
+      "title": "Frontend and web",
+      "items": [
+        "React",
+        "React DOM",
+        "Vite",
+        "D3",
+        "D3 Geo",
+        "D3 Zoom",
+        "TopoJSON",
+        "SVG",
+        "Canvas",
+        "Web Audio",
+        "responsive UI",
+        "accessibility",
+        "form validation",
+        "client-side state",
+        "offline fallbacks"
+      ]
+    },
+    {
+      "title": "Backend, databases and security",
+      "items": [
+        "Supabase",
+        "PostgreSQL",
+        "Postgres functions",
+        "RPCs",
+        "Row Level Security",
+        "Supabase Auth",
+        "anonymous auth",
+        "Edge Functions",
+        "database migrations",
+        "schema design",
+        "data validation",
+        "safe client/server boundaries",
+        "OAuth flows",
+        "REST APIs"
+      ]
+    },
+    {
+      "title": "Testing, delivery and operations",
+      "items": [
+        "Git",
+        "GitHub",
+        "GitHub Actions",
+        "GitHub CLI",
+        "Node.js",
+        "npm",
+        "Vitest",
+        "Playwright",
+        "end-to-end testing",
+        "unit testing",
+        "integration testing",
+        "type checking",
+        "production builds",
+        "CI",
+        "Linux",
+        "Vercel"
+      ]
+    },
+    {
+      "title": "Algorithms and computer science",
+      "items": [
+        "graph modelling",
+        "Dijkstra",
+        "shortest paths",
+        "pathfinding",
+        "game trees",
+        "AI opponents",
+        "data structures",
+        "concurrency",
+        "parallelism",
+        "distributed systems",
+        "computer networks",
+        "operating systems",
+        "network security",
+        "token readers",
+        "matrix methods",
+        "machine learning",
+        "data analysis"
+      ]
+    }
+  ]
+}

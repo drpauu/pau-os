@@ -1,76 +1,55 @@
-# PAU.OS
+# PAU.OS — The Engineering Observatory
 
-**Pau Alcázar’s Interactive Engineering Laboratory.** An original procedural 3D portfolio, backed by real project case studies and accessible, independently rendered HTML.
+Pau Alcázar’s portfolio: an original interactive 3D observatory around **Camí Curt**, followed by **ATHRA**, **Alcoholfabet** and **TrackFlow**. Professional information and case studies are independently rendered HTML; WebGL is optional.
 
-## Run locally
+## Local execution
 
-Node **24 LTS**, npm and a WebGL2-capable browser are recommended. WebGL is optional for reading the portfolio.
+Use Node 24 LTS and npm. Existing `.env.local` is optional for snapshot mode and should not be overwritten.
 
 ```sh
+cd /home/pau/Documents/pau-os
 npm ci
-cp .env.example .env.local # skip when your configured .env.local already exists
 npm run dev
 ```
 
-Open **http://127.0.0.1:3100**. The existing local environment is configured for the portfolio content tables. Do not overwrite it just to run the application.
-
-## Commands
+Open **http://127.0.0.1:3100**.
 
 ```sh
+npm run sync:toolbox  # exact public GitHub Toolbox, with validated offline fallback
 npm run typecheck
 npm run lint
 npm test
-npm run build         # static Next.js export → out/
-npm run preview       # serves the production export on port 3100
-npx playwright install chromium
-npm run test:e2e      # starts its own static preview on 3101
-npm run db:test       # read + denied-write verification; needs .env.local
-node scripts/export-seed.mjs # prepares SQL, performs no remote changes
+npm run build         # synchronizes Toolbox, then exports static pages to out/
+npm run preview       # production export on http://localhost:3100
+npm run test:e2e      # owns production preview on port 3101
 ```
 
-The Playwright configuration uses the local Intel GPU through ANGLE/OpenGL. On a headless CI host, remove the custom `launchOptions` or use SwiftShader; capture LOW mode for content tests. Software-renderer FPS is not representative of hardware performance.
+For first-time browser setup: `npx playwright install chromium`. On CI use `PAU_SOFTWARE_GPU=1 npm run test:e2e`; its render speed is not representative of hardware. The local default uses ANGLE/OpenGL on the available GPU.
 
-## Environment
+## Architecture
 
-| Variable                               | Purpose                                                                     |
-| -------------------------------------- | --------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`                 | Canonical origin, Open Graph, sitemap. Set to the actual deployment origin. |
-| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase API origin; optional.                                              |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Publishable key only; never a secret/service-role key.                      |
+Next.js static export, React/TypeScript, Three.js / React Three Fiber / Drei, GSAP and a small Zustand interaction store. HTML is separate from the lazy-loaded scene. Native scrolling and shareable routes: `/`, `/work`, `/work/camicurt`, `/work/athra`, `/work/alcoholfabet`, `/work/trackflow`, `/experience`, `/about`, `/contact`, `/resume`. Legacy `/projects` links are retained; there is no Lab page.
 
-No authentication, payment, mail or analytics credentials are required. If Supabase is not configured, the reviewed local content snapshot is used. Configured backend failures fail the production build (so unpublished content cannot accidentally be republished from an old snapshot).
+- `lib/professional.ts`: privacy-reviewed CV facts shared by About, Experience, Resume and the optional terminal.
+- `lib/content.ts`: validated project facts, sources, links and explicit ordering.
+- `data/toolbox.json` and `data/sources/github-profile-readme.md`: exact generated inventory and committed public source.
+- `lib/geography.ts` / `data/catalunya-comarques.json`: original game map decoding, shared-boundary adjacency and local routing.
+- `components/3d/`: independent scene, quality lifecycle, cancellation-safe cameras and four exhibits.
+- `features/camicurt/`: accessible isolated geographic explorer, available without WebGL.
+- `lib/supabase/`: optional build-only published-content adapter with strict validation.
 
-## Content management
+The Toolbox has no ratings or invented additions. Updates that change items/order require explicit review via the synchronization command; network failures use the validated committed snapshot. See [synchronization](docs/TOOLBOX_SYNC.md).
 
-The active integration reads **published `portfolio_projects`** through the public Supabase API **at build time**. Edit content in Supabase Studio, run `npm run build` and deploy `out/`. Updating a project does not require changing components. New slugs need a new build to generate their routes. Images must be added to `public/images/`; `cover_image` accepts local `.webp`, `.png` or `.jpg` files. JSON content is validated with Zod and rendered as plain text, never raw HTML.
+## Content and privacy
 
-`portfolio_experience` and `portfolio_content` are isolated optional expansion tables; the initial professional biography and resume use the verified snapshot in `lib/content.ts`. There is no public admin interface. Studio access is controlled by Supabase project membership. Application users, including signed-in users, cannot write portfolio tables.
+The original `Pau_Alcazar_CV.pdf` is private, ignored by Git and never copied into served assets. The curated public one-page PDF omits original private contact details and named clients. Its generator consumes only `lib/professional.ts`; review the derivative before a public launch. Source dates, titles, project maturity and screenshot limitations are documented in [content sources](docs/CONTENT_SOURCES.md).
 
-Migrations: `supabase/migrations/20261014073010_pau_os_content.sql`. Seed: `supabase/seed.sql` (preserves existing edits). Apply only to the intended project. See [database documentation](docs/DATABASE.md).
+Project imagery shows actual applications. The observatory is an illustration. ATHRA curves contain no health data. Alcoholfabet's screenshot uses isolated menu fixtures so capture never creates production sessions.
 
-## Experience
+## Supabase and deployment
 
-- Original machined platform, reactor shader, articulated rings, architectural lighting, project stations and camera transitions.
-- Direct routes for projects, about, lab, resume and contact; all core content works without WebGL or JavaScript.
-- HIGH, MEDIUM, LOW/static and automatic quality; reduced-motion support; optional synthesized ambient audio, off by default.
-- Keyboard-accessible terminal (`Ctrl/⌘ K`), command history, completion and a deliberately bounded command interpreter.
-- Interactive, tested Dijkstra experiment; downloadable one-page PDF resume.
-- Actual ATHRA and TrackFlow local screenshots; actual public Camí Curt screenshot. Captions identify demonstration data.
+`PAU_CONTENT_SOURCE=snapshot` is the default. No database request or credentials are needed for visitors or this build mode. The available Supabase connection is shared with an existing game; **this revision modifies no remote data**. Its old portfolio ordering differs from the new brief. `npm run db:test` is read-only and reports that drift; it is not a passing deployment check for remote mode. Prepared SQL is local only. See [database boundaries](docs/DATABASE.md).
 
-## Deployment
+Publish only `out/`, never the repository root. The existing Sites identity is retained with its owner-only audience. See [deployment](docs/DEPLOYMENT.md) and the current [status](docs/PROJECT_STATUS.md) for actual release and test results.
 
-This is an ordinary static export; no persistent Next.js server is needed.
-
-```sh
-npm ci
-npm run build
-# Publish the contents of out/ using your static host.
-```
-
-On Vercel: framework Next.js, build `npm run build`, output `out`, Node 24. On Cloudflare Pages: build `npm run build`, output `out`, set Node version 24. Set the three variables above before building. No SSR, cron, edge functions or new paid services are required. A rebuild is necessary after CMS changes; do not promise realtime updates.
-
-For Sites, `.openai/hosting.json` declares the existing Site ID and `out` directory. Use the Sites source workflow to package the verified build and publish it. Source credentials are short-lived and must never be written to the checkout.
-
-## Further documentation
-
-[Architecture](ARCHITECTURE.md) · [Reference study](REVERSE_ENGINEERING.md) · [Design system](DESIGN_SYSTEM.md) · [Performance](PERFORMANCE.md) · [Status](PROJECT_STATUS.md) · [Content evidence](docs/CONTENT_PROVENANCE.md).
+[Architecture](docs/ARCHITECTURE.md) · [Art direction](docs/ART_DIRECTION.md) · [Reference study](docs/REVERSE_ENGINEERING.md) · [Performance](docs/PERFORMANCE.md) · [Security](docs/SECURITY.md) · [Geographic provenance](docs/GEOGRAPHY.md).

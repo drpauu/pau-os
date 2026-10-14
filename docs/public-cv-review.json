@@ -1,0 +1,13 @@
+{
+  "generatedFrom": "lib/professional.ts",
+  "originalCopied": false,
+  "sourceSha256": "07af49c0bf51e57e743a24b2aa4dd4c5d88baa2e6d7bb960b387a1663cfb522f",
+  "reviewedOn": "2026-10-14",
+  "excluded": [
+    "private phone",
+    "private email",
+    "named clients",
+    "client-specific projects"
+  ],
+  "editorialReview": "Owner review recommended before public deployment; generated public fields have been checked against the source CV."
+}

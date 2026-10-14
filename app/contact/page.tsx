@@ -32,8 +32,8 @@ export default function Contact() {
             Data. New possibilities.
           </h2>
           <p>
-            Based in Barcelona. Interested in international opportunities,
-            including Switzerland.
+            Based in Barcelona. Interested in engineering opportunities
+            and thoughtful collaborations.
           </p>
           <ButtonLink href={profile.linkedin} external primary>
             Connect on LinkedIn

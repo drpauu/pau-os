@@ -1,3 +1,4 @@
+import { professional } from "./professional";
 import { z } from "zod";
 const publicUrl = z
   .string()
@@ -13,7 +14,10 @@ export const projectSchema = z.object({
   repository_url: publicUrl,
   live_url: publicUrl.nullable(),
   cover_image: z.string().regex(/^\/images\/[a-z0-9-]+\.(webp|png|jpg)$/),
-  gallery: z.array(z.string()).default([]),
+  gallery: z
+    .array(z.string().regex(/^\/images\/[a-z0-9-]+\.(webp|png|jpg)$/))
+    .max(12)
+    .default([]),
   featured: z.boolean(),
   published: z.boolean(),
   sort_order: z.number(),
@@ -33,35 +37,64 @@ export const projectSchema = z.object({
 });
 export type Project = z.infer<typeof projectSchema>;
 export const profile = {
-  name: "Pau Alcázar",
-  role: "Software Engineer · Data & AI Consultant",
+  name: professional.name,
+  role: professional.role,
   github: "https://github.com/drpauu",
   linkedin: "https://www.linkedin.com/in/pau-alcázar-perdomo/",
-  location: "Barcelona, Spain",
-  education: "Computer Science · Universitat Politècnica de Catalunya",
-  summary:
-    "I turn complex problems into software people can use. My work connects data, engineering and the experience on the other side of the screen.",
-  skills: {
-    Software: ["TypeScript", "React", "Python", "C++", "Node.js", "Git"],
-    "Data & systems": [
-      "SQL",
-      "PostgreSQL",
-      "MongoDB",
-      "Supabase",
-      "REST APIs",
-      "Data processing",
-    ],
-    Practice: [
-      "Graph algorithms",
-      "Automated testing",
-      "Linux",
-      "CI/CD",
-      "Application security",
-      "WebGL",
-    ],
-  },
+  location: professional.location,
+  education: professional.education[0].degree + " · UPC",
+  summary: professional.summary,
 };
 export const projects: Project[] = [
+  {
+    slug: "camicurt",
+    title: "CAMÍ CURT",
+    subtitle: "A small route. A surprisingly deep problem.",
+    description:
+      "A Catalan geography game that turns the comarca map into a daily graph puzzle.",
+    category: "INTERACTIVE WEB / ALGORITHMS",
+    technologies: ["React", "D3", "TopoJSON", "Graph algorithms", "Supabase"],
+    repository_url: "https://github.com/drpauu/camicurt.cat",
+    live_url: "https://camicurt.cat",
+    cover_image: "/images/cami-curt.webp",
+    gallery: [],
+    featured: true,
+    published: true,
+    sort_order: 1,
+    content: {
+      status: "Live",
+      intro: "Find the connection. Discover the territory.",
+      problem:
+        "A map can teach much more than names. The challenge is to make geographic relationships tangible, playful and worth returning to.",
+      approach:
+        "Players connect two Catalan comarques through adjacent territories, with rules requiring or forbidding particular regions. Dijkstra enumerates optimal routes; A* provides a complementary length check. The SVG map makes the graph visible and gives feedback on every move.",
+      architecture: [
+        "Comarca geometry → TopoJSON + D3",
+        "Adjacency graph → Dijkstra + rule validation",
+        "Web Worker → shortest-path cache",
+        "React → interactive SVG map",
+        "Supabase → shared daily calendar",
+      ],
+      challenges: [
+        {
+          title: "Turn a graph into something intuitive",
+          description:
+            "Geometric territories act as selectable graph nodes. Route feedback connects the player’s choices with an optimal path.",
+        },
+        {
+          title: "Make a daily challenge dependable",
+          description:
+            "A shared daily calendar has a local generation fallback. A Web Worker precomputes route caches while the main thread keeps the map responsive. Normal, time-trial and exploration modes complement the daily challenge.",
+        },
+      ],
+      scope:
+        "Live application. The installation uses the game’s 41-region geographic dataset. That dataset is not presented as a claim of current administrative completeness. Portfolio interactions stay local and do not access player sessions.",
+      source:
+        "Public source reviewed at 612657b: README.md, src/lib/pathfinding.js and src/lib/geography.js; matching local game data and worker inspected.",
+      caption:
+        "Actual public Camí Curt application · captured without signing in.",
+    },
+  },
   {
     slug: "athra",
     title: "ATHRA",
@@ -82,9 +115,9 @@ export const projects: Project[] = [
     gallery: [],
     featured: true,
     published: true,
-    sort_order: 1,
+    sort_order: 2,
     content: {
-      status: "Development",
+      status: "Development prototype",
       intro: "Performance starts with understanding the signal.",
       problem:
         "Training produces a lot of data. Interpreting activity, sleep and recovery together should not require jumping between disconnected tools.",
@@ -118,6 +151,62 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "alcoholfabet",
+    title: "ALCOHOLFABET",
+    subtitle: "A playful surface. A deliberate system underneath.",
+    description:
+      "A Catalan question-based board game with in-person and online play, server-validated turns and synchronized sessions.",
+    category: "MULTIPLAYER / INTERACTION DESIGN",
+    technologies: [
+      "TypeScript",
+      "React",
+      "SVG",
+      "Supabase",
+      "PostgreSQL",
+      "Realtime",
+    ],
+    repository_url: "https://github.com/drpauu/Alcoholfabet",
+    live_url: "https://alcoholfabet.cat",
+    cover_image: "/images/alcoholfabet.webp",
+    gallery: [],
+    featured: true,
+    published: true,
+    sort_order: 3,
+    content: {
+      status: "Live",
+      intro: "The board is playful. The rules stay consistent.",
+      problem:
+        "A shared board game needs one trustworthy sequence of turns, whether both players share a screen or join from separate devices. Questions, answers and actions also need to respect each player’s role.",
+      approach:
+        "React presents a tactile SVG board, pieces and question cards. The browser sends action requests to PostgreSQL functions through Supabase; the server validates the move and returns a view appropriate to the viewer. Private Realtime channels notify connected devices when the session changes.",
+      architecture: [
+        "React + SVG → board and turn presentation",
+        "Validated action request → Supabase RPC",
+        "PostgreSQL → authoritative game state",
+        "Role-aware view → safe answer visibility",
+        "Private Realtime channel → refreshed session",
+      ],
+      challenges: [
+        {
+          title: "Keep the answer on the right side of the table",
+          description:
+            "Server views control which role can see an answer or judge a response. The client validates the returned shape and rejects responses that expose an answer to a responding player.",
+        },
+        {
+          title: "Make a turn survive reconnection",
+          description:
+            "State versions and idempotency keys support consistent actions. The session reducer and private channel recover the authoritative view after interruptions, while the motion system follows explicit game phases.",
+        },
+      ],
+      scope:
+        "The public application includes in-person play; online roles require private player codes. These capabilities were inspected in source. No production game was created or modified during portfolio verification. The installation is an illustration, not a live game session.",
+      source:
+        "Public repository and local source match d184832: game-repository.ts, useGameSession.ts, useGameChannel.ts, game rules and SQL migrations reviewed.",
+      caption:
+        "Actual Alcoholfabet interface · isolated menu fixture with an empty score; no production game or auth session opened.",
+    },
+  },
+  {
     slug: "trackflow",
     title: "TRACKFLOW",
     subtitle: "A training week, with everything connected.",
@@ -131,9 +220,9 @@ export const projects: Project[] = [
     gallery: [],
     featured: true,
     published: true,
-    sort_order: 2,
+    sort_order: 4,
     content: {
-      status: "Web application",
+      status: "Source available",
       intro: "Structure for the work behind performance.",
       problem:
         "A training plan needs to stay useful after it is written: a coach publishes a week, athletes follow their sessions, and both need an up-to-date view.",
@@ -164,55 +253,6 @@ export const projects: Project[] = [
         "Source reviewed at 1b730d6: README.md, frontend/src and server/src.",
       caption:
         "Actual local application · unauthenticated entry screen. No athlete records displayed.",
-    },
-  },
-  {
-    slug: "cami-curt",
-    title: "CAMÍ CURT",
-    subtitle: "A small route. A surprisingly deep problem.",
-    description:
-      "A Catalan geography game that turns the comarca map into a daily graph puzzle.",
-    category: "INTERACTIVE WEB / ALGORITHMS",
-    technologies: ["React", "D3", "TopoJSON", "Graph algorithms", "Supabase"],
-    repository_url: "https://github.com/drpauu/camicurt.cat",
-    live_url: "https://camicurt.cat",
-    cover_image: "/images/cami-curt.webp",
-    gallery: [],
-    featured: true,
-    published: true,
-    sort_order: 3,
-    content: {
-      status: "Live",
-      intro: "Find the connection. Discover the territory.",
-      problem:
-        "A map can teach much more than names. The challenge is to make geographic relationships tangible, playful and worth returning to.",
-      approach:
-        "Players connect two Catalan comarques through adjacent territories. A shortest-path engine evaluates routes under changing rules; the SVG map makes the graph visible and gives feedback on every move.",
-      architecture: [
-        "Comarca geometry → TopoJSON + D3",
-        "Adjacency graph → route calculation",
-        "Rules + difficulty → valid challenges",
-        "React → interactive SVG map",
-        "Supabase → shared daily calendar",
-      ],
-      challenges: [
-        {
-          title: "Turn a graph into something intuitive",
-          description:
-            "Geometric territories act as selectable graph nodes. Route feedback connects the player’s choices with an optimal path.",
-        },
-        {
-          title: "Make a daily challenge dependable",
-          description:
-            "The public calendar and local generation fallback support the daily workflow. Normal, time-trial and exploration modes provide different ways to learn the map.",
-        },
-      ],
-      scope:
-        "Live application. This portfolio links to the actual game; it does not replicate accounts, leaderboards or player data.",
-      source:
-        "Source reviewed in the owner’s camicurt.cat checkout: README.md, package.json and game source.",
-      caption:
-        "Actual public Camí Curt application · captured without signing in.",
     },
   },
 ];

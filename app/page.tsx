@@ -16,7 +16,7 @@ export default async function Home() {
             <span className="muted">Engineering makes it real.</span>
           </h2>
           <p>
-            I build at the intersection of software, data and human performance.
+            I build at the intersection of software, data and digital products.
             From understanding the problem to the last interaction, I care about
             the whole system.
           </p>
@@ -28,7 +28,7 @@ export default async function Home() {
       <section id="selected-work" className="section-wrap selected-work">
         <div className="section-heading">
           <div>
-            <Eyebrow>SELECTED WORK / 01—03</Eyebrow>
+            <Eyebrow>SELECTED WORK / 01—04</Eyebrow>
             <h2>
               Ideas, made tangible<span className="accent">.</span>
             </h2>
@@ -39,18 +39,17 @@ export default async function Home() {
       </section>
       <section className="about-strip section-wrap">
         <div>
-          <Eyebrow>THE ENGINEER BEHIND THE LAB</Eyebrow>
+          <Eyebrow>THE ENGINEER BEHIND THE WORK</Eyebrow>
           <h2>
             A technical mind.
-            <br />
-            An athlete’s discipline.
+            <br />A builder’s curiosity.
           </h2>
         </div>
         <div>
           <p>
-            Computer Science graduate from UPC. Data & AI consultant with
-            experience at Accenture. I bring the same focus to building software
-            that I bring to high-performance sport.
+            Computer Engineering graduate from UPC. My work connects data,
+            algorithms and usable software, from professional projects at
+            Accenture to independent digital products.
           </p>
           <ButtonLink href="/about/">A little more about me</ButtonLink>
         </div>
