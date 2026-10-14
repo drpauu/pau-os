@@ -1,7 +1,7 @@
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 export const cyan = "#91eafa",
   steel = "#31444f";
-const machinedBox = new RoundedBoxGeometry(1, 1, 1, 2, 0.045);
+export const machinedBox = new RoundedBoxGeometry(1, 1, 1, 2, 0.045);
 export function GlowRing({
   radius,
   y = 0,

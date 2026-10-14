@@ -14,7 +14,7 @@ The contexts have isolated caches, but later runs share the browser process, OS 
 
 ## Mobile touch emulation
 
-A separate Chromium run used a 390×844 viewport, DPR1 and touch/mobile emulation on the same Intel Iris Xe host. In the latest 6.8-second sample Medium rendered at **30 FPS** with 219 draw calls and 63,676 triangles; High reached 38 FPS. A prior run reached 56 FPS in Medium, so the result varies with host load and is not a stable device guarantee. Medium LCP was 772ms with CLS 0. Low retained the static scene at 768ms LCP and loaded no canvas. Auto selects Medium below 800px, keeping the 3D exhibit interactive at the lower render cost. Raw results: `docs/performance-mobile-emulation.json`.
+A separate Chromium run used a 390×844 viewport, DPR1 and touch/mobile emulation on the same Intel Iris Xe host. After instancing repeated board and planning details, the latest 6.8-second sample rendered at **60 FPS in Medium** with 196 draw calls and 63,676 triangles; High reached 38 FPS. Medium LCP was 536ms with CLS 0. Low retained the static scene at 480ms LCP and loaded no canvas. Earlier Medium samples ranged from 30–56 FPS before this optimization, so these short runs still do not guarantee the same rate on a physical phone. Auto selects Medium below 800px, keeping the 3D exhibit interactive at the lower render cost. Raw results: `docs/performance-mobile-emulation.json`.
 
 This measures a phone-shaped viewport and touch event model on the desktop host GPU. It does **not** predict physical iPhone or Android performance. The emulated sample also shares the limitations of a short localhost run and cannot replace testing on representative devices.
 

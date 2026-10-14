@@ -1,59 +1,59 @@
 {
-  "time": "2026-10-14T12:18:47.120Z",
+  "time": "2026-10-14T12:29:22.235Z",
   "viewport": "390x844 DPR1 touch emulation",
   "method": "Chromium touch/mobile emulation on the host GPU; fresh browser context and preselected quality per mode; localhost cold navigation; 6.8s settling sample. This does not represent physical phone performance.",
   "renderer": "ANGLE (Intel, Mesa Intel(R) Iris(R) Xe Graphics (TGL GT2), OpenGL 4.6)",
   "modes": {
     "high": {
       "metrics": {
-        "lcp": 1680,
+        "lcp": 1908,
         "cls": 0
       },
       "canvas": [
         {
           "engine": "three.js r186",
           "fps": "38",
-          "drawCalls": "401",
+          "drawCalls": "355",
           "triangles": "98609"
         }
       ],
-      "heapMB": 24,
+      "heapMB": 26,
       "resources": {
         "requests": 35,
-        "transferBytes": 777503,
-        "jsBytes": 531878
+        "transferBytes": 777571,
+        "jsBytes": 531933
       }
     },
     "medium": {
       "metrics": {
-        "lcp": 772,
+        "lcp": 536,
         "cls": 0
       },
       "canvas": [
         {
           "engine": "three.js r186",
-          "fps": "30",
-          "drawCalls": "219",
+          "fps": "60",
+          "drawCalls": "196",
           "triangles": "63676"
         }
       ],
       "heapMB": 22,
       "resources": {
         "requests": 35,
-        "transferBytes": 777503,
-        "jsBytes": 531878
+        "transferBytes": 777571,
+        "jsBytes": 531933
       }
     },
     "low": {
       "metrics": {
-        "lcp": 768,
+        "lcp": 480,
         "cls": 0
       },
       "canvas": [],
       "heapMB": 6,
       "resources": {
         "requests": 33,
-        "transferBytes": 440144,
+        "transferBytes": 440157,
         "jsBytes": 195119
       }
     }

@@ -39,7 +39,7 @@ const browser = await chromium.launch({
 const evidence = {
   url: origin,
   checkedAt: new Date().toISOString(),
-  mode: "Fourteen static route checks plus live WebGL; existing owner-only read authorization",
+  mode: "Fourteen static routes, desktop WebGL, mobile touch navigation and TrackFlow artwork; existing owner-only read authorization",
   routes: [],
   errors: [],
 };
@@ -134,6 +134,89 @@ try {
     );
   }
   await page.screenshot({ path: "docs/screenshots/live-private-3d.png" });
+
+  const mobileContext = await browser.newContext({
+    viewport: { width: 375, height: 812 },
+    isMobile: true,
+    hasTouch: true,
+  });
+  await mobileContext.route("**/*", (route) => {
+    if (new URL(route.request().url()).origin === origin)
+      return route.continue({
+        headers: {
+          ...route.request().headers(),
+          "OAI-Sites-Authorization": `Bearer ${token}`,
+        },
+      });
+    return route.continue();
+  });
+  const mobilePage = await mobileContext.newPage();
+  mobilePage.on("pageerror", (e) => evidence.errors.push(e.message));
+  await mobilePage.addInitScript(() =>
+    localStorage.setItem("pau-quality", "medium"),
+  );
+  await mobilePage.goto(origin + "/", { waitUntil: "networkidle" });
+  await mobilePage.locator("canvas").waitFor({
+    state: "visible",
+    timeout: 20000,
+  });
+  evidence.mobile = {
+    viewport: "375x812 touch emulation",
+    horizontalOverflow: await mobilePage.evaluate(
+      () => document.documentElement.scrollWidth > innerWidth,
+    ),
+  };
+  await mobilePage.screenshot({ path: "docs/screenshots/live-mobile-home.png" });
+  await mobilePage.waitForTimeout(6800);
+  evidence.mobile.mediumFps = await mobilePage
+    .locator("canvas")
+    .getAttribute("data-fps");
+  await mobilePage
+    .getByRole("button", { name: "Next project installation" })
+    .click();
+  const scene = mobilePage.locator(".scene-container");
+  await scene.evaluate((element) => {
+    for (const [type, x, y] of [
+      ["pointerdown", 280, 490],
+      ["pointerup", 190, 493],
+    ])
+      element.dispatchEvent(
+        new PointerEvent(type, {
+          bubbles: true,
+          pointerType: "touch",
+          clientX: x,
+          clientY: y,
+        }),
+      );
+  });
+  const athraFocus = mobilePage.getByRole("button", {
+    name: "Focus ATHRA station",
+  });
+  await athraFocus.waitFor();
+  if ((await athraFocus.getAttribute("aria-pressed")) !== "true")
+    throw new Error("Deployed mobile swipe did not focus ATHRA.");
+  evidence.mobile.swipeFocusedAthra = true;
+  await mobilePage.goto(origin + "/work/", { waitUntil: "networkidle" });
+  const trackflowImage = mobilePage.locator(".project-trackflow img");
+  await trackflowImage.waitFor({ state: "visible" });
+  await trackflowImage.scrollIntoViewIfNeeded();
+  await mobilePage.waitForFunction(() => {
+    const image = document.querySelector(".project-trackflow img");
+    return image?.complete && image.naturalWidth === 1200;
+  });
+  evidence.mobile.trackflowImage = await trackflowImage.evaluate((image) => ({
+    naturalWidth: image.naturalWidth,
+    alt: image.alt,
+  }));
+  if (evidence.mobile.trackflowImage.naturalWidth !== 1200)
+    throw new Error("Deployed TrackFlow illustration did not load as expected.");
+  await mobilePage.locator(".project-trackflow").screenshot({
+    path: "docs/screenshots/live-mobile-trackflow.png",
+  });
+  if (evidence.mobile.horizontalOverflow)
+    throw new Error("Deployed mobile homepage has horizontal overflow.");
+  await mobileContext.close();
+
   if (evidence.errors.length)
     throw new Error("Deployed page reported browser errors.");
   await fs.writeFile(
@@ -144,6 +227,7 @@ try {
     JSON.stringify({
       checkedRoutes: evidence.routes.length,
       webgl: !!evidence.webgl,
+      mobile: evidence.mobile,
       resumePdfMatches: evidence.resumePdf.matchesLocalArtifact,
       status: "passed",
       errors: evidence.errors,

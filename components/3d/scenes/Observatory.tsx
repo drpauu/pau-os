@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Line, Instances, Instance } from "@react-three/drei";
 import * as THREE from "three";
-import { Body, GlowRing } from "./Geometry";
+import { Body, GlowRing, machinedBox } from "./Geometry";
 import { useLaboratory } from "@/stores/laboratory";
 
 const mint = "#c4e8dc",
@@ -277,6 +277,18 @@ const boardColors = [
   "#869b73",
   "#abb5bb",
 ];
+const boardTiles = Array.from({ length: 24 }, (_, i) => {
+  const side = Math.floor(i / 6);
+  const j = i % 6;
+  return {
+    position: [
+      side === 0 ? -0.9 + j * 0.3 : side === 1 ? 0.9 : side === 2 ? 0.9 - j * 0.3 : -0.9,
+      0.89,
+      side === 0 ? -0.9 : side === 1 ? -0.9 + j * 0.3 : side === 2 ? 0.9 : 0.9 - j * 0.3,
+    ] as [number, number, number],
+    color: boardColors[i % boardColors.length],
+  };
+});
 export function BoardExhibit() {
   const select = useLaboratory((s) => s.select);
   return (
@@ -295,34 +307,18 @@ export function BoardExhibit() {
         scale={[2.15, 0.055, 2.15]}
         color="#343639"
       />
-      {Array.from({ length: 24 }, (_, i) => {
-        const side = Math.floor(i / 6),
-          j = i % 6;
-        const x =
-          side === 0
-            ? -0.9 + j * 0.3
-            : side === 1
-              ? 0.9
-              : side === 2
-                ? 0.9 - j * 0.3
-                : -0.9;
-        const z =
-          side === 0
-            ? -0.9
-            : side === 1
-              ? -0.9 + j * 0.3
-              : side === 2
-                ? 0.9
-                : 0.9 - j * 0.3;
-        return (
-          <Body
+      <Instances limit={boardTiles.length} castShadow receiveShadow>
+        <primitive object={machinedBox} attach="geometry" dispose={null} />
+        <meshStandardMaterial color="white" metalness={0.72} roughness={0.33} />
+        {boardTiles.map((tile, i) => (
+          <Instance
             key={i}
-            position={[x, 0.89, z]}
+            position={tile.position}
             scale={[0.26, 0.065, 0.26]}
-            color={boardColors[i % 6]}
+            color={tile.color}
           />
-        );
-      })}
+        ))}
+      </Instances>
       <Body
         position={[0, 0.89, 0]}
         scale={[0.75, 0.055, 0.75]}

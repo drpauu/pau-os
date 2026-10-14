@@ -157,21 +157,21 @@ function Panel({ kind }: { kind: number }) {
         </>
       ) : kind === 1 ? (
         <>
-          {Array.from({ length: 21 }, (_, i) => (
-            <mesh
-              key={i}
-              position={[
-                -0.7 + (i % 7) * 0.23,
-                -0.23 + Math.floor(i / 7) * 0.19,
-                0.08,
-              ]}
-            >
-              <planeGeometry args={[0.17, 0.12]} />
-              <meshBasicMaterial
+          <Instances limit={21}>
+            <planeGeometry args={[0.17, 0.12]} />
+            <meshBasicMaterial color="white" toneMapped={false} />
+            {Array.from({ length: 21 }, (_, i) => (
+              <Instance
+                key={i}
+                position={[
+                  -0.7 + (i % 7) * 0.23,
+                  -0.23 + Math.floor(i / 7) * 0.19,
+                  0.08,
+                ]}
                 color={i % 4 === 0 ? cyan : i % 3 === 0 ? "#21627a" : "#153648"}
               />
-            </mesh>
-          ))}
+            ))}
+          </Instances>
         </>
       ) : (
         <>
